@@ -1,0 +1,29 @@
+* Steep Mediawiki Gadgets
+Adds buttons to Mediawiki's Visual Editor to allow you to insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]].
+
+Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/][Steep Project]].
+
+[[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
+
+See: [[http://www.mediawiki.org/wiki/VisualEditor_gadgets][Create Gadgets which interact with VisualEditor]].
+
+** Future Plans
+ 1. Finish adding a button for the Process Model.
+ 2. Make the button open a search dialogue.
+ 3. Consider moving the deployment mechanism server-side using $wgVisualEditorPluginModules. See [[https://gerrit.wikimedia.org/r/#/c/75271/][Infrastructure for loading plugins in the MW integration]].
+ 4. Create a plugin to display the Process Model in an iframe. 
+ 5. Add the map.
+
+
+** Deployment
+Install Mediawiki (the Steep project uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]]), along with the [[http://www.mediawiki.org/wiki/VisualEditor][VisualEditor]] and Gadgets plugins. Verify your install in the Special:Version page of your wiki.
+
+Host the Process Model and Map software on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
+
+Edit the MediaWiki:Gadgets-definition page and add the following:
+#+BEGIN_SRC org
+*ProcessModel[ResourceLoader | rights=hidden | hidden | dependencies=ext.visualEditor.core] | process-model.js
+*ProcessModelLoader[ResourceLoader | dependencies=ext.visualEditor.viewPageTarget.init | default] |  process-model-loader.js
+#+END_SRC
+
+Visit Special:Gadgets. You will see two red (non-existent) links called Gadget-process-model.js and Gadget-process-model-loader.js. Create these pages, copying in the contents of the Javascript files of the same names in this repository.

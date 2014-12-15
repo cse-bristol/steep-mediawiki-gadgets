@@ -10,13 +10,20 @@ See: [[http://www.mediawiki.org/wiki/VisualEditor_gadgets][Create Gadgets which 
 Note: we are using VisualEditor v0.1.0. The programming API for this appears quite unstable, so we may have to make changes in future.
 
 ** Future Plans
-*** Make the button open a search dialogue.
- + size
- + search box.
-
-
-*** Consider moving the deployment mechanism server-side using $wgVisualEditorPluginModules. 
+*** Consider moving the deployment mechanism server-side using $wgVisualEditorPluginModules
 See [[https://gerrit.wikimedia.org/r/#/c/75271/][Infrastructure for loading plugins in the MW integration]].
+
+I want to do this next because it impacts whether how I use the share.js stuff.
+
+*** Send search requests
+One option is to include sharejs stuff, then do the following:
+// connection.createFetchQuery(coll, {_id: {$regex: text}}, {}, function(error, results, extraData) {
+
+Alternatively, this annoying thing:
+https://github.com/share/rest/
+Except it doesn't do search.
+This does: https://github.com/letmetravel/rest
+
 *** Create a plugin to display the Process Model in an iframe. 
 *** Add the map
 

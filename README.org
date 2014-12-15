@@ -7,13 +7,18 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 
 See: [[http://www.mediawiki.org/wiki/VisualEditor_gadgets][Create Gadgets which interact with VisualEditor]].
 
-** Future Plans
- 1. Finish adding a button for the Process Model.
- 2. Make the button open a search dialogue.
- 3. Consider moving the deployment mechanism server-side using $wgVisualEditorPluginModules. See [[https://gerrit.wikimedia.org/r/#/c/75271/][Infrastructure for loading plugins in the MW integration]].
- 4. Create a plugin to display the Process Model in an iframe. 
- 5. Add the map.
+Note: we are using VisualEditor v0.1.0. The programming API for this appears quite unstable, so we may have to make changes in future.
 
+** Future Plans
+*** Make the button open a search dialogue.
+ + size
+ + search box.
+
+
+*** Consider moving the deployment mechanism server-side using $wgVisualEditorPluginModules. 
+See [[https://gerrit.wikimedia.org/r/#/c/75271/][Infrastructure for loading plugins in the MW integration]].
+*** Create a plugin to display the Process Model in an iframe. 
+*** Add the map
 
 ** Deployment
 Install Mediawiki (the Steep project uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]]), along with the [[http://www.mediawiki.org/wiki/VisualEditor][VisualEditor]] and Gadgets plugins. Verify your install in the Special:Version page of your wiki.

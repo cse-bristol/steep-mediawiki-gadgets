@@ -6,37 +6,28 @@
     var title = "visualeditor-mwprocessmodel-title",
 	dialogueName = "Process Model Dialogue",
 	processModelCollection = "process-models",
-	queryUrl = blah,
 
-	translations = {
-	    en: {
-		title: "Process Model"
-	    }
+	// TODO do this for real.
+	makeSearchRequest = function(value, callback) {
+	    callback(["a", "b", "c"]);
 	};
-
-    if (!mw.messages.exists(title)) {
-	mw.messages.set(title, "Process Model");
-    }
 
     /*
      Make the dialogue.
      */
     var dialogue = function(surface, config) {
-	config = config ? config : {};
-	config.small = true;
-
-	ve.ui.Dialog.call(this, surface, config);
+	OO.ui.Dialog.call(this, surface, config);
     };
-    OO.inheritClass(dialogue, ve.ui.Dialog);
+    OO.inheritClass(dialogue, OO.ui.Dialog);
     dialogue.static.name = dialogueName;
     dialogue.static.titleMessage = title;
 
     dialogue.prototype.initialize = function() {
-	ve.ui.Dialog.prototype.initialize.call(this);
+	OO.ui.Dialog.prototype.initialize.call(this);
 
-	var search = new ve.ui.SearchWidget(),
+	var search = new OO.ui.SearchWidget(),
 	    doSearch = function(value, callback) {
-		makeSearchRequest(function(results, error) {
+		makeSearchRequest(value, function(results, error) {
 		    if (value === search.query.value) {
 			if (error) {
 			    throw new Error(error);
@@ -56,7 +47,7 @@
 		search.results.addItems(
 		    results.map(function(r) {
 			
-			return new ve.ui.OptionWidget(
+			return new OO.ui.OptionWidget(
 			    r,
 			    {
 				// Ensure we have a String for the label.
@@ -76,19 +67,22 @@
 	this.$body.append(search.$results);
     };
 
-    ve.ui.dialogFactory.register(dialogue);
+    ve.ui.windowFactory.register(dialogue);
 
     /*
      Make the tool.
      */
     var tool = function(toolGroup, config) {
-	ve.ui.DialogTool.call(this, toolGroup, config);
+	ve.ui.Tool.call(this, toolGroup, config);
     };
 
-    OO.inheritClass(tool, ve.ui.DialogTool);
+    OO.inheritClass(tool, ve.ui.Tool);
     tool.static.name = "ProcessModelTool";
-    tool.static.titleMessage = title;
+    tool.static.title = mw.message(title).text();
     tool.static.dialog = dialogueName;
+    tool.prototype.onSelect = function () {
+	this.toolbar.getSurface().execute('window', 'open', dialogueName, null);
+    };    
 
     ve.ui.toolFactory.register(tool);
 

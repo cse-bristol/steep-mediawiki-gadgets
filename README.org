@@ -5,37 +5,44 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 
 [[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
 
-See: [[http://www.mediawiki.org/wiki/VisualEditor_gadgets][Create Gadgets which interact with VisualEditor]].
-
-Note: we are using VisualEditor v0.1.0. The programming API for this appears quite unstable, so we may have to make changes in future.
+See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]].
 
 ** Future Plans
-*** Consider moving the deployment mechanism server-side using $wgVisualEditorPluginModules
-See [[https://gerrit.wikimedia.org/r/#/c/75271/][Infrastructure for loading plugins in the MW integration]].
+*** Size the dialogue box better
+It gets sized without any results in perhaps? Unhelpful.
 
-I want to do this next because it impacts whether how I use the share.js stuff.
+Perhaps I need to put a layout in it?
 
-*** Send search requests
-One option is to include sharejs stuff, then do the following:
-// connection.createFetchQuery(coll, {_id: {$regex: text}}, {}, function(error, results, extraData) {
+*** Internationalization
+I'm only going to do English for now, but I should make the mechanism work.
 
-Alternatively, this annoying thing:
-https://github.com/share/rest/
-Except it doesn't do search.
-This does: https://github.com/letmetravel/rest
+*** Send real search requests
+Two options: 
+ * Include share-js client libraries.
+ * Adapt the share-js REST interface to allow searching (see https://github.com/letmetravel/rest), then use XHR.
 
-*** Create a plugin to display the Process Model in an iframe. 
+*** Create a parser extension to display the Process Model in an iframe
+We'll invent some syntax like {{process-model My-Document}}
+
 *** Add the map
+*** Deployment
+Mediawiki on the Steep server will need migrating to v1.24.0. Consider what needs doing for this.
+
+** Dependencies
+ * Mediawiki v1.24.0
+ * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] v0.1.0 (REL1_24 branch)
+ * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
+
+The Steep Project also uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]], but we do not actually require that for these components.
+
+Verify your Mediawiki plugins by looking at the Special:Version page of your wiki.
 
 ** Deployment
-Install Mediawiki (the Steep project uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]]), along with the [[http://www.mediawiki.org/wiki/VisualEditor][VisualEditor]] and Gadgets plugins. Verify your install in the Special:Version page of your wiki.
+Run the following from inside your Mediawiki directory:
+#+BEGIN_SRC
+# Checkout the code into the extensions folder.
+git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/steep-mediawiki-gadgets
 
-Host the Process Model and Map software on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
-
-Edit the MediaWiki:Gadgets-definition page and add the following:
-#+BEGIN_SRC org
-*ProcessModel[ResourceLoader | rights=hidden | hidden | dependencies=ext.visualEditor.core] | process-model.js
-*ProcessModelLoader[ResourceLoader | dependencies=ext.visualEditor.viewPageTarget.init | default] |  process-model-loader.js
+# Modify LocalSettings.PHP
+echo 'require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";' >>> LocalSettings.php
 #+END_SRC
-
-Visit Special:Gadgets. You will see two red (non-existent) links called Gadget-process-model.js and Gadget-process-model-loader.js. Create these pages, copying in the contents of the Javascript files of the same names in this repository.

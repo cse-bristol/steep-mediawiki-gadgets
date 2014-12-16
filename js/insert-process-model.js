@@ -2,6 +2,11 @@
 
 /*global mw, ve, OO, jQuery*/
 
+/*
+ Add a 'Process Model' tool to the insert tool group inside the Visual Editor toolbar.
+
+ This will produce a dialogue box, which allows the user to search for an existing Process Model.
+ */
 (function() {
     var title = "visualeditor-mwprocessmodel-title",
 	dialogueName = "Process Model Dialogue",

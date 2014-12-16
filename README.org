@@ -8,10 +8,9 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
 
 ** Future Plans
-*** Make the VE button insert the tag
-<process-model name="blah" />
-
 *** Consider making the Visual Editor see the tag
+This would require changes to Parsoid, however?
+
 *** Map
 Replicate this work for the maps.
 

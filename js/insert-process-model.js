@@ -37,6 +37,8 @@
     };
 
     dialogue.prototype.initialize = function() {
+	var instance = this;
+	
 	OO.ui.Dialog.prototype.initialize.call(this);
 
 	var search = new OO.ui.SearchWidget(),
@@ -70,7 +72,14 @@
 	});
 
 	search.on("select", function(data) {
-	    alert("Selected " + data);
+	    ve.init.target
+		.getSurface()
+		.getModel()
+		.getFragment()
+		.collapseRangeToEnd()
+		.insertContent('<process-model name="' + data + '"/>', false);
+
+	    instance.close();
 	});
 
 	this.$body.append(search.$query);

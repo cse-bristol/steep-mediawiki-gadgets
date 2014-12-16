@@ -8,10 +8,8 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]].
 
 ** Future Plans
-*** Size the dialogue box better
-It gets sized without any results in perhaps? Unhelpful.
-
-Perhaps I need to put a layout in it?
+*** Filter out new-
+I don't want these.
 
 *** Internationalization
 I'm only going to do English for now, but I should make the mechanism work.

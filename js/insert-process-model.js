@@ -27,6 +27,10 @@
     dialogue.static.name = dialogueName;
     dialogue.static.titleMessage = title;
 
+    dialogue.prototype.getBodyHeight = function () {
+	return 300;
+    };
+
     dialogue.prototype.initialize = function() {
 	OO.ui.Dialog.prototype.initialize.call(this);
 

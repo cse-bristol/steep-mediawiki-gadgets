@@ -20,8 +20,14 @@ $wgExtensionCredits['steep-mediawiki-gadgets'][] = array(
     'url' => 'https://github.com/cse-bristol/steep-mediawiki-gadgets', 
     'description' => 'This extension adds the ability to include Process Models and Energy Efficiency Maps in a wiki page.',
     'version'  => 0.1,
-    'license-name' => "NUT",
+    'license-name' => "MIT",
 );
+
+$wgShowExceptionDetails = true;
+
+$wgAutoloadClasses['IncludeProcessModel'] = __DIR__ . '/IncludeProcessModel.php';
+
+$wgHooks['ParserFirstCallInit'][] = 'IncludeProcessModel::HookParser';
 
 array_push($wgVisualEditorPluginModules, 'ext.steep-mediawiki-gadgets');
 

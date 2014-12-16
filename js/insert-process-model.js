@@ -1,15 +1,20 @@
 "use strict";
 
-/*global mw, ve, OO*/
+/*global mw, ve, OO, jQuery*/
 
 (function() {
     var title = "visualeditor-mwprocessmodel-title",
 	dialogueName = "Process Model Dialogue",
 	processModelCollection = "process-models",
 
-	// TODO do this for real.
 	makeSearchRequest = function(value, callback) {
-	    callback(["a", "b", "c"]);
+	    jQuery.getJSON(
+		"/channel/search/process-models",
+		{
+		    q: value
+		},
+		callback
+	    );
 	};
 
     /*
@@ -27,13 +32,9 @@
 
 	var search = new OO.ui.SearchWidget(),
 	    doSearch = function(value, callback) {
-		makeSearchRequest(value, function(results, error) {
+		makeSearchRequest(value, function(results) {
 		    if (value === search.query.value) {
-			if (error) {
-			    throw new Error(error);
-			} else {
-			    callback(results);
-			}
+			callback(results);
 			
 		    } else {
 			// Noop, our search is out of date.

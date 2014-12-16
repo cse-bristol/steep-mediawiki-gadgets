@@ -16,11 +16,6 @@ Perhaps I need to put a layout in it?
 *** Internationalization
 I'm only going to do English for now, but I should make the mechanism work.
 
-*** Send real search requests
-Two options: 
- * Include share-js client libraries.
- * Adapt the share-js REST interface to allow searching (see https://github.com/letmetravel/rest), then use XHR.
-
 *** Create a parser extension to display the Process Model in an iframe
 We'll invent some syntax like {{process-model My-Document}}
 

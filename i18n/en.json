@@ -1,4 +1,7 @@
 {
-    "visualeditor-mwprocessmodel-title": "Process Model",
-    "visualeditor-mwmap-title": "Map"
+    "visualeditor-mwprocessmodel-button": "Process Model",
+    "visualeditor-mwprocessmodel-dialogue": "Insert Process Model",
+    
+    "visualeditor-mwmap-button": "Map",
+    "visualeditor-mwmap-dialogue": "Insert Map"
 }

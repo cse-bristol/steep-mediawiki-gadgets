@@ -5,8 +5,10 @@ $wgMessagesDirs['ViewFiles'] = __DIR__ . '/i18n';
 $wgResourceModules['ext.steep-mediawiki-gadgets'] = array(
     'scripts' => array( 'js/insert-process-model.js'),
     'messages' => array(
-        'visualeditor-mwprocessmodel-title',
-        'visualeditor-mwmap-title'
+        'visualeditor-mwprocessmodel-button',
+        'visualeditor-mwprocessmodel-dialogue',
+        'visualeditor-mwmap-button',
+        'visualeditor-mwmap-dialogue'
     ),
     'dependencies' => array(
         'ext.visualEditor.core',

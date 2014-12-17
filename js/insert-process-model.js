@@ -8,7 +8,7 @@
  This will produce a dialogue box, which allows the user to search for an existing Process Model or Map to insert.
  */
 (function() {
-    var makeInsertTool = function(title, collection, element) {
+    var makeInsertTool = function(buttonMessage, dialogueMessage, collection, element) {
 	var dialogueName = collection + " dialogue",
 	    toolName = collection + " tool",
 
@@ -40,7 +40,7 @@
 	};
 	OO.inheritClass(dialogue, OO.ui.Dialog);
 	dialogue.static.name = dialogueName;
-	dialogue.static.titleMessage = title;
+	dialogue.static.title = mw.message(dialogueMessage).text();
 
 	dialogue.prototype.getBodyHeight = function () {
 	    return 300;
@@ -95,8 +95,20 @@
 
 	    doSearch();
 
+	    /*
+	     Should be doing this using oojs-ui layouts or something instead, but that's all quite poorly documented.
+	     */
+	    this.title.$element.css("text-align", "center");
+	    this.title.$element.css("width", "100%");
+	    this.title.$element.css("font-weight", "bold");
+	    this.title.$element.css("display", "block");
+	    this.$head.append(this.title.$element);
+	    
 	    this.$body.append(search.$query);
 	    this.$body.append(search.$results);
+	    this.$body.css("top", "inherit");
+	    this.$body.css("bottom", 0);
+	    this.$body.css("height", "300px");
 	};
 
 	ve.ui.windowFactory.register(dialogue);
@@ -110,7 +122,7 @@
 
 	OO.inheritClass(tool, ve.ui.Tool);
 	tool.static.name = toolName,
-	tool.static.title = mw.message(title).text();
+	tool.static.title = mw.message(buttonMessage).text();
 	tool.static.dialog = dialogueName;
 	tool.prototype.onSelect = function () {
 	    this.toolbar.getSurface().execute('window', 'open', dialogueName, null);
@@ -120,13 +132,15 @@
     };
 
     makeInsertTool(
-	"visualeditor-mwprocessmodel-title",
+	"visualeditor-mwprocessmodel-button",
+	"visualeditor-mwprocessmodel-dialogue",
 	"process-models",
 	"process-model"
     );
 
     makeInsertTool(
-	"visualeditor-mwmap-title",
+	"visualeditor-mwmap-button",
+	"visualeditor-mwmap-dialogue",
 	"maps",
 	"data-map"
     );

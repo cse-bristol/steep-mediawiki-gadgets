@@ -1,4 +1,6 @@
 {
-    "visualeditor-mwprocessmodel-title": "The words on the button that lets you insert a Process Model.",
-    "visualeditor-mwmap-title": "The words on the button that lets you insert a map."
+    "visualeditor-mwprocessmodel-button": "The words on the button that lets you insert a process model.",
+    "visualeditor-mwprocessmodel-dialogue": "The title of the dialogue for searching for a process model to insert.",
+    "visualeditor-mwmap-button": "The words on the button that lets you insert a map.",
+    "visualeditor-mwmap-dialogue": "The title of the dialogue for searching for a map to insert."
 }

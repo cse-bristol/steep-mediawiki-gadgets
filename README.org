@@ -8,8 +8,13 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
 
 ** Future Plans
-*** Consider making the Visual Editor see the tag
-This would require changes to Parsoid, however?
+*** New Document
+From the Visual Editor, I want a way to insert an entirely new document with a given name?
+
+Perhaps I search for it and it's coloured red?
+
+*** Pointing to existing documents
+From the Visual Editor, I'd like to change which document a process-model is pointing at, or remove it.
 
 *** Map
 Replicate this work for the maps.

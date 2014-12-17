@@ -42,10 +42,24 @@
 	OO.ui.Dialog.prototype.initialize.call(this);
 
 	var search = new OO.ui.SearchWidget(),
-	    doSearch = function(value, callback) {
+	    doSearch = function() {
+		var value = search.query.value;
+		
 		makeSearchRequest(value, function(results) {
 		    if (value === search.query.value) {
-			callback(results);
+			search.results.clearItems();
+			search.results.addItems(
+			    results.map(function(r) {
+			
+				return new OO.ui.OptionWidget(
+				    r,
+				    {
+					// Ensure we have a String for the label.
+					label: "" + r
+				    }
+				);
+			    })
+			);
 			
 		    } else {
 			// Noop, our search is out of date.
@@ -53,23 +67,7 @@
 		});
 	    };
 
-	search.query.on("change", function() {
-	    doSearch(search.query.value, function(results) {
-		search.results.clearItems();
-		search.results.addItems(
-		    results.map(function(r) {
-			
-			return new OO.ui.OptionWidget(
-			    r,
-			    {
-				// Ensure we have a String for the label.
-				label: "" + r
-			    }
-			);
-		    })
-		);
-	    });
-	});
+	search.query.on("change", doSearch);
 
 	search.on("select", function(data) {
 	    ve.init.target
@@ -81,6 +79,8 @@
 
 	    instance.close();
 	});
+
+	doSearch();
 
 	this.$body.append(search.$query);
 	this.$body.append(search.$results);

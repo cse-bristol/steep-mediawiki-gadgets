@@ -4,7 +4,10 @@ $wgMessagesDirs['ViewFiles'] = __DIR__ . '/i18n';
 
 $wgResourceModules['ext.steep-mediawiki-gadgets'] = array(
     'scripts' => array( 'js/insert-process-model.js'),
-    'messages' => array('visualeditor-mwprocessmodel-title'),
+    'messages' => array(
+        'visualeditor-mwprocessmodel-title',
+        'visualeditor-mwmap-title'
+    ),
     'dependencies' => array(
         'ext.visualEditor.core',
         'mediawiki.jqueryMsg'
@@ -25,9 +28,9 @@ $wgExtensionCredits['steep-mediawiki-gadgets'][] = array(
 
 $wgShowExceptionDetails = true;
 
-$wgAutoloadClasses['IncludeProcessModel'] = __DIR__ . '/IncludeProcessModel.php';
+$wgAutoloadClasses['IncludeSteepGadgets'] = __DIR__ . '/IncludeSteepGadgets.php';
 
-$wgHooks['ParserFirstCallInit'][] = 'IncludeProcessModel::HookParser';
+$wgHooks['ParserFirstCallInit'][] = 'IncludeSteepGadgets::HookParser';
 
 array_push($wgVisualEditorPluginModules, 'ext.steep-mediawiki-gadgets');
 

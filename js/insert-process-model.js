@@ -20,6 +20,16 @@
 		},
 		callback
 	    );
+	},
+
+	makeResult = function(value) {
+ 	    return new OO.ui.OptionWidget(
+		value,
+		{
+		    // Ensure we have a String for the label.
+		    label: "" + value
+		}
+	    );
 	};
 
     /*
@@ -48,17 +58,20 @@
 		makeSearchRequest(value, function(results) {
 		    if (value === search.query.value) {
 			search.results.clearItems();
-			search.results.addItems(
-			    results.map(function(r) {
+
+			if (!(value in results || value === "")) {
+			    /* 
+			     If the page we're searching for doesn't exist, add an option to create it.
+			     */
+			    var createPage = makeResult(value);
+			    createPage.$element.css("color", "red");
+			    search.results.addItems([
+				createPage
+			    ]);
+			}
 			
-				return new OO.ui.OptionWidget(
-				    r,
-				    {
-					// Ensure we have a String for the label.
-					label: "" + r
-				    }
-				);
-			    })
+			search.results.addItems(
+			    results.map(makeResult)
 			);
 			
 		    } else {

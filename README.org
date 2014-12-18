@@ -11,13 +11,9 @@ See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[ht
 *** Pointing to existing documents
 From the Visual Editor, I'd like to change which document a process-model is pointing at, or remove it.
 
-*** Deployment
-Mediawiki on the Steep server will need migrating to v1.24.0.
-http://www.mediawiki.org/wiki/Manual:Upgrading
-
 ** Dependencies
  * Mediawiki v1.24.0.
- * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] v0.1.0 (REL1_24 branch).
+ * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_24 branch.
  * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Not that this does not require the Parsoid extension be installed into Mediawiki.
  * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
 

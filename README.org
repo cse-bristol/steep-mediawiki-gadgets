@@ -114,6 +114,19 @@ You need the following locations included in your nginx.conf (preferably using D
               log_not_found off;
           }
       }
+
+    # The place where the map lives.
+    location /energy-efficiency-planner {
+    }
+
+    location /process-model {
+    }
+
+    # ShareJS server used by the planner and the process model. This is running on NodeJS.
+    location /channel {
+       	client_max_body_size 100M;
+        proxy_pass http://localhost:11000;
+    }
 #+END_SRC
 
 Remember to run:

@@ -32,5 +32,5 @@ Run the following from inside your Mediawiki directory:
 git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/steep-mediawiki-gadgets
 
 # Modify LocalSettings.PHP
-echo 'require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";' >>> LocalSettings.php
+echo 'require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";' >> LocalSettings.php
 #+END_SRC

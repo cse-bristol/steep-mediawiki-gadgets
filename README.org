@@ -32,8 +32,7 @@ echo 'require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadge
 #+END_SRC
 
 ** Steep Platform Scripts
-Some useful scripts for the Steep platform on our server.
- + there's still an Nginx problem with args? Use rewrite instead of proxy.
+Some useful scripts for administering the whole Steep platform on our server.
 
 *** Database Backup
 Look up the database password from LocalSettings.php. Fill in and run the following script:
@@ -83,40 +82,38 @@ StandardOutput=syslog
 You need the following locations included in your nginx.conf (preferably using Debian's site-available/sites-enabled mechanism):
 
 #+BEGIN_SRC nginx
-    # Sometimes the wiki looks for pages with the abbreviation /w.
-    location /w {
-      	proxy_pass http://localhost/wiki;
-    }
-    
-    location /wiki {
-	proxy_pass http://localhost/mediawiki;
-    }
+      # Sometimes the wiki looks for pages with the abbreviation /w.
+      location /w {
+          rewrite ^/w(.*)$ /mediawiki$1;
+      }
+      
+      location /wiki {
+          rewrite ^/wiki(.*)$ /mediawiki$1;
+      }
 
-    location /mediawiki {
-        index index.php?title=Main_Page;
+      location @wikiindex {
+          rewrite ^/mediawiki(.*)$ /mediawiki/index.php?title=$1&$args;
+      }
 
-        # Pass requests ending in .php through to php-fpm.
-	location ~ \.php$ {
-	    include fastcgi_params;
-	    fastcgi_pass unix:/var/run/php5-fpm.sock;
-	    fastcgi_param SCRIPT_FILENAME $request_filename;
-	    fastcgi_param QUERY_STRING $query_string;
-            fastcgi_param REQUEST_METHOD $request_method;
-            fastcgi_param CONTENT_TYPE $content_type;
-            fastcgi_param CONTENT_LENGTH $content_length;
-	}
+      location /mediawiki {
+          try_files $uri $uri/ @wikiindex;
 
-        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-            try_files $uri /index.php;
-            expires max;
-            log_not_found off;
-        }
+          # Pass requests ending in .php through to php-fpm.
+          location ~* \.php$ {
+              include fastcgi_params;
+              fastcgi_pass unix:/var/run/php5-fpm.sock;
+              fastcgi_param SCRIPT_FILENAME $request_filename;
+              fastcgi_param QUERY_STRING $query_string;
+              fastcgi_param REQUEST_METHOD $request_method;
+              fastcgi_param CONTENT_TYPE $content_type;
+              fastcgi_param CONTENT_LENGTH $content_length;
+          }
 
-        # Assume that requests which didn't point to any of the above were page titles.
-	location /mediawiki/ {
-	    proxy_pass http://localhost/mediawiki/index.php?title=;
-	}
-    }
+          location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+              expires max;
+              log_not_found off;
+          }
+      }
 #+END_SRC
 
 Remember to run:
@@ -217,7 +214,7 @@ $wgStylePath = "$wgScriptPath/skins";
 
 ## The relative URL path to the logo.  Make sure you change this from the default,
 ## or else you'll overwrite your logo when you upgrade!
-$wgLogo             = "/extensions/steep-mediawiki-gadgets/small_steep1.png";
+$wgLogo             = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
 
 ## UPO means: this is also a user preference option
 

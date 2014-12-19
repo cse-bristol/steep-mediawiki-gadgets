@@ -148,9 +148,10 @@ MAIN_DIR="/var/www/mediawiki";
 NEW_DIR="${MAIN_DIR}_${REL}";
 EXT_DIR="${NEW_DIR}/extensions";
 
-# Clone Mediawiki and copy settings.
+# Clone Mediawiki and copy settings and images.
 git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $REL;
-cp "$MAIN_DIR/LocalSettings.php" $NEW_DIR;
+cp "${MAIN_DIR}/LocalSettings.php" $NEW_DIR;
+cp "${MAIN_DIR}/images" "${NEW_DIR}" -R;
 
 # Install Extensions
 for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSuport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown"; do

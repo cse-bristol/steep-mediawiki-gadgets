@@ -92,7 +92,7 @@ You need the following locations included in your nginx.conf (preferably using D
       }
 
       location @wikiindex {
-          rewrite ^/mediawiki(.*)$ /mediawiki/index.php?title=$1&$args;
+          rewrite ^/mediawiki/(.*)$ /mediawiki/index.php?title=$1&$args;
       }
 
       location /mediawiki {

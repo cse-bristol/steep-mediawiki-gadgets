@@ -149,8 +149,7 @@ $wgUsePathInfo = true;
 enableSemantics( 'smartsteep.eu' );
 
 # request accounts doesn't require a bio
-
-$wgAccountRequestMinWords = 0;
+$wgConfirmAccountRequestFormItems['Biography']['minWords'] = 0;
 
 # wire up parsoid to this wiki
 $wgVisualEditorParsoidURL = 'http://localhost:8000';

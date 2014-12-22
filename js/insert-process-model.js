@@ -106,7 +106,7 @@
 	    width = new OO.ui.FieldLayout(
 		widthControl,
 		{
-		    label: "Width (%)"
+		    label: "Width (100%)"
 		}),
 	    heightControl = new OO.ui.InputWidget({
 		value: "600"
@@ -129,6 +129,12 @@
 	    widthControl.$input.attr("max", "100");
 	    widthControl.$input.attr("step", "1");
 	    widthControl.$input.css("width", "100%");
+
+	    widthControl.$input.on("input", function() {
+		width.setLabel(
+		    "Width (" + widthControl.value + "%)"
+		);
+	    });
 
 	    heightControl.$input.attr("type", "number");
 	    heightControl.$input.css("width", "100%");

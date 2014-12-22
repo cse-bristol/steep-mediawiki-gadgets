@@ -114,7 +114,7 @@ You need the following locations included in your nginx.conf (preferably using D
           log_not_found off;
       }
 
-      location /mediawiki/ {
+      location ~* /mediawiki/?$ {
           rewrite ^/mediawiki/?$ /mediawiki/index.php?title=Main_Page&$args;
       }
   }

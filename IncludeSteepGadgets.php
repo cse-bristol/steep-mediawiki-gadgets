@@ -18,9 +18,21 @@ class IncludeSteepGadgets {
     static function Render($args, $location, $tag) {
         if (isset($args['name'])) {
 
+            if (isset($args['width'])) {
+                $width = $args['width'];
+            } else {
+                $width = "100%";
+            }
+
+            if (isset($args['height'])) {
+                $height = $args['height'];
+            } else {
+                $height = "600px";
+            }
+            
             $iframeAttrs = array(
                 "src" => $location . "/?name=" . $args['name'],
-                "style" => "width:100%; height:600px;"
+                "style" => "width:" . $width . "; height:" . $height . "; float:left;"
             );
 
             // This automatically escapes attribute values for us.          

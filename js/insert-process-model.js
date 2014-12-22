@@ -88,12 +88,52 @@
 		    .getModel()
 		    .getFragment()
 		    .collapseRangeToEnd()
-		    .insertContent('<' + element + ' name="' + data + '"/>', false);
+		    .insertContent('<' + element +
+				   ' name="' + data + '"' +
+				   ' width="' + widthControl.getValue() + '%"' +
+				   ' height="' + heightControl.getValue() + 'px"' +
+				   '/>', false);
 
 		instance.close();
 	    });
 
 	    doSearch();
+
+	    var
+	    widthControl = new OO.ui.InputWidget({
+		value: "100"
+	    }),
+	    width = new OO.ui.FieldLayout(
+		widthControl,
+		{
+		    label: "Width (%)"
+		}),
+	    heightControl = new OO.ui.InputWidget({
+		value: "600"
+	    }),
+	    height = new OO.ui.FieldLayout(
+		heightControl,
+		{
+		    label: "Height (px)"
+		}),
+
+	    form = new OO.ui.FormLayout({
+		$content: [
+		    width.$element,
+		    height.$element
+		]
+	    });
+
+	    widthControl.$input.attr("type", "range");
+	    widthControl.$input.attr("min", "0");
+	    widthControl.$input.attr("max", "100");
+	    widthControl.$input.attr("step", "1");
+	    widthControl.$input.css("width", "100%");
+
+	    heightControl.$input.attr("type", "number");
+	    heightControl.$input.css("width", "100%");
+
+	    form.$element.css("padding", "0.75em");
 
 	    /*
 	     Should be doing this using oojs-ui layouts or something instead, but that's all quite poorly documented.
@@ -102,13 +142,20 @@
 	    this.title.$element.css("width", "100%");
 	    this.title.$element.css("font-weight", "bold");
 	    this.title.$element.css("display", "block");
-	    this.$head.append(this.title.$element);
-	    
-	    this.$body.append(search.$query);
-	    this.$body.append(search.$results);
+
 	    this.$body.css("top", "inherit");
 	    this.$body.css("bottom", 0);
 	    this.$body.css("height", "300px");
+	    
+	    this.$head.append(this.title.$element);
+
+	    search.$query.css("position", "initial");
+	    search.$query.css("padding", "0.75em");
+	    search.$results.css("position", "initial");
+	    
+	    this.$body.append(form.$element);
+	    this.$body.append(search.$query);
+	    this.$body.append(search.$results);
 	};
 
 	ve.ui.windowFactory.register(dialogue);

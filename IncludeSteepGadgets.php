@@ -32,7 +32,7 @@ class IncludeSteepGadgets {
             
             $iframeAttrs = array(
                 "src" => $location . "/?name=" . $args['name'],
-                "style" => "width:" . $width . "; height:" . $height . "; float:left;"
+                "style" => "width:" . $width . "; height:" . $height . "; display:inline-block;"
             );
 
             // This automatically escapes attribute values for us.          

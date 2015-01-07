@@ -124,6 +124,11 @@ You need the following locations included in your nginx.conf (preferably using D
       }
   }
 
+  # A short way to get to the map.
+  location /map {
+      rewrite /map(.*) /energy-efficiency-planner$1;
+  }
+
   # The place where the map lives.
   location /energy-efficiency-planner {
   }

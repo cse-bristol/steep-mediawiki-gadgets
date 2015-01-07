@@ -12,7 +12,7 @@ class IncludeSteepGadgets {
     }
 
     static function MapRender($input, $args, $parser, $frame) {
-        return IncludeSteepGadgets::Render($args, "/energy-efficiency-planner", "data-map");
+        return IncludeSteepGadgets::Render($args, "/map", "data-map");
     }
 
     static function Render($args, $location, $tag) {

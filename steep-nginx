@@ -1,0 +1,65 @@
+# Sometimes the wiki looks for pages with the abbreviation /w.
+location /w {
+    rewrite ^/w(.*)$ /mediawiki$1;
+}
+
+location /wiki {
+    rewrite ^/wiki(.*)$ /mediawiki$1;
+}
+
+location @wikiindex {
+    rewrite ^/mediawiki/(.*)$ /mediawiki/index.php?title=$1&$args;
+}
+
+location /mediawiki {
+    try_files $uri $uri/ @wikiindex;
+
+    # Pass requests ending in .php through to php-fpm.
+    location ~* \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $request_filename;
+        fastcgi_param QUERY_STRING $query_string;
+        fastcgi_param REQUEST_METHOD $request_method;
+        fastcgi_param CONTENT_TYPE $content_type;
+        fastcgi_param CONTENT_LENGTH $content_length;
+    }
+
+    location ~* /mediawiki/(File:.*) {
+        # Things in the File: namespace are actually pages.
+        rewrite /mediawiki/(File:.*) /mediawiki/index.php?title=$1&$args;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+        expires max;
+        log_not_found off;
+    }
+
+    location ~* /mediawiki/?$ {
+        rewrite ^/mediawiki/?$ /mediawiki/index.php?title=Main_Page&$args;
+    }
+}
+
+# A short way to get to the map.
+location /map {
+    rewrite /map(.*) /energy-efficiency-planner$1;
+}
+
+# The place where the map lives.
+location /energy-efficiency-planner {
+    location ~* (?<url>/energy-efficiency-planner/(?<document>[^?]+)) {
+        try_files $url $url/ /energy-efficiency-planner/?name=$document&$args;
+    }
+}
+
+location /process-model {
+    location ~* (?<url>/process-model/(?<document>[^?]+)) {
+        try_files $url $url/ /process-model/?name=$document&$args;
+    }        
+}
+
+# ShareJS server used by the planner and the process model. This is running on NodeJS.
+location /channel {
+    client_max_body_size 100M;
+    proxy_pass http://localhost:11000;
+}

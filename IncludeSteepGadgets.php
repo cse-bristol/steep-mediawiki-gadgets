@@ -31,7 +31,7 @@ class IncludeSteepGadgets {
             }
             
             $iframeAttrs = array(
-                "src" => $location . "/?name=" . $args['name'],
+                "src" => $location . "/" . $args['name'],
                 "style" => "width:" . $width . "; height:" . $height . "; display:inline-block;"
             );
 

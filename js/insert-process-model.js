@@ -27,7 +27,7 @@
 		    value,
 		    {
 			// Ensure we have a String for the label.
-			label: "" + value
+			label: "" + value.name
 		    }
 		);
 	    };
@@ -59,11 +59,18 @@
 			if (value === search.query.value) {
 			    search.results.clearItems();
 
-			    if (!(value in results || value === "")) {
+			    var resultsDict = {};
+			    results.forEach(function(r) {
+				resultsDict[r.name] = r.v;
+			    });
+			    
+			    if (!(value in resultsDict || value === "")) {
 				/* 
 				 If the page we're searching for doesn't exist, add an option to create it.
 				 */
-				var createPage = makeResult(value);
+				var createPage = makeResult({
+				    name: value
+				});
 				createPage.$element.css("color", "red");
 				search.results.addItems([
 				    createPage
@@ -89,7 +96,7 @@
 		    .getFragment()
 		    .collapseRangeToEnd()
 		    .insertContent('<' + element +
-				   ' name="' + data + '"' +
+				   ' name="' + data.name + '"' +
 				   ' width="' + widthControl.getValue() + '%"' +
 				   ' height="' + heightControl.getValue() + 'px"' +
 				   '/>', false);

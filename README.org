@@ -46,7 +46,7 @@ mysqldump --user=mediawiki --password=$PASS mediawiki > ~/backup/mediawiki.sql;
 *** Packages
 There are the packages we need on a Debian (Jessie) system:
 #+BEGIN_SRC sh
-sudo aptitude install git subversion php5-common php5-cli php5-fpm nginx mysql-server mysql-client mongodb-server mongodb-clients r-base
+sudo aptitude install git subversion php5-common php5-cli php5-fpm nginx mysql-server mysql-client mongodb-server mongodb-clients r-base r-cran-ggplot2
 #+END_SRC
 
 *** Parsoid Install

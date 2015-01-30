@@ -36,28 +36,103 @@
 	 Make the dialogue.
 	 */
 	var dialogue = function(surface, config) {
-	    OO.ui.Dialog.call(this, surface, config);
+	    OO.ui.ProcessDialog.call(this, surface, config);
 	};
-	OO.inheritClass(dialogue, OO.ui.Dialog);
+
+	OO.inheritClass(dialogue, OO.ui.ProcessDialog);
+
 	dialogue.static.name = dialogueName;
 	dialogue.static.title = mw.message(dialogueMessage).text();
+	dialogue.static.actions = [
+	    { action: 'save', label: 'Insert', flags: [ 'primary', 'progressive' ] },
+	    { action: 'cancel', label: 'Cancel', flags: 'safe' }
+	];	
 
 	dialogue.prototype.getBodyHeight = function () {
-	    return 300;
+	    return 400;
+	};
+
+	dialogue.prototype.getActionProcess = function ( action ) {
+	    var that = this;
+
+	    switch (action) {
+	    case "cancel":
+		return new OO.ui.Process(function() {
+		    that.close({
+			action: action
+		    });
+		});
+
+	    case "save":
+		return new OO.ui.Process(function() {
+		    that.insert();
+		});
+
+	    default:
+		return dialogue.super.prototype.getActionProcess.call(this, action);
+	    }
 	};
 
 	dialogue.prototype.initialize = function() {
-	    var instance = this;
-	    
-	    OO.ui.Dialog.prototype.initialize.call(this);
+	    var instance = this,
+		currentSelection,
 
-	    var search = new OO.ui.SearchWidget(),
+		/*
+		 When we're finished with our dialogue, Insert an xml element in the page.
+		 */
+		insert = function() {
+		    /*
+		     If lockToVersionControl is checked, include the version.
+		     */
+		    var v = lockToVersionControl.$input.attr("checked") ?
+			    ' v="' + versionControl.getValue() + '"'
+			    : "";
+		    
+		    ve.init.target
+			.getSurface()
+			.getModel()
+			.getFragment()
+			.collapseRangeToEnd()
+			.insertContent('<' + element +
+				       ' name="' + currentSelection.name + '"' +
+				       v +
+				       ' width="' + widthControl.getValue() + '%"' +
+				       ' height="' + heightControl.getValue() + 'px"' +
+				       '/>', false);
+
+		    instance.close();
+		},
+
+		/*
+		 Called when a user clicks on a document in the search list, or when we change the search term.
+		 */
+		changeSelection = function(data) {
+		    currentSelection = data;
+
+		    //submitControl.$input.attr("disabled", currentSelection ? null : true);
+		    
+		    var maxV = currentSelection && currentSelection.v ? currentSelection.v : 0;
+		    
+		    // Set the maximum and current value for the slider.
+		    versionControl.$input.attr("max", maxV);
+		    versionControl.setValue(maxV);
+		    versionControl.$input.attr("disabled", true);
+
+		    // Enable or disable the lock to version checkbox based on whether or not this is a new page. 
+		    lockToVersionControl.$input.attr("disabled", (maxV === undefined || maxV === null) ? true : null);
+		    lockToVersionControl.$input.attr("checked", null);
+		},
+
+		/*
+		 Fire a search query. Popular the results list when it comes back.
+		 */
 		doSearch = function() {
 		    var value = search.query.value;
 		    
 		    makeSearchRequest(value, function(results) {
 			if (value === search.query.value) {
 			    search.results.clearItems();
+			    changeSelection();
 
 			    var resultsDict = {};
 			    results.forEach(function(r) {
@@ -85,57 +160,86 @@
 			    // Noop, our search is out of date.
 			}
 		    });
-		};
+		},		
 
-	    search.query.on("change", doSearch);
-
-	    search.on("select", function(data) {
-		ve.init.target
-		    .getSurface()
-		    .getModel()
-		    .getFragment()
-		    .collapseRangeToEnd()
-		    .insertContent('<' + element +
-				   ' name="' + data.name + '"' +
-				   ' width="' + widthControl.getValue() + '%"' +
-				   ' height="' + heightControl.getValue() + 'px"' +
-				   '/>', false);
-
-		instance.close();
-	    });
-
-	    doSearch();
-
-	    var
-	    widthControl = new OO.ui.InputWidget({
-		value: "100"
-	    }),
-	    width = new OO.ui.FieldLayout(
-		widthControl,
-		{
-		    label: "Width (100%)"
+		widthControl = new OO.ui.InputWidget({
+		    value: "100"
 		}),
-	    heightControl = new OO.ui.InputWidget({
-		value: "600"
-	    }),
-	    height = new OO.ui.FieldLayout(
-		heightControl,
-		{
-		    label: "Height (px)"
+		width = new OO.ui.FieldLayout(
+		    widthControl,
+		    {
+			label: "Width (100%)"
+		    }
+		),
+		
+		heightControl = new OO.ui.InputWidget({
+		    value: "600"
+		}),
+		height = new OO.ui.FieldLayout(
+		    heightControl,
+		    {
+			label: "Height (px)"
+		    }
+		),
+
+		lockToVersionControl = new OO.ui.InputWidget(),
+		lockToVersion = new OO.ui.FieldLayout(
+		    lockToVersionControl,
+		    {
+			label: "Lock to Version"
+		    }
+		),
+
+		versionControl = new OO.ui.InputWidget(),
+		version = new OO.ui.FieldLayout(
+		    versionControl,
+		    {
+			label: "Version"
+		    }),
+
+		form = new OO.ui.FieldsetLayout({
+		    $content: [
+			width.$element,
+			height.$element,
+			lockToVersion.$element,
+			version.$element
+		    ]
 		}),
 
-	    form = new OO.ui.FormLayout({
-		$content: [
-		    width.$element,
-		    height.$element
-		]
-	    });
+		search = new OO.ui.SearchWidget(),
+		searchPanel = new OO.ui.PanelLayout({
+		    padded: true
+		}),
+
+		panel = new OO.ui.PanelLayout({
+		    padded: true
+		}),
+
+		stack = new OO.ui.StackLayout({
+		    continuous: true,
+		    scrollable: false,
+		    items: [
+			panel,
+			searchPanel
+		    ]
+		});
+
+	    OO.ui.ProcessDialog.prototype.initialize.call(this);
+
+	    search.$results.css("height", "34%");
+	    searchPanel.$element.css("height", "100%");
+	    
+	    this.content = stack;
+	    this.insert = insert;
+	    this.$body.append(this.content.$element);
+
+	    panel.$element.append(form.$element);
+	    searchPanel.$element.append(search.$element);
 
 	    widthControl.$input.attr("type", "range");
 	    widthControl.$input.attr("min", "0");
 	    widthControl.$input.attr("max", "100");
 	    widthControl.$input.attr("step", "1");
-	    widthControl.$input.css("width", "100%");
 
 	    widthControl.$input.on("input", function() {
 		width.setLabel(
@@ -144,31 +248,35 @@
 	    });
 
 	    heightControl.$input.attr("type", "number");
+
+	    lockToVersionControl.$input.attr("type", "checkbox");
+	    lockToVersionControl.$input.attr("disabled", "true");
+	    lockToVersionControl.$input.on("change", function() {
+		var wasChecked = lockToVersionControl.$input.attr("checked");
+
+		lockToVersionControl.$input.attr("checked", wasChecked ? null : true);
+		versionControl.$input.attr("disabled", wasChecked ? true : null);
+	    });
+
+	    versionControl.$input.attr("type", "number");
+	    versionControl.$input.attr("min", "0");
+	    versionControl.$input.attr("disabled", "true");
+	    
+	    widthControl.$input.css("width", "100%");
 	    heightControl.$input.css("width", "100%");
+	    versionControl.$input.css("width", "100%");
 
-	    form.$element.css("padding", "0.75em");
+	    search.query.on("change", doSearch);
 
-	    /*
-	     Should be doing this using oojs-ui layouts or something instead, but that's all quite poorly documented.
-	     */
-	    this.title.$element.css("text-align", "center");
-	    this.title.$element.css("width", "100%");
-	    this.title.$element.css("font-weight", "bold");
-	    this.title.$element.css("display", "block");
+	    search.on("select", function(data) {
+		if (currentSelection && currentSelection.name === data.name) {
+		    // Noop
+		} else {
+		    changeSelection(data);
+		}
+	    });
 
-	    this.$body.css("top", "inherit");
-	    this.$body.css("bottom", 0);
-	    this.$body.css("height", "300px");
-	    
-	    this.$head.append(this.title.$element);
-
-	    search.$query.css("position", "initial");
-	    search.$query.css("padding", "0.75em");
-	    search.$results.css("position", "initial");
-	    
-	    this.$body.append(form.$element);
-	    this.$body.append(search.$query);
-	    this.$body.append(search.$results);
+	    doSearch();
 	};
 
 	ve.ui.windowFactory.register(dialogue);

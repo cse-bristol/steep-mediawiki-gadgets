@@ -29,9 +29,15 @@ class IncludeSteepGadgets {
             } else {
                 $height = "600px";
             }
+
+            if (isset($args['v'])) {
+                $version = "?v=" . $args['v'];
+            } else {
+                $version = "";
+            }
             
             $iframeAttrs = array(
-                "src" => $location . "/" . $args['name'],
+                "src" => $location . "/" . $args['name'] . $version,
                 "style" => "width:" . $width . "; height:" . $height . "; display:inline-block;"
             );
 

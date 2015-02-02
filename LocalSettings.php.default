@@ -136,6 +136,7 @@ require_once "$IP/extensions/LiquidThreads/LiquidThreads.php";
 include_once "$IP/extensions/SemanticForms/SemanticForms.php";
 include_once "$IP/extensions/SemanticFormsInputs/SemanticFormsInputs.php";
 include_once "$IP/extensions/SemanticDrilldown/SemanticDrilldown.php";
+include_once "$IP/extensions/InputBox/InputBox.php";
 
 include_once "$IP/extensions/GraphViz/GraphViz.php";
 # End of automatically generated settings.

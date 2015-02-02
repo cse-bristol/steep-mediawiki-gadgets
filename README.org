@@ -109,7 +109,7 @@ cp "${MAIN_DIR}/images" "${NEW_DIR}" -R;
 chown www-data:www-data "${NEW_DIR}/images" -R;
 
 # Install Extensions
-for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSuport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown"; do
+for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSuport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox"; do
 git clone "git@github.com:wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL;
 done;
 

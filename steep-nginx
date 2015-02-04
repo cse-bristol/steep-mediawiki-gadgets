@@ -42,7 +42,7 @@ location /mediawiki {
 
 # A short way to get to the map.
 location /map {
-    rewrite ^/map$ http://$server_name/map/;
+    rewrite ^/map$ http://$host/map/;
     
     rewrite ^/map/(.*)$ /energy-efficiency-planner/$1;
 }

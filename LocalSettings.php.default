@@ -41,6 +41,7 @@ $wgLogo             = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.
 
 $wgEnableEmail = true;
 $wgEnableUserEmail = true; # UPO
+$wgEmailConfirmToEdit = true;
 
 $wgEmergencyContact = "wiki@smartsteep.eu";
 $wgPasswordSender = "wiki@smartsteep.eu";

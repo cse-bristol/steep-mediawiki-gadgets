@@ -1,0 +1,4 @@
+1835c1835
+< ;opcache.enable=0
+---
+> opcache.enable=0

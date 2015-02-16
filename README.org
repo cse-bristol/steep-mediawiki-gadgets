@@ -46,7 +46,7 @@ mysqldump --user=mediawiki --password=$PASS mediawiki > ~/backup/mediawiki.sql;
 *** Packages
 There are the packages we need on a Debian (Jessie) system:
 #+BEGIN_SRC sh
-sudo aptitude install git subversion php5-common php5-cli php5-fpm nginx mysql-server mysql-client mongodb-server mongodb-clients r-base r-cran-ggplot2
+sudo aptitude install git subversion php5-common php5-cli php5-fpm nginx mysql-server mysql-client mongodb-server mongodb-clients r-base r-cran-ggplot2 php5-apcu
 #+END_SRC
 
 *** Parsoid Install
@@ -85,6 +85,16 @@ Restart nginx to load the config:
 #+BEGIN_SRC sh
 sudo systemctl restart nginx
 #+END_SRC
+
+*** PHP Config
+Turn on the PHP opcache to significantly improve performance.
+
+#+BEGIN_SRC sh
+PHP_FPM_CONFIG=/etc/php5/fpm/php.ini;
+sudo patch -N "${PHP_FPM_CONFIG}" "php.ini.patch";
+sudo systemctl restart php5-fpm
+#+END_SRC
+
 
 *** Mediawiki
 The following script builds a new Mediawiki install in parallel to any existing one. It then updates the database and Parsoid server, then finally swaps a symlink over. Downtime should be quite short.

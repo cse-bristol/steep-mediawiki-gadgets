@@ -152,6 +152,8 @@ enableSemantics( 'smartsteep.eu' );
 
 # request accounts doesn't require a bio
 $wgConfirmAccountRequestFormItems['Biography']['minWords'] = 0;
+# Fill this in.
+$wgConfirmAccountContact = '';
 
 # wire up parsoid to this wiki
 $wgVisualEditorParsoidURL = 'http://localhost:8000';

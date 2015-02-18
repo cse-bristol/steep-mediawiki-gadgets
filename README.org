@@ -162,4 +162,6 @@ ln -s ${NEW_DIR} ${MAIN_DIR} --no-target-directory --force;
 #+END_SRC
 
 **** LocalSettings.php
-Copy the contents of LocalSettings.php.default into a file called LocalSettings.php in the root of your Mediawiki install. Fill in the $wgDBpassword variable with the password for your MySQL database.
+Copy the contents of LocalSettings.php.default into a file called LocalSettings.php in the root of your Mediawiki install:
+ + Fill in the $wgDBpassword variable with the password for your MySQL database.
+ + Fill in $wgConfirmAccountContact with a person to be notified for account requests.

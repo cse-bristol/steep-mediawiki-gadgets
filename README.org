@@ -31,6 +31,9 @@ git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/stee
 echo 'require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";' >> LocalSettings.php
 #+END_SRC
 
+** TODO Known Issues
+I wasn't able to enable the PHP opcache for the command line, so I had to disable it ($wgMainCacheType = CACHE_NONE in LocalSettings.php) before running the database scripts, then enable it again afterwards.
+
 ** Steep Platform Scripts
 Some useful scripts for administering the whole Steep platform on our server.
 
@@ -46,36 +49,28 @@ mysqldump --user=mediawiki --password=$PASS mediawiki > ~/backup/mediawiki.sql;
 *** Packages
 There are the packages we need on a Debian (Jessie) system:
 #+BEGIN_SRC sh
-sudo aptitude install git subversion php5-common php5-cli php5-fpm nginx mysql-server mysql-client mongodb-server mongodb-clients r-base r-cran-ggplot2 php5-apcu
+sudo aptitude install git subversion php5-common php5-cli php5-fpm php5-mysql nginx mysql-server mysql-client mongodb-server mongodb-clients r-base r-cran-ggplot2 php5-apcu nodejs npm nodejs-legacy;
 #+END_SRC
 
 *** Parsoid Install
-Clone parsoid:
+Install and run parsoid:
 #+BEGIN_SRC sh
-git clone git@github.com:wikimedia/parsoid.git /opt/parsoid
+PARSOID_DIR="/opt/parsoid";
+sudo git clone git@github.com:wikimedia/parsoid.git "$PARSOID_DIR";
+sudo cp "$PARSOID_DIR/api/localsettings.js.example" "$PARSOID_DIR/api/localsettings.js";
+cd "$PARSOID_DIR";
+sudo npm install;
+npm start
 #+END_SRC
 
-Tom made the following systemd ini file in /etc/systemd/system/parsoid.service: 
-#+BEGIN_SRC
-[Unit]
-Description=Mediawiki Parsoid web service on node.js
-Documentation=http://www.mediawiki.org/wiki/Parsoid
-Wants=local-fs.target network.target
-After=local-fs.target network.target
- 
-[Install]
-WantedBy=multi-user.target
- 
-[Service]
-Type=simple
-User=nobody
-Group=nogroup
-WorkingDirectory=/opt/parsoid
-ExecStart=/usr/bin/nodejs /opt/parsoid/api/server.js
-KillMode=process
-Restart=on-success
-PrivateTmp=true
-StandardOutput=syslog
+At this point, Parsoid should be running, but we want it to run as a service instead. Kill it and run this:
+#+BEGIN_SRC sh
+PARSOID_SERVICE="parsoid.service";
+sudo ln "${PARSOID_SERVICE" "/etc/systemd/system/${PARSOID_SERVICE}";
+
+systemctl enable "${PARSOID_SERVICE}";
+systemctl start "${PARSOID_SERVICE}";
+systemctl status "${PARSOID_SERVICE}";
 #+END_SRC
 
 *** Nginx Config
@@ -95,11 +90,10 @@ sudo patch -N "${PHP_FPM_CONFIG}" "php.ini.patch";
 sudo systemctl restart php5-fpm
 #+END_SRC
 
-
-*** Mediawiki
+*** Mediawiki Upgrade
 The following script builds a new Mediawiki install in parallel to any existing one. It then updates the database and Parsoid server, then finally swaps a symlink over. Downtime should be quite short.
 
-If you're doing a fresh install, you'll need to set up LocalSettings.php (see below).
+If you're doing a fresh install, there are some differences (see below).
 
 #+BEGIN_SRC sh
 # Visit http://tools.smartsteep.eu/wiki/Special:Version to see a list of currently installed extensions. Look at LocalSettings.php to see what directories we expect them in.
@@ -110,6 +104,8 @@ MAIN_DIR="/var/www/mediawiki";
 NEW_DIR="${MAIN_DIR}_${REL}";
 EXT_DIR="${NEW_DIR}/extensions";
 
+MYSQL_PASSWORD="password";
+
 # Clone Mediawiki and copy settings and images.
 git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $REL;
 cp "${MAIN_DIR}/LocalSettings.php" $NEW_DIR;
@@ -119,7 +115,7 @@ cp "${MAIN_DIR}/images" "${NEW_DIR}" -R;
 chown www-data:www-data "${NEW_DIR}/images" -R;
 
 # Install Extensions
-for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSuport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox"; do
+for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSuport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox" "MwEmbedSupport" "SyntaxHighlight_GeSHi"; do
 git clone "git@github.com:wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL;
 done;
 
@@ -151,17 +147,25 @@ git pull;
 npm install;
 systemctl restart parsoid;
 
-# Database setup/upgrade
-php "${NEW_DIR}/maintenance/update.php";
+# Database setup/upgrade - if doing a fresh install skip to the fresh-install section first. 
+cd "${NEW_DIR}";
+sudo php "${NEW_DIR}/maintenance/update.php";
 
 # Refresh Semantic Data
-php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";
+sudo php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";
 
 # Point the web server to the new install.
 ln -s ${NEW_DIR} ${MAIN_DIR} --no-target-directory --force;
 #+END_SRC
 
-**** LocalSettings.php
+**** Fresh Install
+Do initial setup on MySQL:
+#+BEGIN_SRC sh
+sudo echo "CREATE USER 'mediawiki'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}'; CREATE DATABASE mediawiki; GRANT ALL PRIVILEGES ON mediawiki.* TO 'mediawiki'@'localhost';" | sudo tee -a mediawiki-user.sql;
+sudo mysql --password < mediawiki-user.sql;
+sudo rm mediawiki-user.sql;
+#+END_SRC
+
 Copy the contents of LocalSettings.php.default into a file called LocalSettings.php in the root of your Mediawiki install:
  + Fill in the $wgDBpassword variable with the password for your MySQL database.
  + Fill in $wgConfirmAccountContact with a person to be notified for account requests.

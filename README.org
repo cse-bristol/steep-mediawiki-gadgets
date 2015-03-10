@@ -66,7 +66,7 @@ npm start
 At this point, Parsoid should be running, but we want it to run as a service instead. Kill it and run this:
 #+BEGIN_SRC sh
 PARSOID_SERVICE="parsoid.service";
-sudo ln "${PARSOID_SERVICE" "/etc/systemd/system/${PARSOID_SERVICE}";
+sudo ln "${PARSOID_SERVICE}" "/etc/systemd/system/${PARSOID_SERVICE}";
 
 systemctl enable "${PARSOID_SERVICE}";
 systemctl start "${PARSOID_SERVICE}";

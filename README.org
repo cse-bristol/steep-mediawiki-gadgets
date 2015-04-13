@@ -98,13 +98,13 @@ If you're doing a fresh install, there are some differences (see below).
 #+BEGIN_SRC sh
 # Visit http://tools.smartsteep.eu/wiki/Special:Version to see a list of currently installed extensions. Look at LocalSettings.php to see what directories we expect them in.
 
-REL="REL1_24";
-SEMANTIC_REL="2.0";
-MAIN_DIR="/var/www/mediawiki";
+REL="REL1_25";
+SEMANTIC_REL="2.1.3";
+MAIN_DIR="/home/${USER}/mediawiki";
 NEW_DIR="${MAIN_DIR}_${REL}";
 EXT_DIR="${NEW_DIR}/extensions";
 
-MYSQL_PASSWORD="password";
+MYSQL_PASSWORD="";
 
 # Clone Mediawiki and copy settings and images.
 git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $REL;
@@ -114,16 +114,23 @@ cp "${MAIN_DIR}/images" "${NEW_DIR}" -R;
 # Set ownership of the images directory
 chown www-data:www-data "${NEW_DIR}/images" -R;
 
+# Get PHP Composer - downloading random files from the internet without checking for a signature is a bad idea, but it's what we're stuck with.
+wget http://getcomposer.org/composer.phar;
+
+# Install External Libraries
+cd "${NEW_DIR}";
+php ./composer.phar install --no-dev;
+
 # Install Extensions
 for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSuport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox" "MwEmbedSupport" "SyntaxHighlight_GeSHi"; do
 git clone "git@github.com:wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL;
 done;
 
 # R Extension http://www.mediawiki.org/wiki/Extension:R
-wget http://mars.wiwi.hu-berlin.de/www-data/RinMW_014_1.tar.gz -P "${NEWDIR}";
+wget http://mars.wiwi.hu-berlin.de/www-data/RinMW_014_1.tar.gz -P "${NEW_DIR}";
 tar -xf RinMW_014_1.tar.gz -C extensions;
-mkdir "${NEWDIR}/Rfiles";
-chown www-data:www-data "${NEWDIR}/Rfiles";
+mkdir "${NEW_DIR}/Rfiles";
+chown www-data:www-data "${NEW_DIR}/Rfiles";
 
 # Visual Editor Core
 cd "${EXT_DIR}/VisualEditor";
@@ -131,7 +138,6 @@ git submodule update --init;
 
 # Semantic Mediawiki V2
 cd $NEW_DIR;
-wget http://getcomposer.org/composer.phar;
 php composer.phar require "mediawiki/semantic-media-wiki:${SEMANTIC_REL}";
 
 # Steep Extensions
@@ -143,7 +149,6 @@ git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector "${NEW_DIR}/skin
 # Update Parsoid
 cd /opt/parsoid;
 git pull;
-# git checkout $REL; (not finished yet for 1.24, so I didn't do this step).
 npm install;
 systemctl restart parsoid;
 

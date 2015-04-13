@@ -1,10 +1,6 @@
 <?php
 # Copy into the root of your Mediawiki install.
-# Fill in $wgDBPassword before using.
-#
-# See includes/DefaultSettings.php for all configurable settings
-# and their default values, but don't forget to make changes in _this_
-# file, not there.
+# Fill in $wgDBPassword and $wgConfirmAccountContact before using.
 #
 # Further documentation for configuration settings may be found at:
 # http://www.mediawiki.org/wiki/Manual:Configuration_settings
@@ -13,6 +9,8 @@
 if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
+
+require_once('server-specific-variables.php');
 
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
@@ -27,15 +25,12 @@ $wgSitename = "SteepWiki";
 $wgScriptPath = "/w";
 $wgScriptExtension = ".php";
 
-## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://tools.smartsteep.eu";
-
 ## The relative URL path to the skins directory
 $wgStylePath = "$wgScriptPath/skins";
 
 ## The relative URL path to the logo.  Make sure you change this from the default,
 ## or else you'll overwrite your logo when you upgrade!
-$wgLogo             = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
+$wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
 
 ## UPO means: this is also a user preference option
 
@@ -55,7 +50,6 @@ $wgDBtype = "mysql";
 $wgDBserver = "localhost";
 $wgDBname = "mediawiki";
 $wgDBuser = "mediawiki";
-$wgDBpassword = "";
 
 # MySQL specific settings
 $wgDBprefix = "";
@@ -146,8 +140,6 @@ enableSemantics( 'smartsteep.eu' );
 
 # request accounts doesn't require a bio
 $wgConfirmAccountRequestFormItems['Biography']['minWords'] = 0;
-# Fill this in.
-$wgConfirmAccountContact = '';
 
 # wire up parsoid to this wiki
 $wgVisualEditorParsoidURL = 'http://localhost:8000';

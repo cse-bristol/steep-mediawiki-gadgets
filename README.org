@@ -7,14 +7,15 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
 
-** Future Plans
-*** Pointing to existing documents
-From the Visual Editor, I'd like to change which document a process-model is pointing at, or remove it.
+** TODO Better display in Visual Editor
+Having added a process-model or map to the document, at present you get a little snippet of XML.
+
+It would be better if this was a GUI control which allowed you to change aspects of that link, or remove it entirely.
 
 ** Dependencies
- * Mediawiki v1.24.0.
- * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_24 branch.
- * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Not that this does not require the Parsoid extension be installed into Mediawiki.
+ * Mediawiki v1.25.0.
+ * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_25 branch.
+ * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Note that this does not require the Parsoid extension be installed into Mediawiki.
  * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
 
 The Steep Project also uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]], but we do not actually require that for these components.
@@ -22,7 +23,7 @@ The Steep Project also uses [[https://semantic-mediawiki.org/][Semantic Mediawik
 Verify your Mediawiki plugins by looking at the Special:Version page of your wiki.
 
 ** Deployment
-Run the following from inside your Mediawiki directory:
+To add this extension to an existing Mediawiki installation, run the following from inside your Mediawiki directory:
 #+BEGIN_SRC
 # Checkout the code into the extensions folder.
 git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/steep-mediawiki-gadgets
@@ -31,146 +32,6 @@ git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/stee
 echo 'require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";' >> LocalSettings.php
 #+END_SRC
 
-** TODO Known Issues
-I wasn't able to enable the PHP opcache for the command line, so I had to disable it ($wgMainCacheType = CACHE_NONE in LocalSettings.php) before running the database scripts, then enable it again afterwards.
-
 ** Steep Platform Scripts
-Some useful scripts for administering the whole Steep platform on our server.
-
-*** Database Backup
-Look up the database password from LocalSettings.php. Fill in and run the following script:
-
-#+BEGIN_SRC sh
-PASS=;
-mkdir -p ~/backup;
-mysqldump --user=mediawiki --password=$PASS mediawiki > ~/backup/mediawiki.sql;
-#+END_SRC
-
-*** Packages
-There are the packages we need on a Debian (Jessie) system:
-#+BEGIN_SRC sh
-sudo aptitude install git subversion php5-common php5-cli php5-fpm php5-mysql nginx mysql-server mysql-client mongodb-server mongodb-clients r-base r-cran-ggplot2 php5-apcu nodejs npm nodejs-legacy;
-#+END_SRC
-
-*** Parsoid Install
-Install and run parsoid:
-#+BEGIN_SRC sh
-PARSOID_DIR="/opt/parsoid";
-sudo git clone git@github.com:wikimedia/parsoid.git "$PARSOID_DIR";
-sudo cp "$PARSOID_DIR/api/localsettings.js.example" "$PARSOID_DIR/api/localsettings.js";
-cd "$PARSOID_DIR";
-sudo npm install;
-npm start
-#+END_SRC
-
-At this point, Parsoid should be running, but we want it to run as a service instead. Kill it and run this:
-#+BEGIN_SRC sh
-PARSOID_SERVICE="parsoid.service";
-sudo ln "${PARSOID_SERVICE}" "/etc/systemd/system/${PARSOID_SERVICE}";
-
-systemctl enable "${PARSOID_SERVICE}";
-systemctl start "${PARSOID_SERVICE}";
-systemctl status "${PARSOID_SERVICE}";
-#+END_SRC
-
-*** Nginx Config
-Include the locations from the file steep-nginx in this repository in your /etc/nginx/nginx.conf file (preferably using Debian's site-available/sites-enabled mechanism).
-
-Restart nginx to load the config:
-#+BEGIN_SRC sh
-sudo systemctl restart nginx
-#+END_SRC
-
-*** PHP Config
-Turn on the PHP opcache to significantly improve performance.
-
-#+BEGIN_SRC sh
-PHP_FPM_CONFIG=/etc/php5/fpm/php.ini;
-sudo patch -N "${PHP_FPM_CONFIG}" "php.ini.patch";
-sudo systemctl restart php5-fpm
-#+END_SRC
-
-*** Mediawiki Upgrade
-The following script builds a new Mediawiki install in parallel to any existing one. It then updates the database and Parsoid server, then finally swaps a symlink over. Downtime should be quite short.
-
-If you're doing a fresh install, there are some differences (see below).
-
-#+BEGIN_SRC sh
-# Visit http://tools.smartsteep.eu/wiki/Special:Version to see a list of currently installed extensions. Look at LocalSettings.php to see what directories we expect them in.
-
-REL="REL1_25";
-SEMANTIC_REL="2.1.3";
-MAIN_DIR="/home/${USER}/mediawiki";
-NEW_DIR="${MAIN_DIR}_${REL}";
-EXT_DIR="${NEW_DIR}/extensions";
-
-MYSQL_PASSWORD="";
-
-# Clone Mediawiki and copy settings and images.
-git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $REL;
-cp "${MAIN_DIR}/LocalSettings.php" $NEW_DIR;
-cp "${MAIN_DIR}/images" "${NEW_DIR}" -R;
-
-# Set ownership of the images directory
-chown www-data:www-data "${NEW_DIR}/images" -R;
-
-# Get PHP Composer - downloading random files from the internet without checking for a signature is a bad idea, but it's what we're stuck with.
-wget http://getcomposer.org/composer.phar;
-
-# Install External Libraries
-cd "${NEW_DIR}";
-php ./composer.phar install --no-dev;
-
-# Install Extensions
-for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSuport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox" "MwEmbedSupport" "SyntaxHighlight_GeSHi"; do
-git clone "git@github.com:wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL;
-done;
-
-# R Extension http://www.mediawiki.org/wiki/Extension:R
-wget http://mars.wiwi.hu-berlin.de/www-data/RinMW_014_1.tar.gz -P "${NEW_DIR}";
-tar -xf RinMW_014_1.tar.gz -C extensions;
-mkdir "${NEW_DIR}/Rfiles";
-chown www-data:www-data "${NEW_DIR}/Rfiles";
-
-# Visual Editor Core
-cd "${EXT_DIR}/VisualEditor";
-git submodule update --init;
-
-# Semantic Mediawiki V2
-cd $NEW_DIR;
-php composer.phar require "mediawiki/semantic-media-wiki:${SEMANTIC_REL}";
-
-# Steep Extensions
-git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git "${EXT_DIR}/steep-mediawiki-gadgets";
-
-# Vector Skin
-git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector "${NEW_DIR}/skins/Vector" --branch $REL;
-
-# Update Parsoid
-cd /opt/parsoid;
-git pull;
-npm install;
-systemctl restart parsoid;
-
-# Database setup/upgrade - if doing a fresh install skip to the fresh-install section first. 
-cd "${NEW_DIR}";
-sudo php "${NEW_DIR}/maintenance/update.php";
-
-# Refresh Semantic Data
-sudo php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";
-
-# Point the web server to the new install.
-ln -s ${NEW_DIR} ${MAIN_DIR} --no-target-directory --force;
-#+END_SRC
-
-**** Fresh Install
-Do initial setup on MySQL:
-#+BEGIN_SRC sh
-sudo echo "CREATE USER 'mediawiki'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}'; CREATE DATABASE mediawiki; GRANT ALL PRIVILEGES ON mediawiki.* TO 'mediawiki'@'localhost';" | sudo tee -a mediawiki-user.sql;
-sudo mysql --password < mediawiki-user.sql;
-sudo rm mediawiki-user.sql;
-#+END_SRC
-
-Copy the contents of LocalSettings.php.default into a file called LocalSettings.php in the root of your Mediawiki install:
- + Fill in the $wgDBpassword variable with the password for your MySQL database.
- + Fill in $wgConfirmAccountContact with a person to be notified for account requests.
+ + The file "scripts/steep-deploy.sh" can run a fresh install or upgrade of the entire Steep platform.
+ + The file "scripts/database-backup.sh" can backup the MySQL database used by a Mediawiki install.

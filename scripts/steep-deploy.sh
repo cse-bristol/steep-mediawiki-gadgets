@@ -42,7 +42,7 @@ else
 fi;
 
 # Prepare the new version. 
-source "mediawiki.sh";
+source "mediawiki-version.sh";
 
 if [ -d $MEDIAWIKI_DIR ]; then
 

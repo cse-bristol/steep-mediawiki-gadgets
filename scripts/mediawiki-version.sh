@@ -9,11 +9,15 @@ set -e;
 
 git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $REL;
 
+sudo setfacl -R -m g:"${USER}":rwX "${NEW_DIR}";
+sudo setfacl -R -m g:www-data:rwX "${NEW_DIR}";
+sudo find "${NEW_DIR}" -type d -exec chmod g+s {} +;
+
 # Get PHP Composer - downloading random files from the internet without checking for a signature is a bad idea, but it's what we're stuck with.
+cd "${NEW_DIR}";
 wget http://getcomposer.org/composer.phar;
 
 # Install External Libraries
-cd "${NEW_DIR}";
 php ./composer.phar install --no-dev;
 
 # Install Extensions

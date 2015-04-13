@@ -23,7 +23,7 @@ SHARE_SERVICE="shareserver.service";
 
 PROCESS_MODEL_VERSION="v0.5.0";
 MAP_VERSION="v0.5.0";
-SHARE_VERSION="0.5.0";
+SHARE_VERSION="v0.5.0";
 
 if [ -d $MEDIAWIKI_DIR ]; then
     # There's an existing version.

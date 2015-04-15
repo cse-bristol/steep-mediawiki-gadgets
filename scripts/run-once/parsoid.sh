@@ -5,18 +5,24 @@ set -u;
 # Stop on first error.
 set -e;
 
-# Installs parsoid as a SystemD deamon.
 PARSOID_DIR="/opt/parsoid";
 PARSOID_SERVICE="parsoid.service";
+CONFIG_TARGET="/etc/systemd/system/${PARSOID_SERVICE}";
 
-sudo git clone git@github.com:wikimedia/parsoid.git "${PARSOID_DIR}";
+echo "Cloning parsoid repository.";
+if ! [ -d "${PARSOID_DIR}" ]; then
+    sudo git clone git@github.com:wikimedia/parsoid.git "${PARSOID_DIR}";
+fi;
+
 sudo cp "${PARSOID_DIR}/api/localsettings.js.example" "${PARSOID_DIR}/api/localsettings.js";
-cd "$PARSOID_DIR";
+pushd "${PARSOID_DIR}";
 sudo npm install;
+popd;
 
+echo "Installing parsoid as a SystemD deamon.";
 # Hard link the daemon configuration into the config directory (SystemD won't follow soft links).
-sudo ln "${PARSOID_SERVICE}" "/etc/systemd/system/${PARSOID_SERVICE}";
+sudo ln -f "run-once/${PARSOID_SERVICE}" "${CONFIG_TARGET}";
 
-systemctl enable "${PARSOID_SERVICE}";
-systemctl start "${PARSOID_SERVICE}";
+sudo systemctl enable "${PARSOID_SERVICE}";
+sudo systemctl start "${PARSOID_SERVICE}";
 

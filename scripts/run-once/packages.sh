@@ -5,29 +5,29 @@ set -u;
 # Stop on first error.
 set -e;
 
+echo "Installing packages";
+echo "Updating package repository";
 sudo aptitude update;
 
-sudo DEBIAN_FRONTEND=noninteractive aptitude install 
+echo "Source control";
+sudo aptitude install git subversion -y;
 
-# Source control
-git subversion
+echo "PHP and MySQL required for Mediawiki";
+sudo aptitude install php5-common php5-cli php5-fpm php5-mysql php5-apcu -y;
+sudo DEBIAN_FRONTEND=noninteractive aptitude install mysql-server mysql-client -y;
 
-# PHP and MySQL required for Mediawiki
-php5-common php5-cli php5-fpm php5-mysql php5-apcu
-mysql-server mysql-client
+echo "Used by R-extension for Mediawiki";
+sudo aptitude install r-base r-cran-ggplot2 -y;
 
-# Used by R-extension for Mediawiki
-r-base r-cran-ggplot2
+echo "ImageMagick used by both R-extension and Mediawiki";
+sudo aptitude install imagemagick -y;
 
-# ImageMagick used by both R-extension and Mediawiki
-imagemagick
+echo "Our web server";
+sudo aptitude install nginx -y;
 
-# Our web server
-nginx 
+echo "NodeJS and MongoDB used by the server-side components of the Process-Model and Map tools.";
+sudo aptitude install nodejs npm nodejs-legacy -y;
+sudo aptitude install mongodb-server mongodb-clients -y;
 
-# NodeJS and MongoDB used by the server-side components of the Process-Model and Map tools.
-nodejs npm nodejs-legacy
-mongodb-server mongodb-clients;
-
-# Browserify used to build the process-model and map.
+echo "Browserify used to build the process-model and map.";
 sudo npm install -g browserify;

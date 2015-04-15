@@ -5,19 +5,29 @@ set -u;
 # Stop on first error.
 set -e;
 
-sudo git clone "git@github.com:cse-bristol/process-model.git" "${PROCESS_MODEL_DIR}";
-sudo git clone "git@github.com:cse-bristol/energy-efficiency-planner.git" "${MAP_DIR}";
-sudo git clone "git@github.com:cse-bristol/share-server.git" "${SHARE_DIR}";
+echo "Clone the repositories for the various Steep components.";
+if ! [ -d "${PROCESS_MODEL_DIR}" ]; then
+    sudo git clone "git@github.com:cse-bristol/process-model.git" "${PROCESS_MODEL_DIR}";
+fi;
 
-# Sort out permissions using extended ACLs so that both the current user and www-data can read and write to them.
+if ! [ -d "${MAP_DIR}" ]; then
+    sudo git clone "git@github.com:cse-bristol/energy-efficiency-planner.git" "${MAP_DIR}";
+fi;
+if ! [ -d "${SHARE_DIR}" ]; then
+    sudo git clone "git@github.com:cse-bristol/share-server.git" "${SHARE_DIR}";
+fi;
+
+echo "Sort out permissions using extended ACLs so that both the current user and www-data can read and write to them.";
 for REPO in "${PROCESS_MODEL_DIR}" "${MAP_DIR}" "${SHARE_DIR}"; do
     sudo setfacl -R -m g:"${USER}":rwX "${REPO}";
     sudo setfacl -R -m g:www-data:rwX "${REPO}";
     sudo find "${REPO}" -type d -exec chmod g+s {} +;
 done;
 
+git -C "${MAP_DIR}" submodule update --init;
 make -C "${MAP_DIR}";
 make -C "${PROCESS_MODEL_DIR}";
-# Set up share server as a SystemD service.
-sudo ln "${SHARE_DIR}/${SHARE_SERVICE}" "/etc/systemd/system/${SHARE_SERVICE}";
+
+echo "Set up share server as a SystemD service.";
+sudo ln -f "${SHARE_DIR}/${SHARE_SERVICE}" "/etc/systemd/system/${SHARE_SERVICE}";
 sudo systemctl enable "${SHARE_SERVICE}";

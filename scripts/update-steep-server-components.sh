@@ -5,6 +5,8 @@ set -u;
 # Stop on first error.
 set -e;
 
+echo "Updating the steep server side components.";
+
 git -C "${PROCESS_MODEL_DIR}" fetch;
 git -C "${PROCESS_MODEL_DIR}" checkout "#${PROCESS_MODEL_VERSION}";
 make -C "${PROCESS_MODEL_DIR}";

@@ -6,6 +6,13 @@ set -u;
 set -e;
 
 # Assumes a Debian (Jessie) system with 'sudo' installed.
+
+# This script installs Mediawiki in two possible scenarios:
+# 1. You have an existing version installed and symlinked to /var/www/mediawiki, in which case we will do an upgrade.
+# 2. You have no existing version, and will need to set some environment variables when you run this script.
+
+# This script does not handle the case when you want to restore from backed up files, although it could do in the future.
+
 TARGET_DIR="/var/www";
 
 REL="REL1_25";

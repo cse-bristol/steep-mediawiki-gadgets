@@ -45,9 +45,13 @@ else
     # The DNS name of this server.
     test -n $WG_SERVER;
 
+    # The username and password of an admin user.
+    test -n $MEDIAWIKI_ADMIN;
+    test -n $MEDIAWIKI_ADMIN_PASS;
+    
     # An email address which account request notifications will be sent to.
     test -n $ACCOUNT_CONTACT;
-    
+
     # Run pre-requisites for first install
     source "run-once/run-once.sh";
 fi;
@@ -76,6 +80,9 @@ if [ -d $MEDIAWIKI_DIR ]; then
 
     source "upgrade-steep-server-components.sh";
 
+    echo "Running Mediawiki's update script (sorts out the database tables).";
+    sudo php "${NEW_DIR}/maintenance/update.php";    
+
 else
     echo "Providing default settings, adding in our server-specific configuration.";
     cp "LocalSettings.php.default" "${NEW_DIR}/LocalSettings.php";
@@ -87,10 +94,12 @@ else
     echo "\$wgConfirmAccountContact=\"${ACCOUNT_CONTACT}\";" >> $EXTRA_CONFIG;
     echo "\$wgServer=\"${WG_SERVER}\"" >> $EXTRA_CONFIG;
     echo "?>" >> $EXTRA_CONFIG;
-fi;
 
-echo "Making sure the database tables are up to date.";
-sudo php "${NEW_DIR}/maintenance/update.php";
+    echo "Running Mediawiki's install script.";
+    sudo php 
+
+    sudo php "${NEW_DIR}/maintenance/install.php" --confpath /tmp SteepWiki "${MEDIAWIKI_ADMIN}" --pass "${MEDIAWIKI_ADMIN_PASS}";    
+fi;
 
 echo "Refreshing Semantic Data";
 sudo php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";

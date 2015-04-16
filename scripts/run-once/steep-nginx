@@ -1,7 +1,8 @@
 server {
+    listen 80;       
     listen [::]:80;
     index index.html;
-    root /var/www/;
+    root /var/www;
     
     # Sometimes the wiki looks for pages with the abbreviation /w.
     location /w {

@@ -22,6 +22,12 @@ sudo aptitude install r-base r-cran-ggplot2 -y;
 echo "ImageMagick used by both R-extension and Mediawiki";
 sudo aptitude install imagemagick -y;
 
+echo "Sendmail required by Mediawiki for email notifications.";
+sudo aptitude install sendmail -y;
+
+echo "Tex required by Mediawiki for mathematical formatting.";
+sudo aptitude install texlive -y;
+
 echo "Our web server";
 sudo aptitude install nginx -y;
 

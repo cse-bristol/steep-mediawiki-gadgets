@@ -13,7 +13,7 @@ echo "Source control";
 sudo aptitude install git subversion -y;
 
 echo "PHP and MySQL required for Mediawiki";
-sudo aptitude install php5-common php5-cli php5-fpm php5-mysql php5-apcu -y;
+sudo aptitude install php5-common php5-cli php5-fpm php5-mysql php5-apcu php5-curl -y;
 sudo DEBIAN_FRONTEND=noninteractive aptitude install mysql-server mysql-client -y;
 
 echo "Used by R-extension for Mediawiki";

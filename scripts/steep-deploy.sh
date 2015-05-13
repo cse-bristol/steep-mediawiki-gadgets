@@ -44,6 +44,9 @@ else
 
     # The DNS name of this server.
     test -n $WG_SERVER;
+    if [[ $WG_SERVER  != "http"* ]]; then
+	echo "WG_SERVER variable must begin with http" 1>&2; exit 1;
+    fi;
 
     # The username and password of an admin user.
     test -n $MEDIAWIKI_ADMIN;

@@ -24,7 +24,7 @@ php ./composer.phar install --no-dev;
 popd;
 
 # Install Extensions
-for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSupport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox" "SyntaxHighlight_GeSHi"; do
+for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSupport" "TimedMediaHandler" "HeaderTabs" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox" "SyntaxHighlight_GeSHi" "BreadCrumbs2"; do
     if ! [ -d "${EXT_DIR}/${EXTENSION}" ]; then
 	git clone "git@github.com:wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL;
     fi;

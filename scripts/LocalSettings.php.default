@@ -172,5 +172,6 @@ require( "$IP/extensions/MwEmbedSupport/MwEmbedSupport.php" );
 require( "$IP/extensions/TimedMediaHandler/TimedMediaHandler.php" );
 require_once( "$IP/extensions/HeaderTabs/HeaderTabs.php" );
 require_once( "$IP/extensions/R/R.php" );
+require_once("$IP/extensions/BreadCrumbs2/BreadCrumbs2.php");
 
 require_once('extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php');

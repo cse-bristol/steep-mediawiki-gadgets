@@ -22,11 +22,3 @@ for REPO in "${PROCESS_MODEL_DIR}" "${MAP_DIR}" "${SHARE_DIR}"; do
     sudo find "${REPO}" -type d -exec chmod g+s {} +;
     sudo chown -R "${USER}":steep "${REPO}";
 done;
-
-git -C "${MAP_DIR}" submodule update --init;
-make -C "${MAP_DIR}";
-make -C "${PROCESS_MODEL_DIR}";
-
-echo "Set up share server as a SystemD service.";
-sudo ln -f "${SHARE_DIR}/${SHARE_SERVICE}" "/etc/systemd/system/${SHARE_SERVICE}";
-sudo systemctl enable "${SHARE_SERVICE}";

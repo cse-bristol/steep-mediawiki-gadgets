@@ -81,11 +81,6 @@ if [ -d $MEDIAWIKI_DIR ]; then
 
     cp "${OLD_DIR}/images" "${NEW_DIR}" -R;
 
-    source "upgrade-steep-server-components.sh";
-
-    echo "Running Mediawiki's update script (sorts out the database tables).";
-    php "${NEW_DIR}/maintenance/update.php";    
-
 else
     rm -f "${NEW_DIR}/LocalSettings.php";
     
@@ -105,10 +100,17 @@ else
     echo "\$wgServer=\"${WG_SERVER}\";" >> "${EXTRA_CONFIG}";
 fi;
 
+echo "Granting write permission on images folder.";
+sudo chown -R "${USER}":steep "${NEW_DIR}/images";
+sudo chmod g+sw -R "${NEW_DIR}/images";
+
+echo "Running Mediawiki's update script (sorts out the database tables).";
+php "${NEW_DIR}/maintenance/update.php";    
+
 echo "Refreshing Semantic Data";
 php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";
 
-echo "Upgrading the other Steep server-side components.";
+echo "Upgrading and building the other Steep server-side components.";
 source "update-steep-server-components.sh";
 
 echo "Pointing the symlink at the newly installed version of mediawiki.";

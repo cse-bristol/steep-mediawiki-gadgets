@@ -114,4 +114,4 @@ echo "Upgrading and building the other Steep server-side components.";
 source "update-steep-server-components.sh";
 
 echo "Pointing the symlink at the newly installed version of mediawiki.";
-ln -s ${NEW_DIR} ${MEDIAWIKI_DIR} --no-target-directory;
+sudo ln -s ${NEW_DIR} ${MEDIAWIKI_DIR} --no-target-directory;

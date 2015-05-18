@@ -17,11 +17,10 @@ if ! [ -d "${SHARE_DIR}" ]; then
     sudo git clone "git@github.com:cse-bristol/share-server.git" "${SHARE_DIR}";
 fi;
 
-echo "Sort out permissions using extended ACLs so that both the current user and www-data can read and write to them.";
+echo "Sort out permissions so that both the current user and www-data can read and write to them.";
 for REPO in "${PROCESS_MODEL_DIR}" "${MAP_DIR}" "${SHARE_DIR}"; do
-    sudo setfacl -R -m g:"${USER}":rwX "${REPO}";
-    sudo setfacl -R -m g:www-data:rwX "${REPO}";
     sudo find "${REPO}" -type d -exec chmod g+s {} +;
+    sudo chown -R "${USER}":steep "${REPO}";
 done;
 
 git -C "${MAP_DIR}" submodule update --init;

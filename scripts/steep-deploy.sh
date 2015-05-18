@@ -15,12 +15,12 @@ set -e;
 
 TARGET_DIR="/var/www";
 
-REL="REL1_25";
-SEMANTIC_REL="2.1.3";
+REL="REL1_24";
+SEMANTIC_REL="2.2.0";
 MEDIAWIKI_DIR="${TARGET_DIR}/mediawiki";
 NEW_DIR="${MEDIAWIKI_DIR}_${REL}";
 EXT_DIR="${NEW_DIR}/extensions";
-EXTRA_CONFIG_FILE="server-specific-variables.php";
+EXTRA_CONFIG_FILE="SteepSettings.php";
 EXTRA_CONFIG="${NEW_DIR}/${EXTRA_CONFIG_FILE}";
 
 PROCESS_MODEL_DIR="${TARGET_DIR}/process-model";
@@ -76,7 +76,7 @@ if [ -d $MEDIAWIKI_DIR ]; then
     cp "${OLD_DIR}/LocalSettings.php" "${NEW_DIR}";
 
     if [ -e $OLD_EXTRA_CONFIG ]; then
-	cp "${OLD_EXTRA_CONFIG}" "${NEW_EXTRA_CONFIG}";
+	cp "${OLD_EXTRA_CONFIG}" "${EXTRA_CONFIG}";
     fi;
 
     cp "${OLD_DIR}/images" "${NEW_DIR}" -R;
@@ -84,28 +84,29 @@ if [ -d $MEDIAWIKI_DIR ]; then
     source "upgrade-steep-server-components.sh";
 
     echo "Running Mediawiki's update script (sorts out the database tables).";
-    sudo php "${NEW_DIR}/maintenance/update.php";    
+    php "${NEW_DIR}/maintenance/update.php";    
 
 else
-    echo "Providing default settings, adding in our server-specific configuration.";
-    cp "LocalSettings.php.default" "${NEW_DIR}/LocalSettings.php";
-
-    EXTRA_CONFIG="${NEW_DIR}/${EXTRA_CONFIG_FILE}";
+    rm -f "${NEW_DIR}/LocalSettings.php";
     
-    echo "<?php" > $EXTRA_CONFIG;
-    echo "\$wgDBpassword=\"${MYSQL_MEDIAWIKI_PASS}\";" >> $EXTRA_CONFIG;
-    echo "\$wgConfirmAccountContact=\"${ACCOUNT_CONTACT}\";" >> $EXTRA_CONFIG;
-    echo "\$wgServer=\"${WG_SERVER}\"" >> $EXTRA_CONFIG;
-    echo "?>" >> $EXTRA_CONFIG;
-
     echo "Running Mediawiki's install script.";
-    sudo php 
+    php "${NEW_DIR}/maintenance/install.php" SteepWiki "${MEDIAWIKI_ADMIN}" --server "localhost" --dbname "mediawiki" --pass "${MEDIAWIKI_ADMIN_PASS}" --installdbuser "root" --installdbpass "${MYSQL_ROOT_PASS}" --dbuser "mediawiki" --dbpass "${MYSQL_MEDIAWIKI_PASS}" --email "${ACCOUNT_CONTACT}";
 
-    sudo php "${NEW_DIR}/maintenance/install.php" --confpath /tmp SteepWiki "${MEDIAWIKI_ADMIN}" --pass "${MEDIAWIKI_ADMIN_PASS}";    
+    # Install Semantic Mediawiki
+    pushd "${NEW_DIR}";
+    php composer.phar require "mediawiki/semantic-media-wiki:${SEMANTIC_REL}";
+    popd;    
+
+    echo "Adding in Steep settings.";
+    echo "require_once \"\$IP/${EXTRA_CONFIG_FILE}\";" >> "${NEW_DIR}/LocalSettings.php";
+    cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";
+
+    echo "\$wgConfirmAccountContact=\"${ACCOUNT_CONTACT}\";" >> "${EXTRA_CONFIG}";
+    echo "\$wgServer=\"${WG_SERVER}\";" >> "${EXTRA_CONFIG}";
 fi;
 
 echo "Refreshing Semantic Data";
-sudo php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";
+php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";
 
 echo "Upgrading the other Steep server-side components.";
 source "update-steep-server-components.sh";

@@ -13,8 +13,8 @@ Having added a process-model or map to the document, at present you get a little
 It would be better if this was a GUI control which allowed you to change aspects of that link, or remove it entirely.
 
 ** Dependencies
- * Mediawiki v1.25.0.
- * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_25 branch.
+ * Mediawiki v1.24.0.
+ * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_24 branch.
  * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Note that this does not require the Parsoid extension be installed into Mediawiki.
  * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
 

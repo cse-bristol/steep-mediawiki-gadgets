@@ -93,6 +93,8 @@
 			.getModel()
 			.getFragment()
 			.collapseRangeToEnd()
+		    
+		    
 			.insertContent('<' + element +
 				       ' name="' + currentSelection.name + '"' +
 				       v +

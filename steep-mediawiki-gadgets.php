@@ -3,7 +3,11 @@
 $wgMessagesDirs['ViewFiles'] = __DIR__ . '/i18n';
 
 $wgResourceModules['ext.steep-mediawiki-gadgets'] = array(
-    'scripts' => array( 'js/insert-process-model.js'),
+    'scripts' => array(
+        'js/insert-process-model.js',
+        'js/steep-node.js',
+        'js/process-model-node.js'
+    ),
     'messages' => array(
         'visualeditor-mwprocessmodel-button',
         'visualeditor-mwprocessmodel-dialogue',
@@ -27,8 +31,6 @@ $wgExtensionCredits['steep-mediawiki-gadgets'][] = array(
     'version'  => 0.1,
     'license-name' => "MIT",
 );
-
-$wgShowExceptionDetails = true;
 
 $wgAutoloadClasses['IncludeSteepGadgets'] = __DIR__ . '/IncludeSteepGadgets.php';
 

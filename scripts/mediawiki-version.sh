@@ -22,6 +22,9 @@ php ./composer.phar update;
 
 # Install External Libraries
 php ./composer.phar install --no-dev;
+
+# Install SubPageList
+php composer.phar require mediawiki/sub-page-list 1.1.2
 popd;
 
 # Install Extensions

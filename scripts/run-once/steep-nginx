@@ -36,6 +36,11 @@ server {
             rewrite /mediawiki/(File:.*) /mediawiki/index.php?title=$1&$args;
         }
 
+        location ~* /mediawiki/(MediaWiki:.*) {
+            # Things in the Mediawiki: namespace may have the .css extension, but are still pages.
+            rewrite ^/mediawiki/(MediaWiki:.*)$ /mediawiki/index.php?title=$1&$args;
+        }        
+
         location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
             expires max;
             log_not_found off;

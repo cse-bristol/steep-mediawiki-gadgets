@@ -8,7 +8,7 @@
  This will produce a dialogue box, which allows the user to search for an existing Process Model or Map to insert.
  */
 (function() {
-    var makeInsertTool = function(buttonMessage, dialogueMessage, collection, element) {
+    var makeInsertTool = function(buttonMessage, dialogueMessage, collection, element, modelClass) {
 	var dialogueName = collection + " dialogue",
 	    toolName = collection + " tool",
 
@@ -36,17 +36,18 @@
 	 Make the dialogue.
 	 */
 	var dialogue = function(surface, config) {
-	    OO.ui.ProcessDialog.call(this, surface, config);
+	    ve.ui.NodeDialog.call(this, surface, config);
 	};
 
-	OO.inheritClass(dialogue, OO.ui.ProcessDialog);
+	OO.inheritClass(dialogue, ve.ui.NodeDialog);
 
 	dialogue.static.name = dialogueName;
 	dialogue.static.title = mw.message(dialogueMessage).text();
 	dialogue.static.actions = [
 	    { action: 'save', label: 'Insert', flags: [ 'primary', 'progressive' ] },
 	    { action: 'cancel', label: 'Cancel', flags: 'safe' }
-	];	
+	];
+	dialogue.static.modelClasses = [modelClass];
 
 	dialogue.prototype.getBodyHeight = function () {
 	    return 400;
@@ -86,21 +87,21 @@
 		     */
 		    var v = lockToVersionControl.$input.attr("checked") ?
 			    ' v="' + versionControl.getValue() + '"'
-			    : "";
+			    : null;
 		    
 		    ve.init.target
-			.getSurface()
-			.getModel()
-			.getFragment()
+		    	.getSurface()
+		    	.getModel()
+		    	.getFragment()
 			.collapseRangeToEnd()
-		    
-		    
-			.insertContent('<' + element +
-				       ' name="' + currentSelection.name + '"' +
-				       v +
-				       ' width="' + widthControl.getValue() + '%"' +
-				       ' height="' + heightControl.getValue() + 'px"' +
-				       '/>', false);
+		    	.insertContent(
+			    new modelClass({
+				name: currentSelection.name,
+				v: v,
+		    	    	width: widthControl.getValue() + "%",
+		    	    	height: heightControl.getValue() + "px"
+			    }).toLinearModel()
+		    	);
 
 		    instance.close();
 		},
@@ -305,14 +306,16 @@
 	"visualeditor-mwprocessmodel-button",
 	"visualeditor-mwprocessmodel-dialogue",
 	"process-models",
-	"process-model"
+	"process-model",
+	ve.dm.ProcessModelNode
     );
 
     makeInsertTool(
 	"visualeditor-mwmap-button",
 	"visualeditor-mwmap-dialogue",
 	"maps",
-	"data-map"
+	"data-map",
+	ve.dm.MapNode
     );
     
 }());

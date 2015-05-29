@@ -1,14 +1,21 @@
 "use strict";
 
-/*global OO, ve*, $/
+/*global OO, ve*/
 
 /*
  A Visual Editor node which represents an XML tag used by the Steep extension.
  */
-ve.dm.SteepNode = function SteepNode() {
+ve.dm.SteepNode = function SteepNode(options) {
     ve.dm.SteepNode.super.apply(this, arguments);
-    // ve.dm.FocusableNode.call(this);
+    ve.dm.FocusableNode.call(this);
     ve.dm.ResizableNode.call(this);
+
+    if (options) {
+	this.name = options.name;
+	this.v = options.v;
+	this.width = options.width;
+	this.height = options.height;
+    }
 };
 
 OO.inheritClass(ve.dm.SteepNode, ve.dm.LeafNode);
@@ -19,11 +26,6 @@ ve.dm.SteepNode.static.matchTagNames = ['iframe'];
 ve.dm.SteepNode.static.isWrapped = false;
 ve.dm.SteepNode.static.isContent = true;
 ve.dm.SteepNode.static.enableAboutGrouping = true;
-
-// ve.dm.SteepNode.static.toDomElements = function(data, converter) {
-//     console.log("toDomElements", data, converter);
-//     return "";
-// };
 
 ve.dm.SteepNode.static.toDataElementHelper = function(domElements, converter) {
     var iframe = domElements[0],
@@ -38,12 +40,21 @@ ve.dm.SteepNode.static.toDataElementHelper = function(domElements, converter) {
     };
 };
 
-ve.ce.SteepNode = function SteepNode(model, config) {
-    ve.ce.SteepNode.super.apply(this, arguments);
-    // ve.ce.FocusableNode.call(this);
-    ve.ce.ResizableNode.call(this);
+ve.dm.SteepNode.static.toDomElements = function() {
+    console.log("toDomElements", arguments);
+    return this.super.static.toDomElements.apply(this, arguments);
 };
 
-OO.inheritClass(ve.ce.SteepNode, ve.ce.LeafNode);
-// OO.mixinClass(ve.ce.SteepNode, ve.ce.FocusableNode);
-OO.mixinClass(ve.ce.SteepNode, ve.ce.ResizableNode);
+ve.dm.SteepNode.prototype.toLinearModel = function() {
+    var data = {
+	type: this.type,
+	name: this.name,
+	v: this.v,
+	width: this.width,
+	height: this.height
+    };
+    
+    this.addModelData(data);
+
+    return [data];
+};

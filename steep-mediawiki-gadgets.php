@@ -4,9 +4,11 @@ $wgMessagesDirs['ViewFiles'] = __DIR__ . '/i18n';
 
 $wgResourceModules['ext.steep-mediawiki-gadgets'] = array(
     'scripts' => array(
-        'js/insert-process-model.js',
-        'js/steep-node.js',
-        'js/process-model-node.js'
+        'js/ve.dm.SteepNode.js',
+        'js/ve.ce.SteepNode.js',
+        'js/ve.dm.ProcessModelNode.js',
+        'js/ve.ce.ProcessModelNode.js',
+        'js/steep-dialogue-and-tool.js'
     ),
     'messages' => array(
         'visualeditor-mwprocessmodel-button',

@@ -7,8 +7,6 @@
  */
 ve.dm.SteepNode = function SteepNode(options) {
     ve.dm.SteepNode.super.apply(this, arguments);
-    ve.dm.FocusableNode.call(this);
-    ve.dm.ResizableNode.call(this);
 
     if (options) {
 	this.name = options.name;
@@ -19,8 +17,6 @@ ve.dm.SteepNode = function SteepNode(options) {
 };
 
 OO.inheritClass(ve.dm.SteepNode, ve.dm.LeafNode);
-OO.mixinClass(ve.dm.SteepNode, ve.dm.FocusableNode);
-OO.mixinClass(ve.dm.SteepNode, ve.dm.ResizableNode);
 
 ve.dm.SteepNode.static.matchTagNames = ['iframe'];
 ve.dm.SteepNode.static.isContent = true;

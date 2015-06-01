@@ -18,14 +18,9 @@ ve.ce.SteepNode = function SteepNode(model, config) {
 	this.$element
 	    .css("height", model.height);
     }
-
-    ve.ce.FocusableNode.call(this, this.$element, config);
-    ve.ce.ResizableNode.call(this, this.$element, config);
 };
 
 OO.inheritClass(ve.ce.SteepNode, ve.ce.LeafNode);
-OO.mixinClass(ve.ce.SteepNode, ve.ce.FocusableNode);
-OO.mixinClass(ve.ce.SteepNode, ve.ce.ResizableNode);
 
 ve.ce.SteepNode.prototype.buildSrc = function(model) {
     var url = "/" + this.toolUrl() + "/?name=" + encodeURIComponent(model.name),

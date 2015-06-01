@@ -18,7 +18,7 @@ ve.dm.ProcessModelNode.static.toDataElement = function(domElements, converter) {
     var d = ve.dm.SteepNode.static.toDataElementHelper.apply(this, arguments);
     d.type = ve.dm.ProcessModelNode.static.name;
 
-    return [d];
+    return d;
 };
 
 ve.dm.ProcessModelNode.prototype.addModelData = function(data) {

@@ -3,13 +3,24 @@
 /*global ve, OO, $*/
 
 ve.ce.SteepNode = function SteepNode(model, config) {
-    ve.ce.SteepNode.super.apply(this, arguments);
-    ve.ce.FocusableNode.call(this);
-    ve.ce.ResizableNode.call(this); // resizable, content
+    ve.ce.LeafNode.call(this, model, config);
 
-    this.$element = $('iframe')
+    this.$element = $('<iframe/>')
 	.attr('src', this.buildSrc(model))
-	.attr('style', this.buildStyle(model));
+	.css("overflow", "hidden");
+
+    if (model.width) {
+	this.$element
+	    .css("width", model.width);
+    }
+
+    if (model.height) {
+	this.$element
+	    .css("height", model.height);
+    }
+
+    ve.ce.FocusableNode.call(this, this.$element, config);
+    ve.ce.ResizableNode.call(this, this.$element, config);
 };
 
 OO.inheritClass(ve.ce.SteepNode, ve.ce.LeafNode);
@@ -43,16 +54,3 @@ ve.ce.SteepNode.prototype.srcArgs = function(model) {
     throw new Error("Not implemented: srcArgs should be overridden in subtype.");
 };
 
-ve.ce.SteepNode.prototype.buildStyle = function(model) {
-    var style = "";
-    
-    if (model.width) {
-	style += "width: " + model.width + ";";
-    }
-
-    if (model.height) {
-	style += "height: " + model.height + ";";
-    }
-
-    return style;
-};

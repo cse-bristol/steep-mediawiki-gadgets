@@ -8,6 +8,8 @@ $wgResourceModules['ext.steep-mediawiki-gadgets'] = array(
         'js/ve.ce.SteepNode.js',
         'js/ve.dm.ProcessModelNode.js',
         'js/ve.ce.ProcessModelNode.js',
+        'js/ve.dm.MapNode.js',
+        'js/ve.ce.MapNode.js',        
         'js/steep-dialogue-and-tool.js'
     ),
     'messages' => array(

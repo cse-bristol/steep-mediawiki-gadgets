@@ -65,9 +65,7 @@
 		});
 
 	    case "save":
-		return new OO.ui.Process(function() {
-		    that.insert();
-		});
+		return new OO.ui.Process(that.insert);
 
 	    default:
 		return dialogue.super.prototype.getActionProcess.call(this, action);
@@ -85,24 +83,26 @@
 		    /*
 		     If lockToVersionControl is checked, include the version.
 		     */
-		    var v = lockToVersionControl.$input.attr("checked") ?
+		    var options = {
+			name: currentSelection.name,
+			v: lockToVersionControl.$input.attr("checked") ?
 			    ' v="' + versionControl.getValue() + '"'
-			    : null;
-		    
+			    : null,
+			width: widthControl.getValue() + "%",
+			height: heightControl.getValue() + "px"
+		    },
+			model = new modelClass(options)
+		    	    .toLinearModel();
+
 		    ve.init.target
 		    	.getSurface()
 		    	.getModel()
 		    	.getFragment()
-			.collapseRangeToEnd()
+		    	.collapseRangeToEnd()
 		    	.insertContent(
-			    new modelClass({
-				name: currentSelection.name,
-				v: v,
-		    	    	width: widthControl.getValue() + "%",
-		    	    	height: heightControl.getValue() + "px"
-			    }).toLinearModel()
+		    	    model
 		    	);
-
+		    
 		    instance.close();
 		},
 
@@ -112,7 +112,7 @@
 		changeSelection = function(data) {
 		    currentSelection = data;
 
-		    //submitControl.$input.attr("disabled", currentSelection ? null : true);
+		    instance.actions.setAbilities({"save": !!currentSelection });
 		    
 		    var maxV = currentSelection && currentSelection.v ? currentSelection.v : 0;
 		    

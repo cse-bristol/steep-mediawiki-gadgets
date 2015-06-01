@@ -23,7 +23,6 @@ OO.mixinClass(ve.dm.SteepNode, ve.dm.FocusableNode);
 OO.mixinClass(ve.dm.SteepNode, ve.dm.ResizableNode);
 
 ve.dm.SteepNode.static.matchTagNames = ['iframe'];
-ve.dm.SteepNode.static.isWrapped = false;
 ve.dm.SteepNode.static.isContent = true;
 ve.dm.SteepNode.static.enableAboutGrouping = true;
 
@@ -38,11 +37,6 @@ ve.dm.SteepNode.static.toDataElementHelper = function(domElements, converter) {
 	width: data.attrs.width,
 	height: data.attrs.height
     };
-};
-
-ve.dm.SteepNode.static.toDomElements = function() {
-    console.log("toDomElements", arguments);
-    return this.super.static.toDomElements.apply(this, arguments);
 };
 
 ve.dm.SteepNode.prototype.toLinearModel = function() {

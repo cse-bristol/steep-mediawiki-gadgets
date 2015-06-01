@@ -35,10 +35,14 @@ class IncludeSteepGadgets {
             } else {
                 $version = "";
             }
+
+            if (isset($args['focus'])) {
+                $focus = "&focus=" . $args['focus'];
+            }
             
             $iframeAttrs = array(
-                "src" => $location . "/?name=" . $args['name'] . $version,
-                "style" => "width:" . $width . "; height:" . $height . "; display:inline-block;"
+                "src" => $location . "/?name=" . $args['name'] . $version . $focus,
+                "style" => "width:" . $width . "; height:" . $height . "; display:inline-block; overflow: hidden;"
             );
 
             // This automatically escapes attribute values for us.          

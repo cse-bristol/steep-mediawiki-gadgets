@@ -18,7 +18,7 @@ make -C "${MAP_DIR}";
 
 git -C "${SHARE_DIR}" fetch;
 git -C "${SHARE_DIR}" checkout "${SHARE_VERSION}";
-make -C "${SHARE_DIR}";
+(cd "${SHARE_DIR}" && npm install);
 
 echo "Set up share server as a SystemD service.";
 sudo ln -f "${SHARE_DIR}/${SHARE_SERVICE}" "/etc/systemd/system/${SHARE_SERVICE}";

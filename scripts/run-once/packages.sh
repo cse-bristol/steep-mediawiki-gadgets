@@ -18,6 +18,7 @@ sudo DEBIAN_FRONTEND=noninteractive aptitude install mysql-server mysql-client -
 
 echo "Used by R-extension for Mediawiki";
 sudo aptitude install r-base r-cran-ggplot2 -y;
+sudo Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Rgraphviz")';
 
 echo "ImageMagick used by both R-extension and Mediawiki";
 sudo aptitude install imagemagick -y;

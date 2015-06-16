@@ -3,6 +3,8 @@ server {
     listen [::]:80;
     index index.html;
     root /var/www;
+
+    client_max_body_size 100M;    
     
     # Sometimes the wiki looks for pages with the abbreviation /w.
     location /w {
@@ -73,7 +75,6 @@ server {
 
     # ShareJS server used by the planner and the process model. This is running on NodeJS.
     location /channel {
-        client_max_body_size 100M;
         proxy_pass http://localhost:11000;
     }
 }

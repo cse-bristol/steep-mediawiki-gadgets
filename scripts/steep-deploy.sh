@@ -90,14 +90,15 @@ else
     # Install Semantic Mediawiki
     pushd "${NEW_DIR}";
     php composer.phar require "mediawiki/semantic-media-wiki:${SEMANTIC_REL}";
-    popd;    
+    popd;
 
     echo "Adding in Steep settings.";
-    echo "require_once \"\$IP/${EXTRA_CONFIG_FILE}\";" >> "${NEW_DIR}/LocalSettings.php";
+    LOCAL_SETTINGS="${NEW_DIR}/LocalSettings.php";
+    
+    echo "\$wgConfirmAccountContact=\"${ACCOUNT_CONTACT}\";" >> "${LOCAL_SETTINGS}";
+    echo "\$wgServer=\"${WG_SERVER}\";" >> "${LOCAL_SETTINGS}";
+    echo "require_once \"\$IP/${EXTRA_CONFIG_FILE}\";" >> "${LOCAL_SETTINGS}";
     cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";
-
-    echo "\$wgConfirmAccountContact=\"${ACCOUNT_CONTACT}\";" >> "${EXTRA_CONFIG}";
-    echo "\$wgServer=\"${WG_SERVER}\";" >> "${EXTRA_CONFIG}";
 fi;
 
 echo "Granting write permission on images folder.";

@@ -36,6 +36,8 @@ require_once "$IP/extensions/TimedMediaHandler/TimedMediaHandler.php";
 require_once "$IP/extensions/HeaderTabs/HeaderTabs.php";
 require_once "$IP/extensions/R/R.php";
 require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";
+require_once('extensions/IntraACL/includes/HACL_Initialize.php');
+enableIntraACL();
 
 ## Stuff to configure the URL rewriting stuff
 $wgArticlePath = "/wiki/$1";

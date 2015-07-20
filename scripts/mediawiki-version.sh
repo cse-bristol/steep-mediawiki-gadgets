@@ -13,7 +13,7 @@ sudo chmod g+s "${NEW_DIR}";
 sudo chown "${USER}":steep "${NEW_DIR}";
 
 # Prepares a new version of Mediawiki in a directory with the version number appended to it.
-git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $REL --depth 1;
+git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $MEDIAWIKI_VERSION --depth 1;
 
 # Get PHP Composer - downloading random files from the internet without checking for a signature is a bad idea, but it's what we're stuck with.
 pushd "${NEW_DIR}";
@@ -37,6 +37,10 @@ wget http://mars.wiwi.hu-berlin.de/www-data/RinMW_014_1.tar.gz -N -P "${NEW_DIR}
 tar -C "${NEW_DIR}/extensions" -xf "${NEW_DIR}/RinMW_014_1.tar.gz";
 mkdir -p "${NEW_DIR}/Rfiles";
 chmod g+w "${NEW_DIR}/Rfiles";
+
+# IntraACL http://wiki.4intra.net/IntraACL
+git clone "git@github.com:mediawiki4intranet/IntraACL.git" --depth 1;
+patch -d "${NEW_DIR}" -p1 < "${NEW_DIR}/extensions/IntraACL/patches/IntraACL-MediaWiki-${MEDIAWIKI_VERSION}.diff";
 
 # Visual Editor Core
 git -C "${EXT_DIR}/VisualEditor" submodule update --init;

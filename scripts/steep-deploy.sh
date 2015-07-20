@@ -15,7 +15,9 @@ set -e;
 
 TARGET_DIR="/var/www";
 
+# The name of the branch we'll get for our skins and extensions. 
 REL="REL1_24";
+MEDIAWIKI_VERSION="1.24.1";
 SEMANTIC_REL="2.2.0";
 MEDIAWIKI_DIR="${TARGET_DIR}/mediawiki";
 NEW_DIR="${MEDIAWIKI_DIR}_${REL}";

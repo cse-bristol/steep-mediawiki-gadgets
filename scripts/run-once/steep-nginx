@@ -3,6 +3,7 @@ server {
     listen [::]:80;
     index index.html;
     root /var/www;
+    server_name "$hostname";
 
     client_max_body_size 100M;    
     

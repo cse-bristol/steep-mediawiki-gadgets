@@ -15,4 +15,4 @@ echo "Running Mediawiki's update script (sorts out the database tables).";
 php "${NEW_DIR}/maintenance/update.php";    
 
 echo "Refreshing Semantic Data";
-php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";
+php "${NEW_DIR}/extensions/SemanticMediaWiki/maintenance/rebuildData.php";

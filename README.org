@@ -32,6 +32,7 @@ git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/stee
 echo 'require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";' >> LocalSettings.php
 #+END_SRC
 
-** Steep Platform Scripts
- + The file "scripts/steep-deploy.sh" can run a fresh install or upgrade of the entire Steep platform.
- + The file "scripts/database-backup.sh" can backup the MySQL database used by a Mediawiki install.
+** Scripts
+The file "scripts/steep-deploy.sh" can run a fresh install or upgrade of the entire Steep platform.
+
+The files "scripts/steep-backup.sh" and "scripts/steep-restore.sh" do what they say.

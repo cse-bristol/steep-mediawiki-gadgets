@@ -101,15 +101,7 @@ else
     cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";
 fi;
 
-echo "Granting write permission on images folder.";
-sudo chown -R "${USER}":steep "${NEW_DIR}/images";
-sudo chmod g+sw -R "${NEW_DIR}/images";
-
-echo "Running Mediawiki's update script (sorts out the database tables).";
-php "${NEW_DIR}/maintenance/update.php";    
-
-echo "Refreshing Semantic Data";
-php "${EXT_DIR}/SemanticMediaWiki/maintenance/rebuildData.php";
+source "mediawiki-update.sh";
 
 echo "Upgrading and building the other Steep server-side components.";
 source "update-steep-server-components.sh";

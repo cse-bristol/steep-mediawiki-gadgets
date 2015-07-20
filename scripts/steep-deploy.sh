@@ -30,9 +30,9 @@ MAP_DIR="${TARGET_DIR}/energy-efficiency-planner";
 SHARE_DIR="/opt/shareserver";
 SHARE_SERVICE="shareserver.service";
 
-PROCESS_MODEL_VERSION="v0.5.0";
-MAP_VERSION="v0.5.0";
-SHARE_VERSION="v0.5.0";
+PROCESS_MODEL_VERSION="master";
+MAP_VERSION="master";
+SHARE_VERSION="master";
 
 if [ -d $MEDIAWIKI_DIR ]; then
     echo "Upgrading existing install";

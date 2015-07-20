@@ -29,7 +29,7 @@ source "run-once/mysql-config.sh";
 mysql --user=mediawiki --password="${MYSQL_MEDIAWIKI_PASS}" mediawiki < "${UNZIP_DIR}/mediawiki.sql";
 
 mongorestore --drop --db "share" --host "localhost" "${UNZIP_DIR}/mongo";
-mv -f "${UNZIP_DIR}/images" "${MEDIAWIKI_DIR}/images";
+cp "${UNZIP_DIR}/images" "${MEDIAWIKI_DIR}";
 
 rm -rf "${UNZIP_DIR}";
 

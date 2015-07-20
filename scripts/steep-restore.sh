@@ -28,8 +28,8 @@ source "run-once/mysql-config.sh";
 # Restore our data into the mediawiki database.
 mysql --user=mediawiki --password="${MYSQL_MEDIAWIKI_PASS}" mediawiki < "${UNZIP_DIR}/mediawiki.sql";
 
-mongorestore --drop --db "share" --host "localhost" "${UNZIP_DIR}/mongo";
-cp "${UNZIP_DIR}/images" "${MEDIAWIKI_DIR}";
+mongorestore --drop --host "localhost" "${UNZIP_DIR}/mongo";
+cp -r "${UNZIP_DIR}/images" "${MEDIAWIKI_DIR}";
 
 rm -rf "${UNZIP_DIR}";
 

@@ -15,19 +15,20 @@ test -n $BACKUP_ZIP;
 test -n $MYSQL_ROOT_PASS;
 test -n $MYSQL_MEDIAWIKI_PASS;
 
-UNZIPPED_BACKUP=`mktemp -d steep-restore.XXXXXXXX`;
 MEDIAWIKI_DIR="/var/www/mediawiki";
+UNZIP_DIR="/tmp/steep-restore";
 
-unzip "${BACKUP_ZIP}" -d "${UNZIPPED_BACKUP}";
+rm -rf "${UNZIP_DIR}";
+unzip "${BACKUP_ZIP}" -d "${UNZIP_DIR}";
 
 # Recreate the mediawiki database.
 source "run-once/mysql-config.sh";
 # Restore our data into the mediawiki database.
 mysql --user=mediawiki --password="${MYSQL_MEDIAWIKI_PASS}" mediawiki < "${UNZIPPED_BACKUP}/mediawiki.sql";
 
-mongorestore --drop --db "share" --host "localhost" "${UNZIPPED_BACKUP}/mongo";
-mv -f "${UNZIPPED_BACKUP}/images" "${MEDIAWIKI_DIR}/images";
+mongorestore --drop --db "share" --host "localhost" "${UNZIP_DIR}/mongo";
+mv -f "${UNZIP_DIR}/images" "${MEDIAWIKI_DIR}/images";
 
-rm -rf "${UNZIPPED_BACKUP}";
+rm -rf "${UNZIP_DIR}";
 
 source "mediawiki-update.sh";

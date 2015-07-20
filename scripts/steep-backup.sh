@@ -26,5 +26,5 @@ mongodump --db "share" --host "localhost" --out "${THIS_BACKUP}/mongo";
 cp -r "${MEDIAWIKI_DIR}/images" "${THIS_BACKUP}/images";
 
 rm -f "${BACKUP_ZIP}";
-zip -r "${BACKUP_ZIP}" "${THIS_BACKUP}";
+pushd ${THIS_BACKUP} && zip -r "${BACKUP_ZIP}" * && popd;
 rm -rf "${THIS_BACKUP}";

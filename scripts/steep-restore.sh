@@ -24,7 +24,7 @@ unzip "${BACKUP_ZIP}" -d "${UNZIP_DIR}";
 # Recreate the mediawiki database.
 source "run-once/mysql-config.sh";
 # Restore our data into the mediawiki database.
-mysql --user=mediawiki --password="${MYSQL_MEDIAWIKI_PASS}" mediawiki < "${UNZIPPED_BACKUP}/mediawiki.sql";
+mysql --user=mediawiki --password="${MYSQL_MEDIAWIKI_PASS}" mediawiki < "${UNZIP_DIR}/mediawiki.sql";
 
 mongorestore --drop --db "share" --host "localhost" "${UNZIP_DIR}/mongo";
 mv -f "${UNZIP_DIR}/images" "${MEDIAWIKI_DIR}/images";

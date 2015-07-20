@@ -16,6 +16,8 @@ test -n $MYSQL_ROOT_PASS;
 test -n $MYSQL_MEDIAWIKI_PASS;
 
 MEDIAWIKI_DIR="/var/www/mediawiki";
+# For mediawiki-update script.
+NEW_DIR=$MEDIAWIKI_DIR;
 UNZIP_DIR="/tmp/steep-restore";
 
 rm -rf "${UNZIP_DIR}";

@@ -15,7 +15,7 @@ test -n $BACKUP_ZIP;
 test -n $MYSQL_ROOT_PASS;
 test -n $MYSQL_MEDIAWIKI_PASS;
 
-UNZIPPED_BACKUP=`mktemp -d steep-restore.xxxxxxxx`;
+UNZIPPED_BACKUP=`mktemp -d steep-restore.XXXXXXXX`;
 MEDIAWIKI_DIR="/var/www/mediawiki";
 
 unzip "${BACKUP_ZIP}" -d "${UNZIPPED_BACKUP}";

@@ -5,7 +5,11 @@ server {
     root /var/www;
     server_name "$hostname";
 
-    client_max_body_size 100M;    
+    client_max_body_size 100M;
+
+    gzip on;
+    gzip_disable "msie6";
+    gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
     
     # Sometimes the wiki looks for pages with the abbreviation /w.
     location /w {

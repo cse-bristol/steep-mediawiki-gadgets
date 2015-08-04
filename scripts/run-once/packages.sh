@@ -36,5 +36,7 @@ echo "NodeJS and MongoDB used by the server-side components of the Process-Model
 sudo aptitude install nodejs npm nodejs-legacy -y;
 sudo aptitude install mongodb-server mongodb-clients -y;
 
-echo "Browserify used to build the process-model and map.";
+echo "Browserify, watchify and catw used to build the process-model and map.";
 sudo npm install -g browserify;
+sudo npm install -g watchify;
+sudo npm install -g catw;

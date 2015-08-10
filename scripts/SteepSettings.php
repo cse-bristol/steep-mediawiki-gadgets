@@ -19,6 +19,8 @@ $wgUseInstantCommons = true;
 $wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['edit'] = false;
 
+enableSemantics('smartsteep.eu');
+
 require_once "$IP/extensions/Cite/Cite.php";
 require_once "$IP/extensions/Gadgets/Gadgets.php";
 require_once "$IP/extensions/Interwiki/Interwiki.php";
@@ -42,8 +44,6 @@ enableIntraACL();
 ## Stuff to configure the URL rewriting stuff
 $wgArticlePath = "/wiki/$1";
 $wgUsePathInfo = true;
-
-enableSemantics( 'smartsteep.eu' );
 
 # wire up parsoid to this wiki
 $wgVisualEditorParsoidURL = 'http://localhost:8000';

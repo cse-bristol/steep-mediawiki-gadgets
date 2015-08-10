@@ -16,9 +16,9 @@ set -e;
 TARGET_DIR="/var/www";
 
 # The name of the branch we'll get for our skins and extensions. 
-REL="REL1_24";
-MEDIAWIKI_VERSION="1.24.1";
-SEMANTIC_REL="2.2.0";
+REL="REL1_25";
+MEDIAWIKI_VERSION="1.25.1";
+SEMANTIC_REL="2.2.2";
 MEDIAWIKI_DIR="${TARGET_DIR}/mediawiki";
 NEW_DIR="${MEDIAWIKI_DIR}_${REL}";
 EXT_DIR="${NEW_DIR}/extensions";
@@ -68,11 +68,11 @@ if [ -d $MEDIAWIKI_DIR ]; then
 
     echo "Migrating existing files.";
     
-    OLD_DIR=(readlink $MEDIAWIKI_DIR);
+    OLD_DIR=`readlink $MEDIAWIKI_DIR`;
     OLD_EXTRA_CONFIG="${OLD_DIR}/${EXTRA_CONFIG_FILE}";    
     
     # Take down the wiki temporarily.
-    rm ${MEDIAWIKI_DIR};
+    sudo unlink ${MEDIAWIKI_DIR};
 
     # Migrate files from the old version
     cp "${OLD_DIR}/LocalSettings.php" "${NEW_DIR}";
@@ -89,11 +89,6 @@ else
     echo "Running Mediawiki's install script.";
     php "${NEW_DIR}/maintenance/install.php" SteepWiki "${MEDIAWIKI_ADMIN}" --server "localhost" --dbname "mediawiki" --pass "${MEDIAWIKI_ADMIN_PASS}" --installdbuser "root" --installdbpass "${MYSQL_ROOT_PASS}" --dbuser "mediawiki" --dbpass "${MYSQL_MEDIAWIKI_PASS}" --email "${ACCOUNT_CONTACT}";
 
-    # Install Semantic Mediawiki
-    pushd "${NEW_DIR}";
-    php composer.phar require "mediawiki/semantic-media-wiki:${SEMANTIC_REL}";
-    popd;
-
     echo "Adding in Steep settings.";
     LOCAL_SETTINGS="${NEW_DIR}/LocalSettings.php";
     
@@ -102,6 +97,11 @@ else
     echo "require_once \"\$IP/${EXTRA_CONFIG_FILE}\";" >> "${LOCAL_SETTINGS}";
     cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";
 fi;
+
+# Install Semantic Mediawiki
+pushd "${NEW_DIR}";
+php composer.phar require "mediawiki/semantic-media-wiki:${SEMANTIC_REL}";
+popd;
 
 source "mediawiki-update.sh";
 

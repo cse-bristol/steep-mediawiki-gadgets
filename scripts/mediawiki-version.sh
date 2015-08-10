@@ -38,9 +38,9 @@ tar -C "${NEW_DIR}/extensions" -xf "${NEW_DIR}/RinMW_014_1.tar.gz";
 mkdir -p "${NEW_DIR}/Rfiles";
 chmod g+w "${NEW_DIR}/Rfiles";
 
-# IntraACL http://wiki.4intra.net/IntraACL
-git clone "git@github.com:mediawiki4intranet/IntraACL.git" "${NEW_DIR}/extensions/IntraACL"  --depth 1;
-patch -d "${NEW_DIR}" -p1 < "${NEW_DIR}/extensions/IntraACL/patches/IntraACL-MediaWiki-${MEDIAWIKI_VERSION}.diff";
+# # IntraACL http://wiki.4intra.net/IntraACL
+# git clone "git@github.com:mediawiki4intranet/IntraACL.git" "${NEW_DIR}/extensions/IntraACL"  --depth 1;
+# patch -d "${NEW_DIR}" -p1 < "${NEW_DIR}/extensions/IntraACL/patches/IntraACL-MediaWiki-${MEDIAWIKI_VERSION}.diff";
 
 # Visual Editor Core
 git -C "${EXT_DIR}/VisualEditor" submodule update --init;

@@ -1,0 +1,53 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%
+}
+
+.container {
+    min-height: 100%;
+    display: table;
+}
+
+.top {
+    display: table-row;
+    height: 100%;
+}
+
+.bottom {
+    display: table-row;    
+}
+
+.left {
+    width: 15em;
+    display: table-cell;
+}
+
+.top .right {
+}
+
+.bottom .left {
+    padding-bottom: 2em;
+}
+
+/*
+Everything other than the navbar.
+ */
+.right {
+    width: 100%;
+    display: table-cell;
+}
+
+.top .right {
+    background-color: pink;
+}
+
+.bottom .right {
+    padding-bottom: 2em;
+    vertical-align: bottom;
+    padding-left: 2em;
+    color: grey;
+}

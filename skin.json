@@ -1,0 +1,45 @@
+{
+    "name": "Steep",
+    "author": [
+	"Glenn Searby"
+    ],
+    "url": "https://github.com/cse-bristol/steep-skin",
+    "descriptionmsg": "steepskin-desc",
+    "namemsg": "steepskin-name",
+    "license-name": "MIT",
+    "type": "skin",
+    "ConfigRegistry": {
+    },
+    "ValidSkinNames": {
+	"steep": "Steep"
+    },
+    "MessageDirs": {
+	"Steep": [
+	    "i18n"
+	]
+    },
+    "AutoloadClasses": {
+	"SkinSteep": "SkinSteep.php",
+	"SteepTemplate": "SteepTemplate.php"
+    },
+    "ResourceModules": {
+	"skins.steep.styles": {
+	    "position": "top",
+	    "styles": {
+		"screen.css": {
+		    "media": "screen"
+		},
+		"navbar.css" : {
+		    "media": "screen"
+		}		
+	    },
+	    "dependencies": [
+	    ]
+	}
+    },
+    "ResourceFileModulePaths": {
+	"localBasePath": "resources",
+	"remoteSkinPath": "Steep"
+    },    
+    "manifest_version": 1
+}

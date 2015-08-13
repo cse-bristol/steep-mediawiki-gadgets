@@ -84,3 +84,4 @@ $wgConfirmAccountRequestFormItems = array(
 );
 
 $wgNamespacesWithSubpages[NS_MAIN] = true;
+$wgVisualEditorSupportedSkins[] = 'steep';

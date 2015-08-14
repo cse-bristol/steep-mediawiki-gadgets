@@ -7,118 +7,9 @@
  */
 
 class SteepTemplate extends BaseTemplate {
-  function navIcon ($alt, $href, $src) {
-    $img = Html::rawElement(
-      'img',
-      array(
-	'src' => $src,
-	'alt' => $alt
-      )
-    );
-
-    $div = Html::rawElement(
-      'div',
-      array(),
-      $alt
-    );
-
-    return Html::rawElement(
-      'a',
-      array(
-	'href' => $href,
-	'class' => 'nav-image-link'
-      ),
-      $img . $div
-    );
-  }
-
-  function navLink ($text, $href) {
-    return Html::rawElement(
-      'a',
-      array(
-	'href' => $href,
-	'class' => 'nav-text-link'
-      ),
-      $text
-    );
-  }
-
   function getMsg ($msg) {
     return htmlspecialchars(
       $this->translator->translate($msg)
-    );
-  }
-
-  function upperNavItems () {
-    return join(
-      '',
-      array(
-	$this->navIcon(
-	  $this->get('sitename'),
-	  htmlspecialchars($this->data['nav_urls']['mainpage']['href']),
-	  $this->get('logopath')
-	),
-	$this->navIcon(
-	  'Projects',
-	  Skin::makeNSUrl("Projects", '', NS_CATEGORY),
-	  ''
-	),
-	$this->navIcon(
-	  'New Process Model',
-	  '/process-model',
-	  ''
-	),
-	$this->navIcon(
-	  'New Map',
-	  '/map',
-	  ''
-	),
-	$this->navIcon(
-	  'Add Assets',
-	  '',
-	  ''
-	),
-	$this->navIcon(
-	  'Manage Assets',
-	  '',
-	  ''
-	),
-	$this->navIcon(
-	  'Users',
-	  '',
-	  ''
-	)
-      )
-    );
-  }
-
-  function lowerNavItems () {
-    return join(
-      array(
-	$this->navIcon(
-	  'About',
-	  Title::newFromText(
-	    $this->getMsg('aboutpage')
-	  )->getLinkUrl(),
-	  ''
-	),
-	$this->navLink(
-	  $this->getMsg('help'),
-	  $this->getMsg('helppage')
-	),
-	$this->navLink(
-	  $this->getMsg('privacy'),
-	  Title::newFromText(
-	    $this->getMsg('privacypage')
-	  )->getLinkUrl()	  
-	),
-	$this->navLink(
-	  $this->getMsg('disclaimers'),
-	  Title::newFromText(
-	    $this->getMsg('disclaimerpage')
-	  )->getLinkUrl()
-	)
-      )
     );
   }
 
@@ -148,7 +39,7 @@ class SteepTemplate extends BaseTemplate {
       array(
 	'class' => 'left navbar'
       ),
-      $this->upperNavItems()
+      $this->navbar->upperNavItems()
     );
   }
 
@@ -158,7 +49,7 @@ class SteepTemplate extends BaseTemplate {
       array(
 	'class' => 'left navbar'
       ),
-      $this->lowerNavItems()
+      $this->navbar->lowerNavItems()
     );
   }
 
@@ -168,8 +59,123 @@ class SteepTemplate extends BaseTemplate {
       array(
 	'class' => 'right'
       ),
-      ''
+      $this->header() . $this->contentActions->contentNavigation() . $this->content()
     );
+  }
+
+  function header() {
+    $userTools = "";
+    
+    foreach ( $this->getPersonalTools() as $key => $item ) {
+      if ($key === 'newmessages') {
+	/*
+	   Messages removed in this skin.
+	 */
+	continue;
+      }
+      
+      $userTools = $userTools . $this->makeListItem($key, $item);
+    }
+
+    $search = Html::rawElement(
+      'li',
+      array(),
+      $this->search()
+    );
+
+    return Html::rawElement(
+      'ul',
+      array(
+	'class' => 'user-tools'
+      ),
+      $userTools . $search
+    );
+  }
+
+  function search() {
+    $input = Html::rawElement(
+      'input',
+      array(
+	'type' => 'hidden',
+	'name' => 'title',
+	'value' => $this->get('searchTitle')
+      )
+    );
+    
+    return Html::rawElement(
+      'form',
+      array(
+	'ie' => 'searchform',
+	'action' => $this->get('wgScript')
+      ),
+      $input . $this->makeSearchInput(array(
+	'id' => 'searchInput',
+	'placeholder' => $this->getMsg('search') . ' ' . $this->get('sitename')
+      ))
+    );
+  }
+
+
+  function content() {
+    return Html::rawElement(
+      'div',
+      array(
+	'id' => 'content',
+	'class' => 'mw-body'
+      ),
+      $this->title() . $this->bodyContent()
+    );
+  }
+
+  function title() {
+    return Html::rawElement(
+      'h1',
+      array(
+	'id' => 'first-heading'
+      ),
+      $this->get('title')
+    );
+  }
+
+  function hasContents() {
+    return preg_match('/id="toc"/', $this->get('bodytext')) === 1;
+  }
+
+  function bodyContent() {
+    return Html::rawElement(
+      'div',
+      array(
+	'id' => 'bodyContent',
+	'class' => 'mw-body-content'
+      ),
+      $this->get('subtitle') . $this->get('undelete') . $this->get('bodytext')
+    );
+  }
+
+  function subTitles() {
+    $result = '';
+
+    if ($this->has('subtitle')) {
+      $result .= Html::rawElement(
+	'div',
+	array(
+	  'id' => 'contentSub'
+	),
+	$this->get('subtitle')
+      );
+    }
+
+    if ($this->has('undelete')) {
+      $result .= Html::rawElement(
+	'div',
+	array(
+	  'id' => 'contentSub2'
+	),
+	$this->get('undelete')
+      );
+    }
+
+    return result;
   }
 
   function bottomRight() {
@@ -183,12 +189,15 @@ class SteepTemplate extends BaseTemplate {
   }
 
   public function execute() {
+    $this->navbar = new SteepNavbar($this->get('sitename'), $this->get('logopath'), $this->data['nav_urls']['mainpage']['href'], $this->translator);
+    $this->contentActions = new SteepContentActions($this->get('content_actions'));
+    
     $this->html('headelement');
 
     echo Html::rawElement(
       'div',
       array(
-	'class' => 'container'
+	'class' => 'container' . ($this->hasContents() ? '' : ' clutter')
       ),
       $this->top() . $this->bottom()
     );

@@ -7,5 +7,15 @@
     "steepskin-name": "Steep Skin",
     "steepskin-desc": "Skin for the Steep platform",
 
-    "process-model-new": "New Process Model"
+    "home": "Home",
+    "all-projects": "Projects",
+    "all-projects-page": "Projects",
+    "new-process-model": "New Process Model",
+    "new-map": "Create Map",
+    "add-assets": "Add Assets",
+    "manage-assets": "Manage Assets",
+    "manage-assets-page": "ManageAssets",
+    "manage-users": "Users",
+
+    "disclaimers": "blah blah blah"
 }

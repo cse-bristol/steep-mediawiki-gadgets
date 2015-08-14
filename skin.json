@@ -13,14 +13,16 @@
     "ValidSkinNames": {
 	"steep": "Steep"
     },
-    "MessageDirs": {
+    "MessagesDirs": {
 	"Steep": [
 	    "i18n"
 	]
     },
     "AutoloadClasses": {
 	"SkinSteep": "SkinSteep.php",
-	"SteepTemplate": "SteepTemplate.php"
+	"SteepTemplate": "SteepTemplate.php",
+	"SteepNavbar": "SteepNavbar.php",
+	"SteepContentActions": "SteepContentActions.php"
     },
     "ResourceModules": {
 	"skins.steep.styles": {
@@ -29,11 +31,32 @@
 		"screen.css": {
 		    "media": "screen"
 		},
-		"navbar.css" : {
+		"navbar.css": {
+		    "media": "screen"
+		},
+		"user-tools.css": {
+		    "media": "screen"
+		},
+		"content-actions.css": {
+		    "media": "screen"
+		},
+		"content.css": {
+		    "media": "screen"
+		},
+		"table-of-contents.css": {
 		    "media": "screen"
 		}		
-	    },
+	    }
+	},
+	"skins.steep.js": {
+	    "scripts": [
+		"resources/table-of-contents.js"
+	    ],
+	    "position": "top",
 	    "dependencies": [
+		"mediawiki.toc",
+		"mediawiki.cookie",
+		"jquery.effects.slide"
 	    ]
 	}
     },

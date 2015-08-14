@@ -1,0 +1,26 @@
+.user-tools {
+    margin: 0;
+    margin-top: -2em;
+    list-style-type: none;
+    text-align: right;
+    text-decoration: none;
+    transition: margin 0.3s;
+}
+
+.clutter .user-tools {
+    margin-top: 0;
+}
+
+.user-tools li {
+    display: inline-block;
+    padding: 0.5em;
+}
+
+.user-tools a {
+    text-decoration: none;
+    color: grey;
+}
+
+.user-tools a:hover {
+    text-decoration: underline;
+}

@@ -10,6 +10,12 @@ body {
 .container {
     min-height: 100%;
     display: table;
+    margin-left: -13em;
+    transition: margin-left 0.3s;
+}
+
+.container.clutter {
+    margin-left: 0;
 }
 
 .top {
@@ -26,9 +32,6 @@ body {
     display: table-cell;
 }
 
-.top .right {
-}
-
 .bottom .left {
     padding-bottom: 2em;
 }
@@ -39,15 +42,18 @@ Everything other than the navbar.
 .right {
     width: 100%;
     display: table-cell;
+    padding: 0 2em 2em 2em;    
 }
 
 .top .right {
-    background-color: pink;
+    vertical-align: top;
 }
 
 .bottom .right {
-    padding-bottom: 2em;
     vertical-align: bottom;
-    padding-left: 2em;
     color: grey;
+}
+
+.left.hidden {
+    margin-left: -15em;
 }

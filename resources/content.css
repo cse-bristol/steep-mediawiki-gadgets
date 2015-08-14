@@ -11,11 +11,15 @@
 
 #content {
     transition: margin-left 0.3s;
+    transition: width 0.3s;
     width: 80%;
     margin: auto;
 }
 
-#content.shrunk {
+.clutter #content {
     width: auto;
+}
+
+.clutter #content.shrunk {
     margin-left: 12em;
 }

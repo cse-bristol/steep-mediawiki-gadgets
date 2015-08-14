@@ -121,7 +121,7 @@ class SteepTemplate extends BaseTemplate {
       'div',
       array(
 	'id' => 'content',
-	'class' => 'mw-body'
+	'class' => 'mw-body' . ($this->hasContents() ? ' shrunk' : '')
       ),
       $this->title() . $this->bodyContent()
     );

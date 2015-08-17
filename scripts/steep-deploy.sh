@@ -61,6 +61,9 @@ else
     # An email address which account request notifications will be sent to.
     test -n $ACCOUNT_CONTACT;
 
+    # True if users must confim accounts.
+    test -n $CONFIRM_ACCOUNTS;
+
     # Run pre-requisites for first install
     source "run-once/run-once.sh";
 fi;
@@ -98,6 +101,10 @@ else
     echo "\$wgServer=\"${WG_SERVER}\";" >> "${LOCAL_SETTINGS}";
     echo "require_once \"\$IP/${EXTRA_CONFIG_FILE}\";" >> "${LOCAL_SETTINGS}";
     cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";
+
+    if [ "$CONFIRM_ACCOUNTS" = true ] ; then
+	cat 'ConfirmUsers.php' >> "${LOCAL_SETTINGS}";
+    fi
 fi;
 
 # Install Semantic Mediawiki

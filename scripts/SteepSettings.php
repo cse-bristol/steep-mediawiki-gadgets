@@ -2,7 +2,6 @@
 
 $wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
 
-$wgEmailConfirmToEdit = true;
 $wgEmergencyContact = "wiki@smartsteep.eu";
 $wgPasswordSender = "wiki@smartsteep.eu";
 
@@ -16,16 +15,12 @@ $wgEnableUploads = true;
 # InstantCommons allows wiki to use images from http://commons.wikimedia.org
 $wgUseInstantCommons = true;
 
-$wgGroupPermissions['*']['createaccount'] = false;
-$wgGroupPermissions['*']['edit'] = false;
-
 enableSemantics('smartsteep.eu');
 
 require_once "$IP/extensions/Cite/Cite.php";
 require_once "$IP/extensions/Gadgets/Gadgets.php";
 require_once "$IP/extensions/Interwiki/Interwiki.php";
 require_once "$IP/extensions/WikiEditor/WikiEditor.php";
-require_once "$IP/extensions/ConfirmAccount/ConfirmAccount.php";
 require_once "$IP/extensions/VisualEditor/VisualEditor.php";
 require_once "$IP/extensions/LiquidThreads/LiquidThreads.php";
 require_once "$IP/extensions/SemanticForms/SemanticForms.php";

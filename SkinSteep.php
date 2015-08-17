@@ -27,7 +27,18 @@ class SkinSteep extends SkinTemplate {
     );
   }
 
-  function doEditSectionLink() {
+  public function doEditSectionLink() {
     return '';
+  }
+
+  protected function prepareQuickTemplate() {
+    $template = parent::prepareQuickTemplate();
+
+    $template->set(
+      'hidetoc', 
+      $this->getRequest()->getCookie('hidetoc')
+    );
+    
+    return $template;
   }
 }

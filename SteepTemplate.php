@@ -121,7 +121,7 @@ class SteepTemplate extends BaseTemplate {
       'div',
       array(
 	'id' => 'content',
-	'class' => 'mw-body' . ($this->hasContents() ? ' shrunk' : '')
+	'class' => 'mw-body' . ($this->hasHiddenContents() ? ' shrunk' : '')
       ),
       $this->title() . $this->bodyContent()
     );
@@ -138,7 +138,22 @@ class SteepTemplate extends BaseTemplate {
   }
 
   function hasContents() {
-    return preg_match('/id="toc"/', $this->get('bodytext')) === 1;
+    if (!defined($this->hasContents)) {
+      $this->hasContents = (preg_match('/id="toc"/', $this->get('bodytext')) === 1);
+    } 
+    
+    return $this->hasContents;
+  }
+
+  function contentsHidden() {
+    return $this->get('hidetoc') == 1;
+  }
+
+  /*
+     This page has enough sections to have a table of contents, but the user has hidden it.
+   */
+  function hasHiddenContents() {
+    return $this->hasContents() && $this->contentsHidden();
   }
 
   function bodyContent() {
@@ -148,8 +163,27 @@ class SteepTemplate extends BaseTemplate {
 	'id' => 'bodyContent',
 	'class' => 'mw-body-content'
       ),
-      $this->get('subtitle') . $this->get('undelete') . $this->get('bodytext')
+      $this->get('subtitle') . $this->get('undelete') . $this->bodyText()
     );
+  }
+
+  function bodyText() {
+    $text = $this->get('bodytext');
+
+    if ($this->hasHiddenContents()) {
+      /*
+	 Add the tochidden class.
+       */
+      return preg_replace(
+	'/class=\"toc/',
+	'class="toc tochidden',
+	$text,
+	1
+      );
+      
+    } else {
+      return $text;
+    }
   }
 
   function subTitles() {
@@ -197,7 +231,7 @@ class SteepTemplate extends BaseTemplate {
     echo Html::rawElement(
       'div',
       array(
-	'class' => 'container' . ($this->hasContents() ? '' : ' clutter')
+	'class' => 'container' . ($this->hasHiddenContents() ? '' : ' clutter')
       ),
       $this->top() . $this->bottom()
     );

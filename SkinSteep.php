@@ -26,4 +26,8 @@ class SkinSteep extends SkinTemplate {
       )
     );
   }
+
+  function doEditSectionLink() {
+    return '';
+  }
 }

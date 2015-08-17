@@ -27,7 +27,7 @@ class SkinSteep extends SkinTemplate {
     );
   }
 
-  public function doEditSectionLink() {
+  public function doEditSectionLink(Title $nt, $section, $tooltip = NULL, $lang = false) {
     return '';
   }
 

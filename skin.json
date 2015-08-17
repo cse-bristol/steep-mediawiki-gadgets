@@ -55,8 +55,7 @@
 	    "position": "top",
 	    "dependencies": [
 		"mediawiki.toc",
-		"mediawiki.cookie",
-		"jquery.effects.slide"
+		"mediawiki.cookie"
 	    ]
 	}
     },

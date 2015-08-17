@@ -50,7 +50,7 @@
 	},
 	"skins.steep.js": {
 	    "scripts": [
-		"resources/table-of-contents.js"
+		"table-of-contents.js"
 	    ],
 	    "position": "top",
 	    "dependencies": [

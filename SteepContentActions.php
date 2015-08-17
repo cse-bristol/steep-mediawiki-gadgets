@@ -8,12 +8,16 @@ class SteepContentActions {
   function __construct($actions) {
     $this->actions = $actions;
   }
+
+  function actionExists($action) {
+    return array_key_exists($action, $this->actions) && $this->actions[$action];
+  }
   
   function contentNavigation() {
     $contentActionsMenu = '';
 
     foreach (array('talk', 've-edit', 'history', 'watch', 'unwatch') as $tab) {
-      if (array_key_exists($tab, $this->actions) && $this->actions[$tab]) {
+      if ($this->actionExists($tab)) {
 	$action = $this->contentAction($tab, $this->actions[$tab]);
 
 	$contentActionsMenu .= $action;
@@ -33,7 +37,9 @@ class SteepContentActions {
     $contentSubmenu = '';
 
     foreach(array('delete', 'move', 'protect', 'purge') as $tab) {
-      $contentSubmenu .= $this->contentAction($tab, $this->actions[$tab]);
+      if ($this->actionExists($tab)) {
+	$contentSubmenu .= $this->contentAction($tab, $this->actions[$tab]);
+      }
     }
 
     $expander = Html::rawElement(

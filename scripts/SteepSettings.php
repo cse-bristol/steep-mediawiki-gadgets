@@ -35,7 +35,6 @@ require_once "$IP/extensions/InputBox/InputBox.php";
 require_once "$IP/extensions/GraphViz/GraphViz.php";
 require_once "$IP/extensions/MwEmbedSupport/MwEmbedSupport.php";
 require_once "$IP/extensions/TimedMediaHandler/TimedMediaHandler.php";
-require_once "$IP/extensions/HeaderTabs/HeaderTabs.php";
 require_once "$IP/extensions/R/R.php";
 require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";
 // require_once('extensions/IntraACL/includes/HACL_Initialize.php');

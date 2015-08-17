@@ -11,6 +11,10 @@ set -e;
 # 1. You have an existing version installed and symlinked to /var/www/mediawiki, in which case we will do an upgrade.
 # 2. You have no existing version, and will need to set some environment variables when you run this script.
 
+# The file LocalSettings.php will be generated in the case of (1 - fresh install). It will include a require statement to SteepSettings.php. After this, feel free to edit it to have custom settings for that server.
+
+# The file SteepSettings.php will be replaced on every update, and should not be manually edited.
+
 # This script does not handle the case when you want to restore from backed up files, although it could do in the future.
 
 TARGET_DIR="/var/www";
@@ -69,7 +73,6 @@ if [ -d $MEDIAWIKI_DIR ]; then
     echo "Migrating existing files.";
     
     OLD_DIR=`readlink $MEDIAWIKI_DIR`;
-    OLD_EXTRA_CONFIG="${OLD_DIR}/${EXTRA_CONFIG_FILE}";    
     
     # Take down the wiki temporarily.
     sudo unlink ${MEDIAWIKI_DIR};
@@ -77,11 +80,10 @@ if [ -d $MEDIAWIKI_DIR ]; then
     # Migrate files from the old version
     cp "${OLD_DIR}/LocalSettings.php" "${NEW_DIR}";
 
-    if [ -e $OLD_EXTRA_CONFIG ]; then
-	cp "${OLD_EXTRA_CONFIG}" "${EXTRA_CONFIG}";
-    fi;
-
     cp "${OLD_DIR}/images" "${NEW_DIR}" -R;
+
+    # Overwrite SteepSettings.php
+    cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";        
 
 else
     rm -f "${NEW_DIR}/LocalSettings.php";

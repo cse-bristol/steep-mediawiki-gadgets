@@ -63,8 +63,6 @@
 a.content-action-link {
     font-size: x-large;
     display: block;
-    width: 1em;
-    height: 1em;
     text-decoration: none;
     color: grey;
 }
@@ -77,3 +75,40 @@ a.content-action-link {
 .content-action-link:hover {
     color: darkgrey;
 }
+
+#ca-talk a:after {
+    content: "Talk";
+}
+
+#ca-ve-edit a:after {
+    content: "Edit";
+}
+
+#ca-history a:after {
+    content: "History";
+}
+
+#ca-watch a:after {
+    content: "Watch";
+}
+
+#ca-unwatch a:after {
+    content: "Unwatch";
+}
+
+#ca-delete a:after {
+    content: "Delete";
+}
+
+#ca-move a:after {
+    content: "Move";
+}
+
+#ca-protect a:after {
+    content: "Protect";
+}
+
+#ca-purge a:after {
+    content: "Refresh";
+}
+

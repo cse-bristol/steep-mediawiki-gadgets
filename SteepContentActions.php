@@ -85,8 +85,7 @@ class SteepContentActions {
 	array(
 	  'class' => ($data['class'] . ' ' ?: '') . 'content-action-link',
 	  'href' => $data['href']
-	),
-	$tab[0]
+	)
       )
     );
   }

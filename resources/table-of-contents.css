@@ -3,7 +3,7 @@ We would like the table of contents to display as a table.
 
 However, Mediawiki renders it as nested lists, so this css is quite complicated.
  */
-#toc {
+#table-of-contents {
     background-color: white;
     position: relative;
     left: -13em;
@@ -12,7 +12,7 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
     height: 0;
 }
 
-#toc > ul {
+#table-of-contents > ul {
     width: 13em;
     transition: opacity 0.3s;
 }
@@ -37,7 +37,7 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
 }
 
 .toctoggle {
-    color: transparent;
+    display: block;
     position: relative;
     width: 0;
     height: 0;
@@ -47,25 +47,28 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
     transition: left 0.3s;
 }
 
-.toctoggle {
-    background-color: grey;
-}
-
 .tochidden .toctoggle {
     left: 3em;
-    background-color: black;
 }
 
-.tochidden .toctoggle a {
+.toctoggle:after {
+    content: "hide";
+    background-color: grey;
     color: white;
 }
 
-#toc ul {
+.tochidden .toctoggle:after {
+    content: "show";
+    background-color: black;
+    color: white;    
+}
+
+#table-of-contents ul {
     list-style-type: none;
     margin: 0 !important;
 }
 
-#toc ul a {
+#table-of-contents ul a {
     color: grey;
     text-decoration: none;
     font-weight: bold;

@@ -54,7 +54,6 @@
 	    ],
 	    "position": "top",
 	    "dependencies": [
-		"mediawiki.toc",
 		"mediawiki.cookie"
 	    ]
 	}

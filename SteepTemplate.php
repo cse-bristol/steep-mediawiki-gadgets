@@ -121,7 +121,7 @@ class SteepTemplate extends BaseTemplate {
       'div',
       array(
 	'id' => 'content',
-	'class' => 'mw-body' . ($this->hasHiddenContents() ? ' shrunk' : '')
+	'class' => 'mw-body' . (($this->hasContents && (!$this->contentsHidden)) ? ' shrunk' : '')
       ),
       $this->title() . $this->bodyContent()
     );
@@ -135,25 +135,6 @@ class SteepTemplate extends BaseTemplate {
       ),
       $this->get('title')
     );
-  }
-
-  function hasContents() {
-    if (!defined($this->hasContents)) {
-      $this->hasContents = (preg_match('/id="toc"/', $this->get('bodytext')) === 1);
-    } 
-    
-    return $this->hasContents;
-  }
-
-  function contentsHidden() {
-    return $this->get('hidetoc') == 1;
-  }
-
-  /*
-     This page has enough sections to have a table of contents, but the user has hidden it.
-   */
-  function hasHiddenContents() {
-    return $this->hasContents() && $this->contentsHidden();
   }
 
   function bodyContent() {
@@ -170,7 +151,17 @@ class SteepTemplate extends BaseTemplate {
   function bodyText() {
     $text = $this->get('bodytext');
 
-    if ($this->hasHiddenContents()) {
+    /*
+       We rename this to prevent mediawiki.toc.js from fiddling with it.
+     */
+    $text = preg_replace(
+      '/id=\"toc/',
+      'id="table-of-contents',
+      $text,
+      1
+    );
+
+    if ($this->hasContents && $this->contentsHidden) {
       /*
 	 Add the tochidden class.
        */
@@ -223,6 +214,9 @@ class SteepTemplate extends BaseTemplate {
   }
 
   public function execute() {
+    $this->hasContents = (preg_match('/id="toc"/', $this->get('bodytext')) === 1);
+    $this->contentsHidden = $this->haveData('hidetoc') && ($this->get('hidetoc') == 1);
+    
     $this->navbar = new SteepNavbar($this->get('sitename'), $this->get('logopath'), $this->data['nav_urls']['mainpage']['href'], $this->translator);
     $this->contentActions = new SteepContentActions($this->get('content_actions'));
     
@@ -231,7 +225,7 @@ class SteepTemplate extends BaseTemplate {
     echo Html::rawElement(
       'div',
       array(
-	'class' => 'container' . ($this->hasHiddenContents() ? '' : ' clutter')
+	'class' => 'container' . (($this->hasContents && $this->contentsHidden) ? '' : ' clutter')
       ),
       $this->top() . $this->bottom()
     );

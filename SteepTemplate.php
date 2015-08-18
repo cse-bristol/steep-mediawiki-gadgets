@@ -105,7 +105,7 @@ class SteepTemplate extends BaseTemplate {
     return Html::rawElement(
       'form',
       array(
-	'ie' => 'searchform',
+	'id' => 'searchform',
 	'action' => $this->get('wgScript')
       ),
       $input . $this->makeSearchInput(array(

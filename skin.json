@@ -22,8 +22,14 @@
 	"SkinSteep": "SkinSteep.php",
 	"SteepTemplate": "SteepTemplate.php",
 	"SteepNavbar": "SteepNavbar.php",
-	"SteepContentActions": "SteepContentActions.php"
+	"SteepContentActions": "SteepContentActions.php",
+	"CategoryTable": "CategoryTable.php"
     },
+
+    "Hooks": {
+	"CategoryPageView": "CategoryTable::drawCategoryAsTable"
+    },
+
     "ResourceModules": {
 	"skins.steep.styles": {
 	    "position": "top",

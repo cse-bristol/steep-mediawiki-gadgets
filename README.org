@@ -1,20 +1,23 @@
-* Steep Mediawiki Gadgets
-Adds buttons to Mediawiki's Visual Editor to allow you to insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]].
-
 Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/][Steep Project]].
 
 [[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
 
+* Steep VisualEditor Extension
+Adds buttons to Mediawiki's Visual Editor to allow you to insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]].
+
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
 
-** TODO Better display in Visual Editor
+*** TODO Better display in Visual Editor
 Having added a process-model or map to the document, at present you get a little snippet of XML.
 
 It would be better if this was a GUI control which allowed you to change aspects of that link, or remove it entirely.
 
-** Dependencies
- * Mediawiki v1.24.0.
- * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_24 branch.
+* TODO Steep Skin
+Reskins Mediawiki to have fewer controls, and to support a projects structure based around the Category:Project page.
+
+* Dependencies
+ * Mediawiki v1.25.1
+ * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_25 branch.
  * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Note that this does not require the Parsoid extension be installed into Mediawiki.
  * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
 
@@ -22,14 +25,25 @@ The Steep Project also uses [[https://semantic-mediawiki.org/][Semantic Mediawik
 
 Verify your Mediawiki plugins by looking at the Special:Version page of your wiki.
 
-** Deployment
+* Deployment
 To add this extension to an existing Mediawiki installation, run the following from inside your Mediawiki directory:
-#+BEGIN_SRC
-# Checkout the code into the extensions folder.
-git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/steep-mediawiki-gadgets
+#+BEGIN_SRC sh
+  # Checkout the code into the extensions folder.
+  git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/steep-mediawiki-gadgets;
 
-# Modify LocalSettings.PHP
-echo 'require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";' >> LocalSettings.php
+  # Synlink the skin into the right place
+  ln -s -T extensions/steep-mediawiki-gadgets/steep-skin skins/Steep;
+#+END_SRC
+
+Then modify your LocalSettings.php to include the following (replace any existing wfLoadSkins call):
+#+BEGIN_SRC php
+  require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";
+
+  wfLoadSkins(array(
+      'Steep',
+      'Vector'
+  ));
+  $wgDefaultSkin = "steep";
 #+END_SRC
 
 ** Scripts

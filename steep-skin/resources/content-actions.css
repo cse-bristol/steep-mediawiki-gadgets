@@ -1,0 +1,114 @@
+.content-actions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 5em;
+    right: 2em;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+
+    /* Cross-browser disable text selection. */
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.clutter .content-actions {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.content-action {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.content-submenu {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.content-submenu-expander {
+    background-color: white;
+    cursor: default;
+}
+
+.content-submenu-wrapper {
+    overflow: hidden;
+}
+
+.content-submenu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    transform: translateY(-110%);
+    transition: transform 1s;
+}
+
+.content-submenu:hover .content-submenu-list {
+    transform: none;
+}
+
+.content-submenu-list .content-action {
+    display: block;
+}
+
+a.content-action-link {
+    font-size: x-large;
+    display: block;
+    text-decoration: none;
+    color: grey;
+}
+
+.content-action-link.selected {
+    color: black;
+    pointer-events: none;
+}
+
+.content-action-link:hover {
+    color: darkgrey;
+}
+
+#ca-talk a:after {
+    content: "Talk";
+}
+
+#ca-ve-edit a:after {
+    content: "Edit";
+}
+
+#ca-history a:after {
+    content: "History";
+}
+
+#ca-watch a:after {
+    content: "Watch";
+}
+
+#ca-unwatch a:after {
+    content: "Unwatch";
+}
+
+#ca-delete a:after {
+    content: "Delete";
+}
+
+#ca-move a:after {
+    content: "Move";
+}
+
+#ca-protect a:after {
+    content: "Protect";
+}
+
+#ca-purge a:after {
+    content: "Refresh";
+}
+

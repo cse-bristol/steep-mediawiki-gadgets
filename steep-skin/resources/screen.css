@@ -1,0 +1,59 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%
+}
+
+.container {
+    min-height: 100%;
+    display: table;
+    margin-left: -13em;
+    transition: margin-left 0.3s;
+}
+
+.container.clutter {
+    margin-left: 0;
+}
+
+.top {
+    display: table-row;
+    height: 100%;
+}
+
+.bottom {
+    display: table-row;    
+}
+
+.left {
+    width: 15em;
+    display: table-cell;
+}
+
+.bottom .left {
+    padding-bottom: 2em;
+}
+
+/*
+Everything other than the navbar.
+ */
+.right {
+    width: 100%;
+    display: table-cell;
+    padding: 0 2em 2em 2em;    
+}
+
+.top .right {
+    vertical-align: top;
+}
+
+.bottom .right {
+    vertical-align: bottom;
+    color: grey;
+}
+
+.left.hidden {
+    margin-left: -15em;
+}

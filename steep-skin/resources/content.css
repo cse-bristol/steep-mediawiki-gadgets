@@ -1,0 +1,25 @@
+#first-heading {
+    vertical-align: bottom;
+    margin: 1em 0 0.2em 0;
+    border-bottom: 1px solid grey;
+    wdith: 100%;
+}
+
+.patrollink {
+    display: none;
+}
+
+#content {
+    transition: margin-left 0.3s;
+    transition: width 0.3s;
+    width: 80%;
+    margin: auto;
+}
+
+.clutter #content {
+    width: auto;
+}
+
+.clutter #content.shrunk {
+    margin-left: 12em;
+}

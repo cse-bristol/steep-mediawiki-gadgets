@@ -24,10 +24,9 @@
 
 	    makeResult = function(value) {
  		return new OO.ui.OptionWidget(
-		    value,
 		    {
-			// Ensure we have a String for the label.
-			label: "" + value.name
+			data: " " + value.name,
+			label: " " + value.name
 		    }
 		);
 	    };
@@ -98,7 +97,6 @@
 		    	.getSurface()
 		    	.getModel()
 		    	.getFragment()
-		    	.collapseRangeToEnd()
 		    	.insertContent(
 		    	    model
 		    	);
@@ -155,10 +153,7 @@
 				]);
 			    }
 			    
-			    search.results.addItems(
-				results.map(makeResult)
-			    );
-			    
+			    search.results.addItems(results.map(makeResult));
 			} else {
 			    // Noop, our search is out of date.
 			}

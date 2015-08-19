@@ -1,0 +1,72 @@
+{
+    "name": "Steep",
+    "author": [
+	"Glenn Searby"
+    ],
+    "url": "https://github.com/cse-bristol/steep-skin",
+    "descriptionmsg": "steepskin-desc",
+    "namemsg": "steepskin-name",
+    "license-name": "MIT",
+    "type": "skin",
+    "ConfigRegistry": {
+    },
+    "ValidSkinNames": {
+	"steep": "Steep"
+    },
+    "MessagesDirs": {
+	"Steep": [
+	    "i18n"
+	]
+    },
+    "AutoloadClasses": {
+	"SkinSteep": "SkinSteep.php",
+	"SteepTemplate": "SteepTemplate.php",
+	"SteepNavbar": "SteepNavbar.php",
+	"SteepContentActions": "SteepContentActions.php",
+	"CategoryTable": "CategoryTable.php"
+    },
+
+    "Hooks": {
+	"CategoryPageView": "CategoryTable::drawCategoryAsTable"
+    },
+
+    "ResourceModules": {
+	"skins.steep.styles": {
+	    "position": "top",
+	    "styles": {
+		"screen.css": {
+		    "media": "screen"
+		},
+		"navbar.css": {
+		    "media": "screen"
+		},
+		"user-tools.css": {
+		    "media": "screen"
+		},
+		"content-actions.css": {
+		    "media": "screen"
+		},
+		"content.css": {
+		    "media": "screen"
+		},
+		"table-of-contents.css": {
+		    "media": "screen"
+		}		
+	    }
+	},
+	"skins.steep.js": {
+	    "scripts": [
+		"table-of-contents.js"
+	    ],
+	    "position": "top",
+	    "dependencies": [
+		"mediawiki.cookie"
+	    ]
+	}
+    },
+    "ResourceFileModulePaths": {
+	"localBasePath": "resources",
+	"remoteSkinPath": "Steep"
+    },    
+    "manifest_version": 1
+}

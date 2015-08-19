@@ -1,0 +1,32 @@
+.navbar {
+    background-color: black;
+}
+
+.navbar a {
+    display:block;    
+    text-decoration: none;
+    text-align: center;
+}
+
+.navbar a:hover {
+    color: green;
+}
+
+.upper-nav {
+    display: table-row;
+    height: 100%;
+}
+
+.nav-image-link {
+    padding: 1em;    
+    color: white;
+}
+
+.lower-nav {
+    padding-bottom: 2em;
+}
+
+.nav-text-link {
+    padding: 0.2em;
+    color: slategray;
+}

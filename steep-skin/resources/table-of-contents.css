@@ -1,0 +1,86 @@
+/*
+We would like the table of contents to display as a table.
+
+However, Mediawiki renders it as nested lists, so this css is quite complicated.
+ */
+#table-of-contents {
+    background-color: white;
+    position: relative;
+    left: -13em;
+    top: -4em;
+    width: 0;
+    height: 0;
+}
+
+#table-of-contents > ul {
+    width: 13em;
+    transition: opacity 0.3s;
+}
+
+.tochidden > ul {
+    opacity: 0;    
+}
+
+#toctitle h2 {
+    font-weight: bold;
+    font-size: large;
+    color: grey;
+    text-align: left;
+    padding: 0;
+    margin-top: 2em;
+
+    transition: opacity 0.3s;
+}
+
+.tochidden #toctitle h2 {
+    opacity: 0;
+}
+
+.toctoggle {
+    display: block;
+    position: relative;
+    width: 0;
+    height: 0;
+    left: 0em;
+    top: -4em;
+
+    transition: left 0.3s;
+}
+
+.tochidden .toctoggle {
+    left: 3em;
+}
+
+.toctoggle:after {
+    content: "hide";
+    background-color: grey;
+    color: white;
+}
+
+.tochidden .toctoggle:after {
+    content: "show";
+    background-color: black;
+    color: white;    
+}
+
+#table-of-contents ul {
+    list-style-type: none;
+    margin: 0 !important;
+}
+
+#table-of-contents ul a {
+    color: grey;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.tocnumber {
+    width: 2em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.toctext {
+    max-width: 10em;
+    display: inline-block;
+}

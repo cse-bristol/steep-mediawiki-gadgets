@@ -11,7 +11,7 @@ class CategoryTable extends Article {
 
   public static function hook() {
     $wgHooks['CategoryPageView'][] = 'CategoryTable::drawCategoryAsTable';
-  }  
+  }
 
   public static function drawCategoryAsTable($categoryPage) {
     $tablePage = new self(
@@ -46,18 +46,49 @@ class CategoryTable extends Article {
     return false;
   }
 
-  function el($element='div', array $attribs=array(), $contents='') {
-    $this->getContext()->getOutput()->addElement($element, $attribs, $contents);
+  function out($html) {
+    $this->getContext()->getOutput()->addHTML($html);
   }
   
   function view() {
-    $this->el(
-      'button',
-      array(
-	'id' => 'new-category-page'
-      ),
-      'New ' . $this->getTitle()->getText()
+    $this->getContext()->getOutput()->enableOOUI();
+    
+    $this->out(
+      new OOUI\ButtonWidget(
+	array(
+	  'id' => 'new-category-page',
+	  'infusable' => true,
+	  'label' => 'New ' . $this->getTitle()->getText(),
+	  'href' => '#'
+	)
+      )
     );
+
+    $this->out(
+      Html::rawElement(
+	'form',
+	array(
+	  'class' => 'search-form'
+	),
+	Html::rawElement(
+	  'input',
+	  array(
+	    'type' => 'search',
+	    'name' => 'search',
+	    'placeholder' => 'Find',
+
+	  )
+	)
+      )
+    );
+    
+    /* $this->el(
+       'button',
+       array(
+       'id' => 'new-category-page'
+       ),
+       'New ' . $this->getTitle()->getText()
+       ); */
     
     // ToDo title, new, sort, search
     

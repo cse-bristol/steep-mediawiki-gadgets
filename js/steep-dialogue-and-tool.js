@@ -23,12 +23,15 @@
 	    },
 
 	    makeResult = function(value) {
- 		return new OO.ui.OptionWidget(
-		    {
-			data: " " + value.name,
-			label: " " + value.name
-		    }
-		);
+     		return new OO.ui.OptionWidget(
+    		    {
+              data: {
+                name: value.name,
+                v: value.v
+              },
+    			    label: " " + value.name
+    		    }
+    		);
 	    };
 
 	/*

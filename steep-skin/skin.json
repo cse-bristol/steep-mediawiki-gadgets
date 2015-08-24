@@ -51,16 +51,22 @@
 		},
 		"table-of-contents.css": {
 		    "media": "screen"
-		}		
+		},
+		"search-in-category.css": {
+		    "media": "screen"
+		}
 	    }
 	},
 	"skins.steep.js": {
 	    "scripts": [
-		"table-of-contents.js"
+		"table-of-contents.js",
+		"new-document-in-category.js",
+		"search-in-category.js"
 	    ],
-	    "position": "top",
+	    "position": "bottom",
 	    "dependencies": [
-		"mediawiki.cookie"
+		"mediawiki.cookie",
+		"oojs-ui"
 	    ]
 	}
     },

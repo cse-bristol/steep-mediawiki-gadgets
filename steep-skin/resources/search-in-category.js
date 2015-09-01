@@ -34,7 +34,14 @@
 		    + "&fulltext=1";
 	    },
 	    
-	    searchForms = $('.search-form'),
+	    searchForms = $('.search-form')
+		.on('submit', function(e) {
+		    e.preventDefault();		    
+		    
+		    window.location.assign(
+		    	"?search=" + inCategory + $(this).find('input')[0].value
+		    );    
+		}),
 	    searchInputs = searchForms.find('input');
 
 	searchInputs.suggestions({

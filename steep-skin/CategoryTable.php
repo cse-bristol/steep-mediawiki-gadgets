@@ -81,22 +81,111 @@ class CategoryTable extends Article {
 	)
       )
     );
-    
-    /* $this->el(
-       'button',
-       array(
-       'id' => 'new-category-page'
-       ),
-       'New ' . $this->getTitle()->getText()
-       ); */
-    
-    // ToDo title, new, sort, search
+
+    $api = new ApiMain(
+      new DerivativeRequest( 
+        $this->getContext()->getRequest(),
+        array(
+	  'action' => 'query',
+	  'list' => 'search',
+	  'srsearch' => 'incategory:' . $this->getTitle()->getText(),
+	  'srlimit' => 10,
+	  'srnamespace' => join(
+	    '|',
+	    array(
+	      MWNamespace::getCanonicalIndex(''),
+	      MWNamespace::getCanonicalIndex('file'),
+	      MWNamespace::getCanonicalIndex('category')
+	    )
+	  )
+	),
+        true
+      )
+    );
+
+    $api->execute();
+
+    $rows = "";
+
+    foreach ($api->getResult()->getResultData()['query']['search'] as $key => $row) {
+      if (is_numeric($key)) {
+	$rows .= $this->categoryContentsRow($row);
+      }
+    }
+
+    $this->out(
+      Html::rawElement(
+	'table',
+	array(
+	  'class' => 'category-contents'
+	),
+	Html::rawElement(
+	  'tbody',
+	  array(),
+	  $rows
+	)
+      )
+    );
     
     parent::view();
 
-    // ToDo table
-    
     $this->addHelpLink('Help:Categories');
+  }
+
+  function categoryContentsRow($row) {
+    $title = Title::newFromText($row['title'], $row['ns']);
+
+    $watched = $this->getContext()->getUser()->isWatched($title);
+    
+    return Html::rawElement(
+      'tr',
+      array(),
+      join(
+	'',
+	array(
+	  $this->cell(
+	    '&nbsp;',
+	    array(
+	      'class' => 'type ' . ($title->getNSText() ?: 'Page')
+	    )
+	  ),
+	  $this->cell(
+	    Html::rawElement(
+	      'a',
+	      array(
+		'href' => $title->getLinkURL()
+	      ),
+	      $title->getText()
+	    ),
+	    array(
+	      'class' => 'link expand'
+	    )
+	  ),
+	  $this->cell(
+	    '&nbsp;',
+	    array(
+	      'class' => 'watched-status ' . ($watched ? 'watched' : 'unwatched')
+	    )
+	  ),
+	  $this->cell(
+	    $this->getContext()->getLanguage()->date(
+	      $row['timestamp']
+	    ),
+	    array(
+	      'class' => 'last-change'
+	    )
+	  )
+	)
+      )
+    );
+  }
+
+  function cell($content, $params = array()) {
+    return Html::rawElement(
+      'td',
+      $params,
+      $content
+    );
   }
 }
 

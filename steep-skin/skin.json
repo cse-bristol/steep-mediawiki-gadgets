@@ -54,7 +54,10 @@
 		},
 		"search-in-category.css": {
 		    "media": "screen"
-		}
+		},
+		"category-table.css": {
+		    "media": "screen"
+		}		
 	    }
 	},
 	"skins.steep.js": {

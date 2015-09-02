@@ -45,3 +45,16 @@
 .last-change {
     text-align: right;
 }
+
+.pagination a {
+    display: inline-block;
+    padding: 1em;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+.pagination span {
+    display: inline-block;
+    padding: 1em;
+}

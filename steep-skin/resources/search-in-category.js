@@ -51,7 +51,12 @@
 			    action: 'query',
 			    list: 'search',
 			    srsearch: inCategory + query,
-			    srlimit: maxRows
+			    srlimit: maxRows,
+			    srnamespace: [
+				mw.config.values.wgNamespaceIds[''],
+				mw.config.values.wgNamespaceIds.category,
+				mw.config.values.wgNamespaceIds.file
+			    ]
 			})
 			.done(function(data) {
 			    if (data.warnings) {
@@ -80,13 +85,15 @@
 
 	    result: {
 		render: function(text, context) {
-		    var title = new mw.Title(text.title, text.ns);
+		    var title = new mw.Title(text.title, text.ns),
+			titleText = title.getNamespacePrefix() + title.getName();
 
 		    var a = $('<a>')
+			    .addClass("search-result-" + (title.getNamespacePrefix() || "page"))
 			    .attr('href', title.getUrl())
-			    .attr('title', title.getName())
+			    .attr('title', titleText)
 			    .addClass('mw-searchSuggest-link')
-			    .text(title.getName());
+			    .text(titleText);
 
 		    this.append(a);
 		},

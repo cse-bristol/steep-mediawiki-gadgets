@@ -58,10 +58,13 @@ server {
         }
     }
 
+    # Add trailing slash.
+    location = /map {
+        return 301 $scheme://$host/map/;
+    }
+
     # A short way to get to the map.
     location /map {
-        rewrite ^/map$ $scheme://$host/map/;
-        
         rewrite ^/map/(.*)$ /energy-efficiency-planner/$1;
     }
 

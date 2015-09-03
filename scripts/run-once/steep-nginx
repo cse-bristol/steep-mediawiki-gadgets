@@ -88,6 +88,6 @@ server {
     }
 
     location = /index.html {
-        return 301 $scheme://$server_name:$server_port/wiki/
+        return 301 $scheme://$server_name:$server_port/wiki/;
     }
 }

@@ -80,11 +80,14 @@ server {
 
     # ShareJS server used by the planner and the process model. This is running on NodeJS.
     location /channel {
-        proxy_pass http://localhost:11000;
+        proxy_pass $scheme://localhost:11000;
     }
 
-    location / {
-        rewrite ^/$ /wiki/ permanent;
-        rewrite ^/index.html$ /wiki/ permanent;
+    location = / {
+        return 301 $scheme://$server_name:$server_port/wiki/;
+    }
+
+    location = /index.html {
+        return 301 $scheme://$server_name:$server_port/wiki/
     }
 }

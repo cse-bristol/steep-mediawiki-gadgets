@@ -82,4 +82,9 @@ server {
     location /channel {
         proxy_pass http://localhost:11000;
     }
+
+    location / {
+        rewrite ^/$ /wiki/ permanent;
+        rewrite ^/index.html$ /wiki/ permanent;
+    }
 }

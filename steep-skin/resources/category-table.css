@@ -1,0 +1,60 @@
+.category-contents {
+    width: 100%;
+}
+
+.category-contents td.expand {
+    width: 99%;
+}
+
+.category-contents td {
+    white-space: nowrap;
+}
+
+.type.Page:after {
+    content: "Page";
+}
+
+.type.Category:after {
+    content: "Category";
+}
+
+.type.File:after {
+    content: "File";
+}
+
+.type.process-model {
+    content: "Process Model";
+}
+
+.type.map {
+    content: "Map";
+}
+
+.link {
+}
+
+.watched-status {
+}
+
+.watched-status.watched:after {
+    content: 'W';
+    font-weight: bold;
+    text-align: center;
+}
+
+.last-change {
+    text-align: right;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 1em;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+.pagination span {
+    display: inline-block;
+    padding: 1em;
+}

@@ -50,9 +50,11 @@ class CategoryTable extends Article {
       $tablePage->page = $page;
     }
     
-    $ascending = $req->getBool('sortAscending');
-    
+    $ascending = $req->getText('sortAscending');
+   
     if (!is_null($ascending)) {
+      $ascending = ($ascending === 'true');
+      
       $tablePage->sortAscending = $ascending;
     }
 

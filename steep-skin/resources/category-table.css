@@ -58,3 +58,37 @@
     display: inline-block;
     padding: 1em;
 }
+
+#sort-category-table .oo-ui-iconElement-icon {
+    background-color: pink;
+}
+
+#sort-category-table .oo-ui-iconElement-icon:before {
+    content: "Desc";
+    position: relative;
+    top: -0.2em;
+}
+
+#sort-category-table .oo-ui-iconElement-icon:after {
+    content: "Asc";
+    position: relative;
+    top: 0.8em;
+    left: -2em;
+}
+
+#sort-category-table .oo-ui-labelElement-label {
+    margin-left: 3em;
+}
+
+#sort-category-table .oo-ui-labelElement-label:after {
+    margin-left: 1em;
+    color: green;
+}
+
+#sort-category-table .oo-ui-labelElement-label.ascending:after {
+    content: "asc";
+}
+
+#sort-category-table .oo-ui-labelElement-label.descending:after {
+    content: "desc";
+}

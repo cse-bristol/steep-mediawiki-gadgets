@@ -58,10 +58,13 @@ server {
         }
     }
 
+    # Add trailing slash.
+    location = /map {
+        return 301 $scheme://$host/map/;
+    }
+
     # A short way to get to the map.
     location /map {
-        rewrite ^/map$ $scheme://$host/map/;
-        
         rewrite ^/map/(.*)$ /energy-efficiency-planner/$1;
     }
 
@@ -80,6 +83,14 @@ server {
 
     # ShareJS server used by the planner and the process model. This is running on NodeJS.
     location /channel {
-        proxy_pass http://localhost:11000;
+        proxy_pass $scheme://localhost:11000;
+    }
+
+    location = / {
+        return 301 $scheme://$server_name:$server_port/wiki/;
+    }
+
+    location = /index.html {
+        return 301 $scheme://$server_name:$server_port/wiki/;
     }
 }

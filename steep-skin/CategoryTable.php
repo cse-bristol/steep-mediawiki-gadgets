@@ -53,7 +53,7 @@ class CategoryTable extends Article {
     }
     
     $ascending = $req->getText('sortAscending');
-   
+    
     if (!is_null($ascending)) {
       $ascending = ($ascending === 'true');
       
@@ -176,8 +176,11 @@ class CategoryTable extends Article {
   function table($searchResults) {
     $rows = "";
 
-    while ($searchResults->current()) {
-      $rows .= $this->categoryContentsRow($searchResults->current()->getData());
+    while ($current = $searchResults->current()) {
+      $rows .= $this->categoryContentsRow(
+	$current->getData(),
+	$current->getHighlights()['text'][0]
+      );
 
       $searchResults->next();
     }
@@ -195,7 +198,7 @@ class CategoryTable extends Article {
     );
   }
 
-  function categoryContentsRow($row) {
+  function categoryContentsRow($row, $highlight) {
     $title = Title::newFromText($row['title'], $row['namespace']);
 
     $watched = $this->getContext()->getUser()->isWatched($title);
@@ -213,15 +216,27 @@ class CategoryTable extends Article {
 	    )
 	  ),
 	  $this->cell(
-	    Html::rawElement(
-	      'a',
+	    join(
+	      '',
 	      array(
-		'href' => $title->getLinkURL()
-	      ),
-	      $title->getText()
+		Html::rawElement(
+		  'a',
+		  array(
+		    'href' => $title->getLinkURL()
+		  ),
+		  $title->getText()
+		),
+		Html::rawElement(
+		  'span',
+		  array(
+		    'class' => 'search-snippet'
+		  ),
+		  $highlight
+		)
+	      )
 	    ),
 	    array(
-	      'class' => 'link expand'
+	      'class' => 'title-column expand'
 	    )
 	  ),
 	  $this->cell(

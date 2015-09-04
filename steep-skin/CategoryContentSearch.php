@@ -82,6 +82,10 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
     $query->setParam('_source', $resultsType->getSourceFiltering());
     $query->setParam('fields', $resultsType->getFields());
 
+    $query->setHighlight(
+      $resultsType->getHighlightingConfiguration()
+    );
+
     $indexes = array();
 
     foreach($this->namespaces as $n) {

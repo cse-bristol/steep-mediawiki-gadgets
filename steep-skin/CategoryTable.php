@@ -42,6 +42,8 @@ class CategoryTable extends Article {
     $tablePage->setContext($categoryPage->getContext());
     $tablePage->setParserOptions($categoryPage->getParserOptions());
 
+    $tablePage->isProjectsPage = $categoryPage->getTitle() == 'Category:Projects';
+
     $req = $page = $tablePage->getContext()->getRequest();
 
     $page = $req->getInt('page');
@@ -100,7 +102,7 @@ class CategoryTable extends Article {
 	array(
 	  'id' => 'new-category-page',
 	  'infusable' => true,
-	  'label' => 'New ' . $this->getTitle()->getText(),
+	  'label' => $this->isProjectsPage ? 'New Project' : 'Add Asset',
 	  'href' => '#'
 	)
       )

@@ -13,10 +13,6 @@
 	    return titleRegex.test(text);
 	},
 
-	isCategoryPage = function() {
-	    return mw.config.values.wgNamespaceNumber === mw.config.values.wgNamespaceIds.category;
-	},
-
 	validateTitleAndSetAbilities = function(dialogue) {
 	    dialogue.actions.setAbilities({
 		create: isValidTitle(dialogue.pageTitle.getValue())
@@ -24,7 +20,7 @@
 	};
     
     mw.hook('wikipage.content').add(function(content) {
-	if (!isCategoryPage()) {
+	if (!mw.viewingCategoryPage) {
 	    return;
 	}
 

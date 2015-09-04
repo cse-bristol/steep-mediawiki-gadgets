@@ -17,6 +17,13 @@
    Allow sorting on the above columns (exept for Text snippet).
  */
 class CategoryContentSearch extends \CirrusSearch\Searcher {
+  private static $sortLookup = array(
+    'title' => 'title.keyword',
+    'latest' => 'timestamp',
+    'watched' => 'timestamp',
+    'type' => 'namespace'
+  );
+  
   public static function create($offset, $limit, $page) {
     return new self($offset, $limit, $page);
   }
@@ -47,7 +54,7 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
   /*
      Returns an Elastica\ResultSet
    */
-  function search($sortAscending) {
+  function search($sort, $sortAscending) {
     $query = Elastica\Query::create(
       /*
 	 Filter based on namespace and category.
@@ -63,14 +70,9 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
 
     $query->setFrom($this->offset);
     $query->setSize($this->limit);
-    
+
     $query->setSort(array(
-      // ToDo choose sort field
-      // title.keyword
-      // timestamp
-      // watch
-      // type
-      'timestamp' => ($sortAscending ? 'asc' : 'desc')
+      self::$sortLookup[$sort] => ($sortAscending ? 'asc' : 'desc')
     ));
 
     $resultsType = new CirrusSearch\Search\FullTextResultsType(

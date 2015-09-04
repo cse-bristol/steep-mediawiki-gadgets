@@ -19,7 +19,7 @@ class CategoryTable extends Article {
      $sort is the current sort option.
      $sortAscending is the direction of sort.
      $sortOptions are the possible sort columns.
-  */
+   */
   private $sort = 'latest';
   private $sortAscending = false;
   private static $sortOptions = array(
@@ -56,9 +56,9 @@ class CategoryTable extends Article {
       $tablePage->sortAscending = $ascending;
     }
 
-    $sort = $req->getText('sortColumn');
+    $sort = $req->getText('sort');
 
-    if ($sort && in_array($sort, $sortOptions)) {
+    if ($sort && in_array($sort, self::$sortOptions)) {
       $tablePage->sort = $sort;
     }
 
@@ -105,6 +105,10 @@ class CategoryTable extends Article {
     );
 
     $this->out(
+      $this->viewSort()
+    );
+
+    $this->out(
       Html::rawElement(
 	'form',
 	array(
@@ -128,8 +132,44 @@ class CategoryTable extends Article {
       $this
     );
 
-    $searchResults = $search->search($this->sortAscending);
+    $searchResults = $search->search($this->sort, $this->sortAscending);
 
+    $this->out(
+      $this->table($searchResults)
+    );
+
+    $this->pagination($searchResults->getTotalHits());
+    
+    parent::view();
+
+    $this->addHelpLink('Help:Categories');
+  }
+
+  function viewSort() {
+    $widget = new OOUI\DropdownInputWidget(
+      array(
+	'id' => 'sort-category-table',
+	'infusable' => true
+      )
+    );
+
+    $widget->setOptions(
+      array(
+	array('data' => 'Latest'),
+	array('data' => 'Watched'),
+	array('data' => 'Type'),
+	array('data' => 'Title')
+      )
+    );
+
+    $widget->setValue(
+      ucfirst($this->sort)
+    );
+
+    return $widget;
+  }
+
+  function table($searchResults) {
     $rows = "";
 
     while ($searchResults->current()) {
@@ -138,25 +178,17 @@ class CategoryTable extends Article {
       $searchResults->next();
     }
     
-    $this->out(
+    return Html::rawElement(
+      'table',
+      array(
+	'class' => 'category-contents'
+      ),
       Html::rawElement(
-	'table',
-	array(
-	  'class' => 'category-contents'
-	),
-	Html::rawElement(
-	  'tbody',
-	  array(),
-	  $rows
-	)
+	'tbody',
+	array(),
+	$rows
       )
     );
-
-    $this->pagination($searchResults->getTotalHits());
-    
-    parent::view();
-
-    $this->addHelpLink('Help:Categories');
   }
 
   function categoryContentsRow($row) {

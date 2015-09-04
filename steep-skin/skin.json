@@ -63,9 +63,11 @@
 	},
 	"skins.steep.js": {
 	    "scripts": [
+		"steep-utils.js",
 		"table-of-contents.js",
 		"new-document-in-category.js",
-		"search-in-category.js"
+		"search-in-category.js",
+		"sort-category-table.js"
 	    ],
 	    "position": "bottom",
 	    "dependencies": [

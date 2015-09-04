@@ -23,6 +23,7 @@
 	"SteepTemplate": "SteepTemplate.php",
 	"SteepNavbar": "SteepNavbar.php",
 	"SteepContentActions": "SteepContentActions.php",
+	"CategoryContentSearch": "CategoryContentSearch.php",
 	"CategoryTable": "CategoryTable.php"
     },
 

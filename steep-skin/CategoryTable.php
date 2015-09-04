@@ -15,6 +15,20 @@ class CategoryTable extends Article {
   // We'll show this many pages either side of the current page, if they're available.
   private $pagesToShow = 3;
 
+  /*
+     $sort is the current sort option.
+     $sortAscending is the direction of sort.
+     $sortOptions are the possible sort columns.
+  */
+  private $sort = 'latest';
+  private $sortAscending = false;
+  private static $sortOptions = array(
+    'latest',
+    'type',
+    'title',
+    'watched',
+  );
+
   public static function hook() {
     $wgHooks['CategoryPageView'][] = 'CategoryTable::drawCategoryAsTable';
   }
@@ -28,10 +42,24 @@ class CategoryTable extends Article {
     $tablePage->setContext($categoryPage->getContext());
     $tablePage->setParserOptions($categoryPage->getParserOptions());
 
-    $page = $tablePage->getContext()->getRequest()->getInt('page');
+    $req = $page = $tablePage->getContext()->getRequest();
+
+    $page = $req->getInt('page');
 
     if ($page) {
       $tablePage->page = $page;
+    }
+    
+    $ascending = $req->getBool('sortAscending');
+    
+    if (!is_null($ascending)) {
+      $tablePage->sortAscending = $ascending;
+    }
+
+    $sort = $req->getText('sortColumn');
+
+    if ($sort && in_array($sort, $sortOptions)) {
+      $tablePage->sort = $sort;
     }
 
     /*
@@ -94,38 +122,22 @@ class CategoryTable extends Article {
       )
     );
 
-    $api = new ApiMain(
-      new DerivativeRequest( 
-        $this->getContext()->getRequest(),
-        array(
-	  'action' => 'query',
-	  'list' => 'search',
-	  'srsearch' => 'incategory:' . $this->getTitle()->getText(),
-	  'srlimit' => $this->pageSize,
-	  'sroffset' => $this->pageSize * ($this->page - 1),
-	  'srnamespace' => join(
-	    '|',
-	    array(
-	      MWNamespace::getCanonicalIndex(''),
-	      MWNamespace::getCanonicalIndex('file'),
-	      MWNamespace::getCanonicalIndex('category')
-	    )
-	  )
-	),
-        true
-      )
+    $search = CategoryContentSearch::create(
+      $this->pageSize * ($this->page - 1),
+      $this->pageSize,
+      $this
     );
 
-    $api->execute();
+    $searchResults = $search->search($this->sortAscending);
 
     $rows = "";
 
-    foreach ($api->getResult()->getResultData()['query']['search'] as $key => $row) {
-      if (is_numeric($key)) {
-	$rows .= $this->categoryContentsRow($row);
-      }
-    }
+    while ($searchResults->current()) {
+      $rows .= $this->categoryContentsRow($searchResults->current()->getData());
 
+      $searchResults->next();
+    }
+    
     $this->out(
       Html::rawElement(
 	'table',
@@ -140,7 +152,7 @@ class CategoryTable extends Article {
       )
     );
 
-    $this->pagination($api->getResult()->getResultData()['query']['searchinfo']['totalhits']);
+    $this->pagination($searchResults->getTotalHits());
     
     parent::view();
 
@@ -148,7 +160,7 @@ class CategoryTable extends Article {
   }
 
   function categoryContentsRow($row) {
-    $title = Title::newFromText($row['title'], $row['ns']);
+    $title = Title::newFromText($row['title'], $row['namespace']);
 
     $watched = $this->getContext()->getUser()->isWatched($title);
     

@@ -201,59 +201,84 @@ class CategoryTable extends Article {
   function categoryContentsRow($row, $highlight) {
     $title = Title::newFromText($row['title'], $row['namespace']);
 
-    $watched = $this->getContext()->getUser()->isWatched($title);
-    
     return Html::rawElement(
       'tr',
       array(),
       join(
 	'',
 	array(
-	  $this->cell(
-	    '&nbsp;',
+	  $this->typeCell($title),
+	  $this->titleCell($title, $highlight),
+	  $this->watchedCell($title),
+	  $this->lastChangeCell($row['timestamp'])
+	)
+      )
+    );
+  }
+
+  function typeCell($title) {
+    $type = $title->getNSText() ?: 'Page';
+
+    if ($this->isProjectsPage && $type === 'Category') {
+      $type = 'Project';
+    }
+    
+    return $this->cell(
+      '&nbsp;',
+      array(
+	'class' => 'type ' . $type
+      )
+    );
+  }
+
+  function titleCell($title, $highlight) {
+    return $this->cell(
+      join(
+	'',
+	array(
+	  // Title
+	  Html::rawElement(
+	    'a',
 	    array(
-	      'class' => 'type ' . ($title->getNSText() ?: 'Page')
-	    )
-	  ),
-	  $this->cell(
-	    join(
-	      '',
-	      array(
-		Html::rawElement(
-		  'a',
-		  array(
-		    'href' => $title->getLinkURL()
-		  ),
-		  $title->getText()
-		),
-		Html::rawElement(
-		  'span',
-		  array(
-		    'class' => 'search-snippet'
-		  ),
-		  $highlight
-		)
-	      )
+	      'href' => $title->getLinkURL()
 	    ),
-	    array(
-	      'class' => 'title-column expand'
-	    )
+	    $title->getText()
 	  ),
-	  $this->cell(
-	    '&nbsp;',
+
+	  // Search 'highlight' - a relevent snippet of text from the document.
+	  Html::rawElement(
+	    'span',
 	    array(
-	      'class' => 'watched-status ' . ($watched ? 'watched' : 'unwatched')
-	    )
-	  ),
-	  $this->cell(
-	    $this->getContext()->getLanguage()->date(
-	      $row['timestamp']
+	      'class' => 'search-snippet'
 	    ),
-	    array(
-	      'class' => 'last-change'
-	    )
+	    $highlight
 	  )
 	)
+      ),
+      array(
+	'class' => 'title-column expand'
+      )
+    );
+  }
+
+  function watchedCell($title) {
+    $watched = $this->getContext()->getUser()->isWatched($title);
+    
+    return $this->cell(
+      '&nbsp;',
+      array(
+	'class' => 'watched-status ' . ($watched ? 'watched' : 'unwatched')
+      )
+    );
+  }
+
+  function lastChangeCell($timestamp) {
+    return $this->cell(
+      $this->getContext()->getLanguage()->date(
+	$timestamp
+      ),
+      array(
+	'class' => 'last-change'
       )
     );
   }

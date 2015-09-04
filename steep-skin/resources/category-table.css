@@ -48,6 +48,13 @@
     content: "Page";
 }
 
+/*
+A Project is a sub-type of Category which also belongs to Category:Projects.
+ */
+.type.Project:after {
+    content: "Project";
+}
+
 .type.Category:after {
     content: "Category";
 }

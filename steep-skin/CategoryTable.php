@@ -25,8 +25,11 @@ class CategoryTable extends Article {
   private static $sortOptions = array(
     'latest',
     'type',
-    'title',
-    'watched',
+    'title'
+    /*
+       To sort based on watch status, we'd have to index that. This would be a fairly complicated task, so I'm leaving it out for now.
+       'watched',
+     */
   );
 
   public static function hook() {
@@ -160,7 +163,10 @@ class CategoryTable extends Article {
     $widget->setOptions(
       array(
 	array('data' => 'Latest'),
-	array('data' => 'Watched'),
+	/*
+	   Watched status is not current implemented, see comment above.
+	   array('data' => 'Watched'),
+	 */
 	array('data' => 'Type'),
 	array('data' => 'Title')
       )

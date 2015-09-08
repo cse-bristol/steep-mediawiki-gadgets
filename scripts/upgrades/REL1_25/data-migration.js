@@ -57,7 +57,7 @@ mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
 		    body,
 		    function(error, result) {
 			if (error) {
-			    console.error(error);
+			    console.error(c, snapshot, error);
 			}
 			triggerEnd(c, snapshot._id);
 		    }
@@ -83,7 +83,7 @@ mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
 		    },
 		    function(error, result) {
 			if (error) {
-			    console.error(error);
+			    console.error(opsName, op, error);
 			}
 			triggerEnd(opsName, op._id);
 		    }

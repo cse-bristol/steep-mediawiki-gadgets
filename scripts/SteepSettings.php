@@ -1,6 +1,8 @@
 <?php
 
-$wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
+if ($wgLogo === "$wgResourceBasePath/resources/assets/wiki.png" || !$wgLogo) {
+  $wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
+}
 
 $wgEmergencyContact = "wiki@smartsteep.eu";
 $wgPasswordSender = "wiki@smartsteep.eu";

@@ -17,7 +17,7 @@ var mongoClient = require('mongodb').MongoClient,
 
     triggerEnd = function(coll, docName) {
 	delete todo[coll][docName];
-	if (!Object.keys(coll).length) {
+	if (!Object.keys(todo[coll]).length) {
 	    delete todo[coll];
 	}
 	if (!Object.keys(todo).length) {

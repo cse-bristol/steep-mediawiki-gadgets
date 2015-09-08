@@ -19,7 +19,8 @@ set -e;
 
 TARGET_DIR="/var/www";
 
-# The name of the branch we'll get for our skins and extensions. 
+# The name of the branch we'll get for our skins and extensions.
+# The various Steep components also have branches matching a Mediawiki version.
 REL="REL1_25";
 MEDIAWIKI_VERSION="1.25.1";
 SEMANTIC_REL="2.2.2";
@@ -33,16 +34,20 @@ PROCESS_MODEL_DIR="${TARGET_DIR}/process-model";
 MAP_DIR="${TARGET_DIR}/energy-efficiency-planner";
 SHARE_DIR="/opt/shareserver";
 SHARE_SERVICE="shareserver.service";
-
-PROCESS_MODEL_VERSION="master";
-MAP_VERSION="master";
-SHARE_VERSION="master";
+STEEP_DIR="${EXT_DIR}/steep-mediawiki-gadgets";
 
 if [ -d $MEDIAWIKI_DIR ]; then
-    echo "Upgrading existing install";
+    PREVIOUS_VERSION=$(git -C "${MEDIAWIKI_DIR}/extensions/steep-mediawiki-gadgets" branch);
+
+    # Before we had a proper versioning scheme - eliminate this section once all the Mediawiki 1.24 deployments are gone.
+    if [ "${PREVIOUS_VERSION}" = "master" ]; then
+	PREVIOUS_VERSION="REL1_24";
+    fi
+
+    echo "Upgrading from ${PREVIOUS_VERSION} to ${REL}";
     
 else
-    echo "Creating install from scratch";
+    echo "Creating ${REL} install from scratch";
     # For a fresh install, these variables must have been set:
     test -n $MYSQL_ROOT_PASS;
 
@@ -103,7 +108,8 @@ else
     cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";
 
     if [ "$CONFIRM_ACCOUNTS" = true ] ; then
-	cat 'ConfirmUsers.php' >> "${LOCAL_SETTINGS}";
+	cp 'ConfirmUsers.php' "${NEW_DIR}";
+	echo "require_once \"\$IP/ConfirmUsers.php\";" >> "${LOCAL_SETTINGS}";
     fi
 fi;
 
@@ -116,6 +122,8 @@ source "mediawiki-update.sh";
 
 echo "Upgrading and building the other Steep server-side components.";
 source "update-steep-server-components.sh";
+
+source "upgrades/upgrade.sh";
 
 echo "Pointing the symlink at the newly installed version of mediawiki.";
 sudo ln -s ${NEW_DIR} ${MEDIAWIKI_DIR} --no-target-directory;

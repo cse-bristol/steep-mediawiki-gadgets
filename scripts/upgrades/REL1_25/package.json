@@ -1,0 +1,10 @@
+{
+    "name": "steep-REL1_25-data-migration",
+    "version": "1.0.0",
+    "description": "Get data from MongoDB and put it into ElasticSearch",
+    
+    "dependencies": {
+	"livedb-elasticsearch": "git://github.com/GlennS/livedb-elasticsearch.git",
+	"mongodb": "2.0.42"
+    }
+}

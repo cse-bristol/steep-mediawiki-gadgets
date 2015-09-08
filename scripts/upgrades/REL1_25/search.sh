@@ -40,4 +40,6 @@ popd;
 php extensions/CirrusSearch/maintenance/updateSearchIndexConfig.php
 php extensions/CirrusSearch/maintenance/forceSearchIndex.php
 
-# ToDo Steep database migration
+# Install dependencies for database migration, then run it.
+npm install;
+node data-migration.js;

@@ -14,7 +14,7 @@ versionLT() {
 }
 
 for d in $(ls -d */ -v); do
-    pushd d;
+    pushd $d;
     if [ $(versionLT $PREVIOUS_VERSION $d) && [ -f upgrade.sh ] ]; then
 	echo "Running ${d} upgrade";
 	source "upgrade.sh";

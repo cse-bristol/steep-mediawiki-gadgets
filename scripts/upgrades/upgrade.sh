@@ -8,9 +8,13 @@ set -e;
 # Runs upgrade steps in the sub-folders under here.
 # Folders which are less than or equal to the $PREVIOUS_VERSION variable will not get run.
 
-# Define a function to compare versions.
+# Define functions to compare versions.
+versionLTE() {
+    [  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]
+}
+
 versionLT() {
-    [ "$1" = "$2" ] && return 1 || verlte $1 $2;
+    [ "$1" = "$2" ] && return 1 || versionLTE $1 $2;
 }
 
 for d in $(ls -d */ -v); do

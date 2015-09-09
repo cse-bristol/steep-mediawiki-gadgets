@@ -10,7 +10,7 @@ set -e;
 # First, install ElasticSearch.
 # The Debian elasticsearch package is quite old. We'll use a newer version provided by the Elasticsearch developers.
 wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -;
-echo "deb http://packages.elastic.co/elasticsearch/1.7/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-1.7.list;
+echo "deb http://packages.elastic.co/elasticsearch/1.7/debian stable main" | sudo tee /etc/apt/sources.list.d/elasticsearch-1.7.list;
 sudo aptitude update -y;
 sudo aptitude install openjdk-7-jre;
 # Make sure there's no existing ElasticSearch config.
@@ -42,10 +42,10 @@ popd > /dev/null;
 
 # Setup the indexes.
 echo "Setting up CirrusSearch indexes.";
+sleep 10;
 php "${EXT_DIR}/CirrusSearch/maintenance/updateSearchIndexConfig.php";
 php "${EXT_DIR}/CirrusSearch/maintenance/forceSearchIndex.php"
 
 # Install dependencies for database migration, then run it.
-sleep 5;
 npm install;
 node data-migration.js;

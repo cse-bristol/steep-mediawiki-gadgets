@@ -46,5 +46,6 @@ php "${EXT_DIR}/CirrusSearch/maintenance/updateSearchIndexConfig.php";
 php "${EXT_DIR}/CirrusSearch/maintenance/forceSearchIndex.php"
 
 # Install dependencies for database migration, then run it.
+sleep 5;
 npm install;
 node data-migration.js;

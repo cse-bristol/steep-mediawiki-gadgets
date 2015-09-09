@@ -71,3 +71,11 @@ $wgAutoWelcomeNewUsers = false;
 
 $wgNamespacesWithSubpages[NS_MAIN] = true;
 $wgVisualEditorSupportedSkins[] = 'steep';
+$wgDefaultSkin = "steep";
+
+# Enabled skins.
+# The following skins were automatically enabled:
+wfLoadSkins(array(
+    'Steep',
+    'Vector'
+));

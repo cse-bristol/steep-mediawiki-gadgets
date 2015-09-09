@@ -32,7 +32,7 @@ done;
 
 # Add search settings to SteepSettings.php
 cp "CirrusSettings.php" "${NEW_DIR}";
-echo "require_once \"\$IP/CirrusSettings.php\";" >> "${EXTRA_CONFIG}";
+echo "require_once \"\$IP/CirrusSettings.php\";" >> "${LOCAL_SETTINGS}";
 
 # Run composer install in Elastica (need to pushd the directory).
 echo "Installing Elasticata";

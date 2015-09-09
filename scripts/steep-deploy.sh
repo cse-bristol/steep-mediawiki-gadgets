@@ -76,6 +76,8 @@ fi;
 echo "Preparing the new version.";
 source "mediawiki-version.sh";
 
+LOCAL_SETTINGS="${NEW_DIR}/LocalSettings.php";
+
 if [ -d $MEDIAWIKI_DIR ]; then
 
     echo "Migrating existing files.";
@@ -100,7 +102,6 @@ else
     php "${NEW_DIR}/maintenance/install.php" SteepWiki "${MEDIAWIKI_ADMIN}" --server "localhost" --dbname "mediawiki" --pass "${MEDIAWIKI_ADMIN_PASS}" --installdbuser "root" --installdbpass "${MYSQL_ROOT_PASS}" --dbuser "mediawiki" --dbpass "${MYSQL_MEDIAWIKI_PASS}" --email "${ACCOUNT_CONTACT}";
 
     echo "Adding in Steep settings.";
-    LOCAL_SETTINGS="${NEW_DIR}/LocalSettings.php";
     
     echo "\$wgConfirmAccountContact=\"${ACCOUNT_CONTACT}\";" >> "${LOCAL_SETTINGS}";
     echo "\$wgServer=\"${WG_SERVER}\";" >> "${LOCAL_SETTINGS}";

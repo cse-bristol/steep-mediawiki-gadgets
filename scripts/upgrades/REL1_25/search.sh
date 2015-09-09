@@ -33,15 +33,16 @@ cp "CirrusSettings.php" "${NEW_DIR}";
 echo "require_once \"\$IP/CirrusSettings.php\";" >> "${EXTRA_CONFIG}";
 
 # Run composer install in Elastica (need to pushd the directory).
-pushd "${EXT_DIR}/Elastica";
+echo "Installing Elasticata";
+pushd "${EXT_DIR}/Elastica" > /dev/null;
 php "${NEW_DIR}/composer.phar" install --no-dev;
-popd;
+popd /dev/null;
 
 # Setup the indexes.
+echo "Setting up CirrusSearch indexes.";
 php "${EXT_DIR}/CirrusSearch/maintenance/updateSearchIndexConfig.php";
 php "${EXT_DIR}/CirrusSearch/maintenance/forceSearchIndex.php"
 
 # Install dependencies for database migration, then run it.
-
 npm install;
 node data-migration.js;

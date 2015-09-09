@@ -25,10 +25,12 @@
 	}
 
 	var newDocumentButton = OO.ui.infuse('new-category-page'),
-	    category = function() {
+	    category = (function() {
 		var title = mw.config.values.wgTitle || "";
 		return title.match(/[A-Z][a-z]*/g).join(" ").toLowerCase();
-	    }(),
+	    }()),
+
+	    isProjects = category === "projects",
 
 	    NewPageDialogue = function(config) {
 		OO.ui.ProcessDialog.call(this, config);
@@ -48,7 +50,7 @@
 	    var dialogue = this;
 
 	    this.pageTitle = new OO.ui.TextInputWidget({ 
-		placeholder: 'Name of ' + category,
+		placeholder: 'Name of ' + (isProjects ? "project" : category),
 		validate: isValidTitle
 	    });
 

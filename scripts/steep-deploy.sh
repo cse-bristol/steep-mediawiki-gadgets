@@ -119,12 +119,12 @@ pushd "${NEW_DIR}" > /dev/null;
 php composer.phar require "mediawiki/semantic-media-wiki:${SEMANTIC_REL}";
 popd > /dev/null;
 
+source "upgrades/upgrade.sh";
+
 source "mediawiki-update.sh";
 
 echo "Upgrading and building the other Steep server-side components.";
 source "update-steep-server-components.sh";
-
-source "upgrades/upgrade.sh";
 
 echo "Pointing the symlink at the newly installed version of mediawiki.";
 sudo ln -s ${NEW_DIR} ${MEDIAWIKI_DIR} --no-target-directory;

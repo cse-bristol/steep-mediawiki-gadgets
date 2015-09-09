@@ -40,11 +40,8 @@ pushd "${EXT_DIR}/Elastica" > /dev/null;
 php "${NEW_DIR}/composer.phar" install --no-dev;
 popd > /dev/null;
 
-# Setup the indexes.
-echo "Setting up CirrusSearch indexes.";
+# Ensure that the ElasticSearch service is up before we try to use it.
 sleep 10;
-php "${EXT_DIR}/CirrusSearch/maintenance/updateSearchIndexConfig.php";
-php "${EXT_DIR}/CirrusSearch/maintenance/forceSearchIndex.php"
 
 # Install dependencies for database migration, then run it.
 npm install;

@@ -1,6 +1,6 @@
 <?php
 
-if ($wgLogo === "$wgResourceBasePath/resources/assets/wiki.png" || !$wgLogo) {
+if ($wgLogo === "/wiki/resources/assets/wiki.png" || !$wgLogo) {
   $wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
 }
 

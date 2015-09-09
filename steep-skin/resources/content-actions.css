@@ -112,3 +112,17 @@ a.content-action-link {
     content: "Refresh";
 }
 
+.back-to-page {
+    text-decoration: none;
+    color: grey;
+    position: absolute;
+    top: 2em;
+    right: 1em;
+}
+
+.back-to-page:after {
+    content: "X";
+    padding-left: 1em;
+    font-size: large;
+    font-family: monospace;
+}

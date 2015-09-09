@@ -5,8 +5,9 @@
  */
 
 class SteepContentActions {
-  function __construct($actions) {
+  function __construct($actions, $viewUrl) {
     $this->actions = $actions;
+    $this->viewUrl = $viewUrl;
   }
 
   function actionExists($action) {
@@ -29,8 +30,24 @@ class SteepContentActions {
       array(
 	'class' => 'content-actions'
       ),
-      $contentActionsMenu . $this->contentActionsHamburger()
+      $contentActionsMenu . $this->contentActionsHamburger() . $this->viewLink()
     );
+  }
+
+  function viewLink() {
+    if ($this->viewUrl) {
+      return Html::rawElement(
+	'a',
+	array(
+	  'class' => 'back-to-page',
+	  'href' => $this->viewUrl
+	),
+	wfMsg('steep-view-link')
+      );
+      
+    } else {
+      return '';
+    }
   }
 
   function contentActionsHamburger() {

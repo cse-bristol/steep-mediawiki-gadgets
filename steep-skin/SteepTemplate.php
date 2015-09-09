@@ -218,7 +218,7 @@ class SteepTemplate extends BaseTemplate {
     $this->contentsHidden = $this->haveData('hidetoc') && ($this->get('hidetoc') == 1);
     
     $this->navbar = new SteepNavbar($this->get('sitename'), $this->get('logopath'), $this->data['nav_urls']['mainpage']['href'], $this->translator);
-    $this->contentActions = new SteepContentActions($this->get('content_actions'));
+    $this->contentActions = new SteepContentActions($this->get('content_actions'), $this->get('viewurl'));
     
     $this->html('headelement');
 

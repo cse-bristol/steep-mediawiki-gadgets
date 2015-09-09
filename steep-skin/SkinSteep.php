@@ -38,7 +38,16 @@ class SkinSteep extends SkinTemplate {
       'hidetoc', 
       $this->getRequest()->getCookie('hidetoc')
     );
+
+    $action = $this->getRequest()->getVal('action');
+    $isTalk = $this->getTitle()->isTalkPage();
+    $viewLink = $this->getTitle()->getSubjectPage()->getLinkURL();
     
+    $template->set(
+      'viewurl',
+      ($action === 'history' || $isTalk) ? $viewLink : ''
+    );
+   
     return $template;
   }
 }

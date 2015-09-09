@@ -98,6 +98,8 @@ class CategoryTable extends Article {
   }
   
   function view() {
+    parent::view();
+    
     $this->getContext()->getOutput()->enableOOUI();
 
     $this->out(
@@ -147,8 +149,6 @@ class CategoryTable extends Article {
 
     $this->pagination($searchResults->getTotalHits());
     
-    parent::view();
-
     $this->addHelpLink('Help:Categories');
   }
 

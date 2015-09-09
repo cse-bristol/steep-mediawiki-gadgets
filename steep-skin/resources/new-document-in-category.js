@@ -25,6 +25,7 @@
 	}
 
 	var newDocumentButton = OO.ui.infuse('new-category-page'),
+	    api = new mw.Api(),
 	    category = (function() {
 		var title = mw.config.values.wgTitle || "";
 		return title.match(/[A-Z][a-z]*/g).join(" ").toLowerCase();
@@ -71,17 +72,49 @@
 
 	    if (action === 'create') {
 		return new OO.ui.Process(function() {
-		    window.location.assign(
-			mw.config.values.wgServer
-			    + mw.config.values.wgArticlePath
-			    .replace(
-				    /\$1/,
-				encodeURIComponent(
-				    "Category:" + dialogue.pageTitle.getValue()
-				)
-			    )
-			    + "?category=" + category
-		    );
+		    var targetTitle = new mw.Title(
+			dialogue.pageTitle.getValue(),
+			mw.config.values.wgNamespaceIds.category
+		    ),
+
+			fullTitle = targetTitle.getNamespacePrefix() + targetTitle.getName(),
+			navigate = function() {
+			    window.location.assign(
+				targetTitle.getUrl()
+			    );
+			};
+
+		    api.getCategories(fullTitle)
+			.done(function(data) {
+			    if (data) {
+				var titles = data.map(function(t) {
+				    return t.getNamespacePrefix() + t.getName();
+				});
+
+				if (titles.indexOf("Category:Projects") >= 0) {
+				    // This page is already a project;
+				    console.log("already a project", titles);
+				    navigate();
+				    return;
+				}
+			    }
+
+			    api
+				.postWithEditToken({
+				    action: 'edit',
+				    title: fullTitle,
+				    summary: 'Made this Category into a Project',
+				    appendtext: '[[Category:Projects]]',
+				    watchlist: 'watch'
+				})
+				.done(function(data) {
+				    if (!data || data.result !== 'Success') {
+					console.error('Failed to make page into a project', fullTitle, data);
+				    } else {
+					navigate();
+				    }
+				});
+			});
 		});
 	    }
 	    return NewPageDialogue.parent.prototype.getActionProcess.apply(this, arguments);

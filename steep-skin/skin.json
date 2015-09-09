@@ -72,6 +72,8 @@
 	    "position": "bottom",
 	    "dependencies": [
 		"mediawiki.cookie",
+		"mediawiki.api.category",
+		"mediawiki.api.edit",
 		"oojs-ui"
 	    ]
 	}

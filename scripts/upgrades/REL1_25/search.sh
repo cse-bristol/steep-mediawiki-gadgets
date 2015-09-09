@@ -10,8 +10,11 @@ set -e;
 # First, install ElasticSearch.
 # The Debian elasticsearch package is quite old. We'll use a newer version provided by the Elasticsearch developers.
 wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -;
-echo "deb http://packages.elastic.co/elasticsearch/1.7/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-1.7.list;
+echo "deb http://packages.elastic.co/elasticsearch/1.7/debian stable main" | sudo tee /etc/apt/sources.list.d/elasticsearch-1.7.list;
 sudo aptitude update -y;
+sudo aptitude install openjdk-7-jre;
+# Make sure there's no existing ElasticSearch config.
+sudo aptitude purge elasticsearch -y;
 sudo aptitude install elasticsearch -y;
 
 # Set ElasticSearch up as a daemon.
@@ -29,16 +32,16 @@ done;
 
 # Add search settings to SteepSettings.php
 cp "CirrusSettings.php" "${NEW_DIR}";
-echo "require_once \"\$IP/CirrusSettings.php\";" >> "${EXTRA_CONFIG}";
+echo "require_once \"\$IP/CirrusSettings.php\";" >> "${LOCAL_SETTINGS}";
 
 # Run composer install in Elastica (need to pushd the directory).
-pushd "${EXT_DIR}/Elastica";
+echo "Installing Elasticata";
+pushd "${EXT_DIR}/Elastica" > /dev/null;
 php "${NEW_DIR}/composer.phar" install --no-dev;
-popd;
+popd > /dev/null;
 
-# Setup the indexes.
-php extensions/CirrusSearch/maintenance/updateSearchIndexConfig.php
-php extensions/CirrusSearch/maintenance/forceSearchIndex.php
+# Ensure that the ElasticSearch service is up before we try to use it.
+sleep 10;
 
 # Install dependencies for database migration, then run it.
 npm install;

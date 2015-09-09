@@ -10,20 +10,41 @@ set -e;
 
 # Define functions to compare versions.
 versionLTE() {
-    [  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]
+    LOWEST=$(echo -e "$1\n$2" | sort -V | head -n1);
+
+    if [ "$1" = "$LOWEST" ]; then
+	return 0;
+    else
+	return 1;
+    fi;
 }
 
 versionLT() {
-    [ "$1" = "$2" ] && return 1 || versionLTE $1 $2;
+    if [ "$1" = "$2" ]; then
+	return 1;
+    elif versionLTE $1 $2; then
+	return 0;
+    else
+	return 1;
+    fi;
 }
 
-for d in $(ls -d */ -v); do
-    pushd $d;
-    if [ $(versionLT $PREVIOUS_VERSION $d) && [ -f upgrade.sh ] ]; then
-	echo "Running ${d} upgrade";
-	source "upgrade.sh";
+echo "Running upgrades";
+pushd upgrades > /dev/null;
+# For everything in the upgrades folder.
+for d in $(ls -d * -v); do
+    # Check it's a directory.
+    if [ -d $d ]; then
+	# Check it's after the version the which was installed before.
+	if versionLT $PREVIOUS_VERSION $d; then
+	    # Check it contains an upgrade.sh file.
+	    if [ -f upgrade.sh ]; then
+		echo "Running ${d} upgrade";
+		pushd $d  > /dev/null;
+		source "upgrade.sh";
+		popd > /dev/null;
+	    fi;
+	fi;
     fi;
-    popd;
 done;
-	  
-
+popd  > /dev/null;

@@ -28,10 +28,18 @@ var mongoClient = require('mongodb').MongoClient,
 	};
     };
 
+console.log("Performing data migration", "connecting to Mongo");
 mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
+    if (error) {
+	console.erorr("connecting to mongo failed", error);
+	process.exit(1);
+    } else {
+	console.log("connected to mongo");
+    }
+    
     elasticClient.deleteMappings(function(error, result) {
 	if (error) {
-	    console.error("dropping mappings", error);
+	    console.error("dropping mappings failed", error);
 	    process.exit(1);
 	} else {
 	    elasticClient.ensureMappingsCreated(function(error, result) {
@@ -39,15 +47,21 @@ mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
 		    console.error("creating mappings", error);
 		    process.exit(1);
 		} else {
+		    if (collections.length === 0) {
+			console.log("No data found to migrate");
+			process.exit(0);
+		    }
+
 		    collections.forEach(function(c) {
 			var snapshots = db.collection(c),
 			    opsName = c + "_ops",
 			    ops = db.collection(opsName);
 
-			todo[c] = {};
-			todo[opsName] = {};
-
 			snapshots.find({}).toArray(function(error, docs) {
+			    if (docs.length) {
+				todo[c] = {};
+			    }
+			    
 			    docs.forEach(function(snapshot) {
 				todo[c][snapshot._id] = true;
 
@@ -81,6 +95,10 @@ mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
 			});
 			
 			ops.find({}).toArray(function(error, docs) {
+			    if (docs.length) {
+				todo[opsName] = {};
+			    }
+			    
 			    docs.forEach(function(op) {
 				todo[opsName][op._id] = true;
 
@@ -108,6 +126,11 @@ mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
 				);
 			    });
 			});
+
+			if (!Object.keys(todo).length) {
+			    console.log("No data found to migrate");
+			    process.exit(0);
+			}
 		    });
 		}
 	    });

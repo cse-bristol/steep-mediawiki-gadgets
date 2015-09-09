@@ -16,3 +16,8 @@ php "${NEW_DIR}/maintenance/update.php";
 
 echo "Refreshing Semantic Data";
 php "${NEW_DIR}/extensions/SemanticMediaWiki/maintenance/rebuildData.php";
+
+# Setup the indexes.
+echo "Setting up CirrusSearch indexes.";
+php "${EXT_DIR}/CirrusSearch/maintenance/updateSearchIndexConfig.php";
+php "${EXT_DIR}/CirrusSearch/maintenance/forceSearchIndex.php"

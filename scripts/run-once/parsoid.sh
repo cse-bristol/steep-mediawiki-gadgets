@@ -15,9 +15,9 @@ if ! [ -d "${PARSOID_DIR}" ]; then
 fi;
 
 sudo cp "${PARSOID_DIR}/api/localsettings.js.example" "${PARSOID_DIR}/api/localsettings.js";
-pushd "${PARSOID_DIR}";
+pushd "${PARSOID_DIR}" > /dev/null;
 sudo npm install;
-popd;
+popd > /dev/null;
 
 echo "Installing parsoid as a SystemD deamon.";
 # Hard link the daemon configuration into the config directory (SystemD won't follow soft links).

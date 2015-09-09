@@ -37,9 +37,10 @@ php "${NEW_DIR}/composer.phar" install --no-dev;
 popd;
 
 # Setup the indexes.
-php extensions/CirrusSearch/maintenance/updateSearchIndexConfig.php
-php extensions/CirrusSearch/maintenance/forceSearchIndex.php
+php "${EXT_DIR}/CirrusSearch/maintenance/updateSearchIndexConfig.php";
+php "${EXT_DIR}/CirrusSearch/maintenance/forceSearchIndex.php"
 
 # Install dependencies for database migration, then run it.
+
 npm install;
 node data-migration.js;

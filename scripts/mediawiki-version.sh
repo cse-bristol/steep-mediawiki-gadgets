@@ -16,7 +16,7 @@ sudo chown "${USER}":steep "${NEW_DIR}";
 git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $MEDIAWIKI_VERSION --depth 1;
 
 # Get PHP Composer - downloading random files from the internet without checking for a signature is a bad idea, but it's what we're stuck with.
-pushd "${NEW_DIR}";
+pushd "${NEW_DIR}" > /dev/null;
 wget http://getcomposer.org/composer.phar;
 php ./composer.phar update;
 
@@ -25,7 +25,7 @@ php ./composer.phar install --no-dev;
 
 # Install SubPageList
 php composer.phar require mediawiki/sub-page-list 1.1.2
-popd;
+popd > /dev/null;
 
 # Install Extensions
 for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSupport" "TimedMediaHandler" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox" "SyntaxHighlight_GeSHi"; do

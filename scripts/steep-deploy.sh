@@ -115,9 +115,9 @@ else
 fi;
 
 # Install Semantic Mediawiki
-pushd "${NEW_DIR}";
+pushd "${NEW_DIR}" > /dev/null;
 php composer.phar require "mediawiki/semantic-media-wiki:${SEMANTIC_REL}";
-popd;
+popd > /dev/null;
 
 source "mediawiki-update.sh";
 

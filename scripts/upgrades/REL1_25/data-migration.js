@@ -28,7 +28,13 @@ var mongoClient = require('mongodb').MongoClient,
 	};
     };
 
+console.log("Performing data migration", "connecting to Mongo";
 mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
+    if (error) {
+	console.erorr("failed connecting to mongo", error);
+	process.exit(1);
+    }
+    
     elasticClient.deleteMappings(function(error, result) {
 	if (error) {
 	    console.error("dropping mappings", error);

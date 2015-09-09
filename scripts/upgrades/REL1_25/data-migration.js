@@ -14,6 +14,8 @@ var mongoClient = require('mongodb').MongoClient,
     ],
 
     todo = {},
+    successes = 0,
+    errors = 0,
 
     triggerEnd = function(coll, docName) {
 	delete todo[coll][docName];
@@ -21,6 +23,7 @@ var mongoClient = require('mongodb').MongoClient,
 	    delete todo[coll];
 	}
 	if (!Object.keys(todo).length) {
+	    console.log("MongoDB to ElasticSearch data migration", "successes", successes, "errors", errors);
 	    process.exit(0);
 	};
     };
@@ -67,6 +70,9 @@ mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
 				    function(error, result) {
 					if (error) {
 					    console.error(c, snapshot, error);
+					    errors++;
+					} else {
+					    successes++;
 					}
 					triggerEnd(c, snapshot._id);
 				    }
@@ -93,6 +99,9 @@ mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
 				    function(error, result) {
 					if (error) {
 					    console.error(opsName, op, error);
+					    errors++;
+					} else {
+					    successes++;
 					}
 					triggerEnd(opsName, op._id);
 				    }

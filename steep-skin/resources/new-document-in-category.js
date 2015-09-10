@@ -60,9 +60,15 @@
 	    });
 
 	    this.form = new OO.ui.FormLayout({
-		items: [this.pageTitle],
-		action: 'create'
+		items: [this.pageTitle]
 	    });
+
+	    this.form
+		.$element
+		.on('submit', function(e) {
+		    e.preventDefault();
+		    dialogue.executeAction('create');
+		});
 
 	    this.$body.append(this.form.$element);
 	};

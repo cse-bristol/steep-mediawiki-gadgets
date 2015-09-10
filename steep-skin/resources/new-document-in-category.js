@@ -71,52 +71,84 @@
 	    var dialogue = this;
 
 	    if (action === 'create') {
-		return new OO.ui.Process(function() {
-		    var targetTitle = new mw.Title(
-			dialogue.pageTitle.getValue(),
-			mw.config.values.wgNamespaceIds.category
-		    ),
+		var targetTitle = new mw.Title(
+		    dialogue.pageTitle.getValue(),
+		    mw.config.values.wgNamespaceIds.category
+		),
 
-			fullTitle = targetTitle.getNamespacePrefix() + targetTitle.getName(),
-			navigate = function() {
-			    window.location.assign(
-				targetTitle.getUrl()
-			    );
-			};
+		    fullTitle = targetTitle.getNamespacePrefix() + targetTitle.getName(),
+		    navigate = function() {
+			window.location.assign(
+			    targetTitle.getUrl()
+			);
 
-		    api.getCategories(fullTitle)
-			.done(function(data) {
-			    if (data) {
-				var titles = data.map(function(t) {
-				    return t.getNamespacePrefix() + t.getName();
-				});
+			navigated = true;
+		    },
 
-				if (titles.indexOf("Category:Projects") >= 0) {
-				    // This page is already a project;
-				    console.log("already a project", titles);
-				    navigate();
-				    return;
-				}
+		    /*
+		     A little explanation of this:
+		     
+		     We're using OO.ui.Process [https://doc.wikimedia.org/oojs-ui/master/js/#!/api/OO.ui.Process-method-createStep] so that we can have asynchronous callback which update the dialogue process.
+		     
+		     However, this doesn't appear to pass the result of one async call into the next one, so I'm doing it manually by using these variables.
+		     */
+		    
+		    getCategoriesResult = null,
+		    addCategoryResult = null,
+		    navigated = false;
+
+
+		return new OO.ui.Process(
+		    function() {
+			return api.getCategories(fullTitle)
+			    .then(function(data) {
+				getCategoriesResult = data;
+				return data;
+			    });
+		    }
+		)
+		    .next(function() {
+			if (getCategoriesResult) {
+			    var titles = getCategoriesResult.map(function(t) {
+				return t.getNamespacePrefix() + t.getName();
+			    });
+
+			    if (titles.indexOf("Category:Projects") >= 0) {
+				// This page is already a project;
+				console.log("already a project", titles);
+				navigate();
+				return true;
 			    }
+			}
 
-			    api
-				.postWithEditToken({
-				    action: 'edit',
-				    title: fullTitle,
-				    summary: 'Made this Category into a Project',
-				    appendtext: '[[Category:Projects]]',
-				    watchlist: 'watch'
-				})
-				.done(function(data) {
-				    if (!data || data.result !== 'Success') {
-					console.error('Failed to make page into a project', fullTitle, data);
-				    } else {
-					navigate();
-				    }
-				});
-			});
-		});
-	    }
+			return api
+			    .postWithEditToken({
+				action: 'edit',
+				title: fullTitle,
+				summary: 'Made this Category into a Project',
+				appendtext: '[[Category:Projects]]',
+				watchlist: 'watch'
+			    })
+			    .then(function(data) {
+				addCategoryResult = data;
+				return data;
+			    });
+		    })
+		    .next(function() {
+			if (navigated) {
+			    return true;
+			}
+			
+			if (!addCategoryResult || !addCategoryResult.edit || addCategoryResult.edit.result !== 'Success') {
+			    var things = ['Failed to make page into a project', fullTitle, addCategoryResult];
+			    console.error(things);
+			    return new OO.ui.Error(things.join(' '));
+			} else {
+			    navigate();
+			    return true;
+			}
+		    });
+	    };
 	    return NewPageDialogue.parent.prototype.getActionProcess.apply(this, arguments);
 	};
 
@@ -134,5 +166,5 @@
 		    });
 	});
     });
-    
+
 }(mediaWiki, jQuery, OO));

@@ -106,7 +106,11 @@ class SteepNavbar {
 	),
 	$this->navIcon(
 	  $this->getMsg('manage-users'),
-	  '',
+	  Skin::makeNSUrl(
+	    $this->getMsg('manage-users-page'),
+	    '',
+	    NS_SPECIAL
+	  ),
 	  ''
 	)
       )

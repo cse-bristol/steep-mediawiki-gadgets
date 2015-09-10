@@ -24,7 +24,12 @@
 	"SteepNavbar": "SteepNavbar.php",
 	"SteepContentActions": "SteepContentActions.php",
 	"CategoryContentSearch": "CategoryContentSearch.php",
-	"CategoryTable": "CategoryTable.php"
+	"CategoryTable": "CategoryTable.php",
+	"SpecialManageUsers": "SpecialManageUsers.php"
+    },
+
+    "SpecialPages": {
+	"ManageUsers": "SpecialManageUsers"
     },
 
     "Hooks": {

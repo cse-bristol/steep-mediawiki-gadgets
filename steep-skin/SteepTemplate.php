@@ -101,6 +101,13 @@ class SteepTemplate extends BaseTemplate {
 	'value' => $this->get('searchTitle')
       )
     );
+
+    $search_icon = Html::rawElement(
+      'span',
+      array(
+	'class' => 'search-icon',
+      )
+    );
     
     return Html::rawElement(
       'form',
@@ -108,7 +115,7 @@ class SteepTemplate extends BaseTemplate {
 	'id' => 'searchform',
 	'action' => $this->get('wgScript')
       ),
-      $input . $this->makeSearchInput(array(
+      $search_icon . $input . $this->makeSearchInput(array(
 	'id' => 'searchInput',
 	'placeholder' => $this->getMsg('search') . ' ' . $this->get('sitename')
       ))

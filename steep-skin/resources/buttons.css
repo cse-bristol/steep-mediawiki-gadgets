@@ -1,0 +1,38 @@
+body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button,
+.mw-ui-button.mw-ui-progressive,
+.mw-ui-button.mw-ui-primary {
+	background-color: #d6eec7;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	font-family: 'fira_sanssemibold';
+	font-size: 14px;
+	padding: 10px 25px;
+	line-height: 1;
+	-webkit-transition: background-color .2s linear;
+	-moz-transition: background-color .2s linear;
+	-o-transition: background-color .2s linear;
+	-ms-transition: background-color .2s linear;
+	transition: background-color .2s linear;
+	color: #282828 !important;
+	border: 0;
+}
+
+body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover,
+.mw-ui-button.mw-ui-progressive:hover,
+.mw-ui-button.mw-ui-primary:hover {
+	background-color: #08b030;
+}
+
+body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button::before {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	content:'\006E';
+	display: inline-block;
+	margin-right: 0.5em;
+}

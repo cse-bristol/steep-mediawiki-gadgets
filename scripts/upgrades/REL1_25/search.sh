@@ -27,7 +27,7 @@ sudo systemctl restart elasticsearch;
 
 # Add extensions
 for EXTENSION in "Elastica" "CirrusSearch"; do
-    git clone "git@github.com:wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL --depth 1;
+    git clone "https://github.com/wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL --depth 1;
 done;
 
 # Add search settings to SteepSettings.php

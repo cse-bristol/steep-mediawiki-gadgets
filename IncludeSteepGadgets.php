@@ -38,6 +38,8 @@ class IncludeSteepGadgets {
 
             if (isset($args['focus'])) {
                 $focus = "&focus=" . $args['focus'];
+            } else {
+                $focus = '';
             }
             
             $iframeAttrs = array(

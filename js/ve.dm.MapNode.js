@@ -9,7 +9,7 @@ ve.dm.MapNode = function MapNode(options) {
 OO.inheritClass(ve.dm.MapNode, ve.dm.SteepNode);
 
 ve.dm.MapNode.static.matchRdfaTypes = ['mw:Extension/data-map'];
-ve.dm.MapNode.static.name = "steep-map";
+ve.dm.MapNode.static.name = "data-map";
 
 ve.dm.MapNode.static.toDataElement = function(domElements, converter) {
     var d = ve.dm.SteepNode.static.toDataElementHelper.apply(this, arguments);

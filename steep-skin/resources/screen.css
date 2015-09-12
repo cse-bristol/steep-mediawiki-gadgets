@@ -4,7 +4,8 @@ html {
 
 body {
     margin: 0;
-    height: 100%
+    height: 100%;
+	background-color: white;
 }
 
 .container {
@@ -51,7 +52,11 @@ Everything other than the navbar.
 
 .bottom .right {
     vertical-align: bottom;
-    color: grey;
+}
+
+.bottom .last-modified {
+	font-size: 0.85em;
+    color: #666;
 }
 
 .left.hidden {

@@ -214,7 +214,7 @@ class SteepTemplate extends BaseTemplate {
     return Html::rawElement(
       'div',
       array(
-	'class' => 'right'
+	'class' => 'right last-modified'
       ),
       $this->get('lastmod')
     );

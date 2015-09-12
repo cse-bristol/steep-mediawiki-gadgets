@@ -6,7 +6,7 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
 #table-of-contents {
     background-color: white;
     position: relative;
-    left: -13em;
+    left: -12em;
     top: -4em;
     width: 0;
     height: 0;
@@ -22,14 +22,13 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
 }
 
 #toctitle h2 {
-    font-weight: bold;
-    font-size: large;
-    color: grey;
+	font-size: 1.2em;
     text-align: left;
     padding: 0;
-    margin-top: 2em;
-
+    margin-top: 4em;
     transition: opacity 0.3s;
+	font-family: 'fira_sansregular';
+    color: #666;
 }
 
 .tochidden #toctitle h2 {
@@ -42,23 +41,35 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
     width: 0;
     height: 0;
     left: 0em;
-    top: -4em;
-
+    top: -6em;
     transition: left 0.3s;
+	cursor: pointer;
 }
 
 .tochidden .toctoggle {
-    left: 3em;
+    left: 2.5em;
 }
 
-.toctoggle:after {
-    content: "hide";
-    background-color: grey;
-    color: white;
+.toctoggle::after {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 20px;
+	content:'\0072';
+    background-color: #eee;
+    color: #282828;
+	padding: 10px 8px;
+	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s;
 }
 
-.tochidden .toctoggle:after {
-    content: "show";
+.toctoggle:hover::after {
+    background-color: #ddd;
+}
+
+.tochidden .toctoggle::after {
     background-color: black;
     color: white;    
 }
@@ -69,9 +80,8 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
 }
 
 #table-of-contents ul a {
-    color: grey;
+    color: #666;
     text-decoration: none;
-    font-weight: bold;
 }
 
 .tocnumber {

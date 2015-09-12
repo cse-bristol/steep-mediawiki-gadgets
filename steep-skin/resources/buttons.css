@@ -27,6 +27,7 @@ body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-but
 	background-color: #08b030;
 }
 
+/*
 body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button::before {
 	font-family: 'steep-icons';
 	font-style: normal;
@@ -36,3 +37,4 @@ body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-but
 	display: inline-block;
 	margin-right: 0.5em;
 }
+*/

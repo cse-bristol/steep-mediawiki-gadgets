@@ -57,6 +57,11 @@ class SteepNavbar {
   }
 
   public function upperNavItems () {
+    $addAssetsTitle = Title::newFromText(
+      'Upload',
+      MWNamespace::getCanonicalIndex('special')      
+    );
+
     return join(
       '',
       array(
@@ -87,7 +92,7 @@ class SteepNavbar {
 	),
 	$this->navIcon(
 	  $this->getMsg('add-assets'),
-	  '',
+	  $addAssetsTitle->getLinkUrl(),
 	  ''
 	),
 	$this->navIcon(
@@ -101,7 +106,11 @@ class SteepNavbar {
 	),
 	$this->navIcon(
 	  $this->getMsg('manage-users'),
-	  '',
+	  Skin::makeNSUrl(
+	    $this->getMsg('manage-users-page'),
+	    '',
+	    NS_SPECIAL
+	  ),
 	  ''
 	)
       )

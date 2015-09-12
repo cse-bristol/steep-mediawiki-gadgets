@@ -22,6 +22,20 @@ ve.dm.SteepNode.static.matchTagNames = ['iframe'];
 ve.dm.SteepNode.static.isContent = true;
 ve.dm.SteepNode.static.enableAboutGrouping = true;
 
+ve.dm.SteepNode.static.toDomElements =  function ( dataElement, doc ) {
+    if ( this.matchTagNames && dataElement.type == this.name) {
+	        var processModel = doc.createElement ( this.name )
+
+	        processModel.setAttribute("name", dataElement.name);
+	        processModel.setAttribute("version", dataElement.v);
+	        processModel.setAttribute("width", dataElement.width);
+	        processModel.setAttribute("height", dataElement.height);
+	        
+	        return [processModel];
+    }
+    throw new Error( 've.dm.Model subclass must match a single tag name or implement toDomElements' );
+};
+
 ve.dm.SteepNode.static.toDataElementHelper = function(domElements, converter) {
     var iframe = domElements[0],
 	data = JSON.parse(

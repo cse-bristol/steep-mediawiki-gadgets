@@ -24,7 +24,12 @@
 	"SteepNavbar": "SteepNavbar.php",
 	"SteepContentActions": "SteepContentActions.php",
 	"CategoryContentSearch": "CategoryContentSearch.php",
-	"CategoryTable": "CategoryTable.php"
+	"CategoryTable": "CategoryTable.php",
+	"SpecialManageUsers": "SpecialManageUsers.php"
+    },
+
+    "SpecialPages": {
+	"ManageUsers": "SpecialManageUsers"
     },
 
     "Hooks": {
@@ -64,8 +69,15 @@
 	"skins.steep.js": {
 	    "scripts": [
 		"steep-utils.js",
+		
 		"table-of-contents.js",
+
 		"new-document-in-category.js",
+		"new-project-dialogue.js",
+		"add-asset-dialogue.js",
+		"new-document-in-category-button.js",
+
+		
 		"search-in-category.js",
 		"sort-category-table.js"
 	    ],

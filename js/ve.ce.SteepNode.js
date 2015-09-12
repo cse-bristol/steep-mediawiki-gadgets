@@ -6,17 +6,16 @@ ve.ce.SteepNode = function SteepNode(model, config) {
     ve.ce.LeafNode.call(this, model, config);
 
     this.$element = $('<iframe/>')
-	.attr('src', this.buildSrc(model))
-	.css("overflow", "hidden");
+        .attr('typeof', model.type)
+	      .attr('src', this.buildSrc(model))
+	      .css("overflow", "hidden");
 
     if (model.width) {
-	this.$element
-	    .css("width", model.width);
+	      this.$element.css("width", model.width);
     }
 
     if (model.height) {
-	this.$element
-	    .css("height", model.height);
+	      this.$element.css("height", model.height);
     }
 };
 

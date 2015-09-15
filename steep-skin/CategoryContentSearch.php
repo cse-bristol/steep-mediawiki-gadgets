@@ -20,9 +20,11 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
   private static $sortLookup = array(
     'title' => 'title.keyword',
     'latest' => 'timestamp',
-    'watched' => 'timestamp',
     'type' => 'namespace'
   );
+
+  private static $steepIndex = 'share';
+  private static $steepType = 'snapshot';
   
   public static function create($offset, $limit, $page) {
     return new self($offset, $limit, $page);
@@ -55,16 +57,59 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
      Returns an Elastica\ResultSet
    */
   function search($sort, $sortAscending) {
-    $query = Elastica\Query::create(
+    $indexes = array();
+
+    foreach($this->namespaces as $n) {
+      /*
+      It's not clear where the "_first" is actually supposed to come from, but it's present in te index.
+       */
+      $indexes[] = $this->indexBaseName . "_" . CirrusSearch\Connection::getIndexSuffixForNamespace($n) . "_". "first";
+    }
+
+    $indexes = array_unique($indexes);
+
+    $indexesCopy = $indexes;
+
+    $mediawikiFilter = CirrusSearch\Search\Filters::unify(array(
       /*
 	 Filter based on namespace and category.
        */
-      
-      CirrusSearch\Search\Filters::unify(array(
 	new Elastica\Filter\Terms('namespace', $this->namespaces),
 	new Elastica\Filter\Term(array(
 	  'category.lowercase_keyword' => strtolower($this->category)
-	))
+	)),
+	new Elastica\Filter\Terms('_index', $indexesCopy)
+    ), array());
+
+    $steepFilter = CirrusSearch\Search\Filters::unify(array(
+      /*
+	 Returns Steep process-models, maps and map data which belong to this project, and aren't deleted.
+       */
+      new Elastica\Filter\Term(array(
+	'project' => $this->category
+      )),
+
+      new Elastica\Filter\Exists('data'),
+
+      new Elastica\Filter\Term(array(
+	'_type' => self::$steepType
+      )),
+
+      new Elastica\Filter\Term(array(
+	'_index' => self::$steepIndex
+      ))
+    ), array());
+
+    $filter = new Elastica\Filter\BoolFilter();
+
+    $filter.addShould($mediawikiFilter);
+    $filter.addShould($steepFilter);
+    
+
+    $query = Elastica\Query::create(
+      new \Elastica\Filter\BoolOr(array(
+	$mediawikiFilter,
+	$steepFilter
       ))
     );
 
@@ -86,14 +131,7 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
       $resultsType->getHighlightingConfiguration()
     );
 
-    $indexes = array();
-
-    foreach($this->namespaces as $n) {
-      // It's not clear where the "_first" is actually supposed to come from, but it's present in te index.
-      $indexes[] = $this->indexBaseName . "_" . CirrusSearch\Connection::getIndexSuffixForNamespace($n) . "_". "first";
-    }
-
-    $indexes = array_unique($indexes);
+    $indexes[] = self::$steepIndex;
 
     $pageType = CirrusSearch\Connection::getPageType($indexes[0], false);
 

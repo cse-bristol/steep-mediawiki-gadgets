@@ -1,0 +1,49 @@
+fieldset {
+	border: 0;
+	padding: 0;
+	margin: 1em 0;
+}
+
+fieldset legend {
+	font-weight: normal;
+	font-family: 'fira_sanssemibold';
+	font-size: 1.6em;
+}
+
+fieldset fieldset legend {
+	font-size: 1.3em;
+}
+
+td.mw-label {
+	padding-right: 0.5em;
+}
+
+td.mw-label label {
+	font-family: 'fira_sansregular';
+}
+
+input[type="submit"] {
+	background-color: #d6eec7;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	font-family: 'fira_sanssemibold';
+	font-size: 14px;
+	padding: 10px 25px;
+	line-height: 1;
+	-webkit-transition: background-color .2s linear;
+	-moz-transition: background-color .2s linear;
+	-o-transition: background-color .2s linear;
+	-ms-transition: background-color .2s linear;
+	transition: background-color .2s linear;
+	color: #282828 !important;
+	border: 0;
+}
+
+input[type="submit"]:hover {
+	background-color: #08b030;
+}
+

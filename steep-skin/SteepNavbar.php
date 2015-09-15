@@ -20,7 +20,7 @@ class SteepNavbar {
     );
   }
 
-  function navIcon ($alt, $href, $src, $text='') {
+  function navImgLink ($alt, $href, $src, $text='') {
     $img = Html::rawElement(
       'img',
       array(
@@ -45,6 +45,17 @@ class SteepNavbar {
     );
   }
 
+  function navIconLink ($text, $href, $icon) {
+    return Html::rawElement(
+      'a',
+      array(
+	'href' => $href,
+	'class' => 'nav-icon-link ' . $icon
+      ),
+      $text
+    );
+  }
+
   function navLink ($text, $href) {
     return Html::rawElement(
       'a',
@@ -65,67 +76,68 @@ class SteepNavbar {
     return join(
       '',
       array(
-	$this->navIcon(
+	$this->navImgLink(
 	  $this->siteName,
 	  $this->homeHref,
 	  $this->logoPath,
 	  $this->getMsg('home')
 	),
-	$this->navIcon(
+	$this->navIconLink(
 	  $this->getMsg('all-projects'),
 	  Skin::makeNSUrl(
 	    $this->getMsg('all-projects-page'),
 	    '',
 	    NS_CATEGORY
 	  ),
-	  ''
+	  'all-projects'	
 	),
-	$this->navIcon(
+	$this->navIconLink(
 	  $this->getMsg('new-process-model'),
 	  '/process-model',
-	  ''
+	  'new-process-model'	
 	),
-	$this->navIcon(
+	$this->navIconLink(
 	  $this->getMsg('new-map'),
 	  '/map',
-	  ''
+	  'new-map'	
 	),
-	$this->navIcon(
+	$this->navIconLink(
 	  $this->getMsg('add-assets'),
 	  $addAssetsTitle->getLinkUrl(),
-	  ''
+	  '',
+	  'add-assets'	
 	),
-	$this->navIcon(
+	$this->navIconLink(
 	  $this->getMsg('manage-assets'),
 	  Skin::makeNSUrl(
 	    $this->getMsg('manage-assets-page'),
 	    '',
 	    NS_SPECIAL
-	  ),	  
-	  ''
+	  ),
+	  'manage-assets'	
 	),
-	$this->navIcon(
+	$this->navIconLink(
 	  $this->getMsg('manage-users'),
 	  Skin::makeNSUrl(
 	    $this->getMsg('manage-users-page'),
 	    '',
 	    NS_SPECIAL
 	  ),
-	  ''
+	  'manage-users'	
 	)
-      )
+  )
     );
   }
 
   public function lowerNavItems () {
     return join(
       array(
-	$this->navIcon(
+	$this->navIconLink(
 	  $this->getMsg('about'),
 	  Title::newFromText(
 	    $this->getMsg('aboutpage')
 	  )->getLinkUrl(),
-	  ''
+	  'about'	
 	),
 	$this->navLink(
 	  $this->getMsg('help'),

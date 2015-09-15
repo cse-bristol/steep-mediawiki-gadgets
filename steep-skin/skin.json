@@ -40,30 +40,39 @@
 	"skins.steep.styles": {
 	    "position": "top",
 	    "styles": {
-		"screen.css": {
-		    "media": "screen"
-		},
-		"navbar.css": {
-		    "media": "screen"
-		},
-		"user-tools.css": {
-		    "media": "screen"
-		},
-		"content-actions.css": {
-		    "media": "screen"
-		},
-		"content.css": {
-		    "media": "screen"
-		},
-		"table-of-contents.css": {
-		    "media": "screen"
-		},
-		"search-in-category.css": {
-		    "media": "screen"
-		},
-		"category-table.css": {
-		    "media": "screen"
-		}		
+			"fonts.css": {
+			    "media": "screen"
+			},
+			"screen.css": {
+			    "media": "screen"
+			},
+			"navbar.css": {
+			    "media": "screen"
+			},
+			"user-tools.css": {
+			    "media": "screen"
+			},
+			"content-actions.css": {
+			    "media": "screen"
+			},
+			"content.css": {
+			    "media": "screen"
+			},
+			"table-of-contents.css": {
+			    "media": "screen"
+			},
+			"search-in-category.css": {
+			    "media": "screen"
+			},
+			"category-table.css": {
+			    "media": "screen"
+			},
+			"buttons.css": {
+			    "media": "screen"
+			},
+			"forms.css": {
+			    "media": "screen"
+			}
 	    }
 	},
 	"skins.steep.js": {

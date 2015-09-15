@@ -5,22 +5,51 @@
     text-align: right;
     text-decoration: none;
     transition: margin 0.3s;
+	font-size: 0.9em;
 }
 
 .clutter .user-tools {
-    margin-top: 0;
+    margin-top: 0.75em;
+
 }
 
 .user-tools li {
     display: inline-block;
-    padding: 0.5em;
+    padding: 0.1em 0.75em;
+}
+
+.user-tools li#pt-userpage {
+	border-right: 1px solid #ccc;
 }
 
 .user-tools a {
     text-decoration: none;
-    color: grey;
+    color: #999;
 }
 
 .user-tools a:hover {
     text-decoration: underline;
+	color: #666;
+}
+
+
+
+form#searchform,
+form.search-form {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+form#searchform input,
+form.search-form input {
+	-webkit-appearance: none;
+	border: 0;
+	height: 2em;
+}
+
+form#searchform input::before {
+	
 }

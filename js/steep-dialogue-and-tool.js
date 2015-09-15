@@ -88,7 +88,7 @@
 		    var options = {
 			name: currentSelection.name,
 			v: lockToVersionControl.$input.attr("checked") ?
-			    ' v="' + versionControl.getValue() + '"'
+			    versionControl.getValue()
 			    : null,
 			width: widthControl.getValue() + "%",
 			height: heightControl.getValue() + "px"

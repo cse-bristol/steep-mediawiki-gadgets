@@ -1,8 +1,13 @@
 #first-heading {
     vertical-align: bottom;
     margin: 1em 0 0.2em 0;
-    border-bottom: 1px solid grey;
-    wdith: 100%;
+    border-bottom: 1px solid #999;
+    width: 100%;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+	font-family: 'fira_sanssemibold';
 }
 
 .patrollink {
@@ -16,10 +21,45 @@
     margin: auto;
 }
 
+#content a {
+	color: #08b030;
+	font-family: 'fira_sansregular';
+}
+
 .clutter #content {
     width: auto;
 }
 
 .clutter #content.shrunk {
     margin-left: 12em;
+}
+
+
+
+
+
+
+ul#preftoc { 
+	list-style-type: none;
+	padding: 0 0 0.5em 0;
+	margin: 1em 0 1em 0;
+	border-bottom: 1px solid #999;
+	overflow: hidden;
+}
+
+ul#preftoc li { 
+	float: left;
+}
+
+ul#preftoc li + li { 
+	margin-left: 1em;
+}
+
+ul#preftoc li a { 
+	color: #282828;
+	text-decoration: none;
+}
+
+ul#preftoc li.selected a { 
+	color: #08b030;
 }

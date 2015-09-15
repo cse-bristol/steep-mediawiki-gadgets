@@ -27,10 +27,13 @@ ve.dm.SteepNode.static.toDomElements =  function ( dataElement, doc ) {
 	        var processModel = doc.createElement ( this.name )
 
 	        processModel.setAttribute("name", dataElement.name);
-	        processModel.setAttribute("version", dataElement.v);
 	        processModel.setAttribute("width", dataElement.width);
 	        processModel.setAttribute("height", dataElement.height);
-	        
+	   
+	        if(dataElement.v){
+		    processModel.setAttribute("version", dataElement.v);
+		}
+	
 	        return [processModel];
     }
     throw new Error( 've.dm.Model subclass must match a single tag name or implement toDomElements' );

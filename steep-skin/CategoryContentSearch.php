@@ -20,7 +20,6 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
   private static $sortLookup = array(
     'title' => 'title.keyword',
     'latest' => 'timestamp',
-    'watched' => 'timestamp',
     'type' => 'namespace'
   );
   

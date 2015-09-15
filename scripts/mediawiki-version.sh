@@ -13,7 +13,7 @@ sudo chmod g+s "${NEW_DIR}";
 sudo chown "${USER}":steep "${NEW_DIR}";
 
 # Prepares a new version of Mediawiki in a directory with the version number appended to it.
-git clone git@github.com:wikimedia/mediawiki.git $NEW_DIR --branch $MEDIAWIKI_VERSION --depth 1;
+git clone https://github.com/wikimedia/mediawiki.git $NEW_DIR --branch $MEDIAWIKI_VERSION --depth 1;
 
 # Get PHP Composer - downloading random files from the internet without checking for a signature is a bad idea, but it's what we're stuck with.
 pushd "${NEW_DIR}" > /dev/null;
@@ -29,7 +29,7 @@ popd > /dev/null;
 
 # Install Extensions
 for EXTENSION in "Cite" "Gadgets" "Interwiki" "WikiEditor" "ConfirmAccount" "VisualEditor" "LiquidThreads" "GraphViz" "MwEmbedSupport" "TimedMediaHandler" "SemanticForms" "SemanticFormsInputs" "SemanticDrilldown" "InputBox" "SyntaxHighlight_GeSHi"; do
-    git clone "git@github.com:wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL --depth 1;
+    git clone "https://github.com/wikimedia/mediawiki-extensions-${EXTENSION}.git" "${EXT_DIR}/${EXTENSION}" --branch $REL --depth 1;
 done;
 
 # R Extension http://www.mediawiki.org/wiki/Extension:R
@@ -39,14 +39,14 @@ mkdir -p "${NEW_DIR}/Rfiles";
 chmod g+w "${NEW_DIR}/Rfiles";
 
 # # IntraACL http://wiki.4intra.net/IntraACL
-# git clone "git@github.com:mediawiki4intranet/IntraACL.git" "${NEW_DIR}/extensions/IntraACL"  --depth 1;
+# git clone "https://github.com/mediawiki4intranet/IntraACL.git" "${NEW_DIR}/extensions/IntraACL"  --depth 1;
 # patch -d "${NEW_DIR}" -p1 < "${NEW_DIR}/extensions/IntraACL/patches/IntraACL-MediaWiki-${MEDIAWIKI_VERSION}.diff";
 
 # Visual Editor Core
 git -C "${EXT_DIR}/VisualEditor" submodule update --init;
 
 # Steep Extensions
-git clone "git@github.com:cse-bristol/steep-mediawiki-gadgets.git" "${STEEP_DIR}" --branch $REL --depth 1;
+git clone "https://github.com/cse-bristol/steep-mediawiki-gadgets.git" "${STEEP_DIR}" --branch $REL --depth 1;
 
 # Vector Skin
 git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector "${NEW_DIR}/skins/Vector" --branch $REL --depth 1;

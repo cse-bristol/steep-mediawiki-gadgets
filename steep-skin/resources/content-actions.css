@@ -17,6 +17,7 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+
 }
 
 .clutter .content-actions {
@@ -24,19 +25,23 @@
     pointer-events: all;
 }
 
+
 .content-action {
     display: inline-block;
     vertical-align: top;
+	margin-left: 1em;
 }
 
 .content-submenu {
     display: inline-block;
     overflow: hidden;
+	margin-left: 1em;
 }
 
 .content-submenu-expander {
     background-color: white;
     cursor: default;
+	text-indent: -5000px;
 }
 
 .content-submenu-wrapper {
@@ -61,11 +66,28 @@
 }
 
 a.content-action-link {
-    font-size: x-large;
     display: block;
     text-decoration: none;
-    color: grey;
+    color: #ababab;
 }
+
+a.content-action-link::after,
+.content-submenu-expander::before {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 20px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-indent: 0;
+}
+
+.content-submenu-expander::before {
+	content: '\006D';
+	display: block;
+    color: #ababab;
+}
+
 
 .content-action-link.selected {
     color: black;
@@ -73,43 +95,43 @@ a.content-action-link {
 }
 
 .content-action-link:hover {
-    color: darkgrey;
+    color: #08b030;
 }
 
 #ca-talk a:after {
-    content: "Talk";
+    content: "\0055";
 }
 
 #ca-ve-edit a:after {
-    content: "Edit";
+    content: "\0057";
 }
 
 #ca-history a:after {
-    content: "History";
+    content: "\0062";
 }
 
 #ca-watch a:after {
-    content: "Watch";
+    content: "\0072";
 }
 
 #ca-unwatch a:after {
-    content: "Unwatch";
+    content: "\0072";
 }
 
 #ca-delete a:after {
-    content: "Delete";
+    content: "\0053";
 }
 
 #ca-move a:after {
-    content: "Move";
+    content: "\0063";
 }
 
 #ca-protect a:after {
-    content: "Protect";
+    content: "\0070";
 }
 
 #ca-purge a:after {
-    content: "Refresh";
+    content: "\0073";
 }
 
 .back-to-page {

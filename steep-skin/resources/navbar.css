@@ -1,5 +1,5 @@
 .navbar {
-    background-color: black;
+    background-color: #282828;
 }
 
 .navbar a {
@@ -9,7 +9,7 @@
 }
 
 .navbar a:hover {
-    color: green;
+    color: #08b030;
 }
 
 .upper-nav {
@@ -17,10 +17,57 @@
     height: 100%;
 }
 
-.nav-image-link {
-    padding: 1em;    
+.nav-image-link,
+.nav-icon-link {
+    padding: 1.25em 2em;    
     color: white;
+	white-space: nowrap;
 }
+
+.nav-icon-link::before {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 30px;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.nav-icon-link.all-projects::before {
+	content:'\0071';
+	color: #1eb04d;
+}
+
+.nav-icon-link.new-process-model::before {
+	content:'\006B';
+	color: #92cdef;
+}
+
+.nav-icon-link.new-map::before {
+	content:'\0069';
+	color: #50b685;
+}
+
+.nav-icon-link.add-assets::before {
+	content:'\0042';
+	color: #d9e0ad;
+}
+
+.nav-icon-link.manage-assets::before {
+	content:'\0071';
+	color: #c2813c;
+}
+
+.nav-icon-link.manage-users::before {
+	content:'\0032';
+	color: #107728;
+}
+
+.nav-icon-link.about::before {
+	content:'\0041';
+	color: #666;
+}
+
 
 .lower-nav {
     padding-bottom: 2em;
@@ -28,5 +75,7 @@
 
 .nav-text-link {
     padding: 0.2em;
-    color: slategray;
+    color: #999999;
+	font-size: 0.9em;
 }
+

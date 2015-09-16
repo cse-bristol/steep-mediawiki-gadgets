@@ -61,7 +61,7 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
 
     foreach($this->namespaces as $n) {
       /*
-      It's not clear where the "_first" is actually supposed to come from, but it's present in te index.
+	 It's not clear where the "_first" is actually supposed to come from, but it's present in te index.
        */
       $indexes[] = $this->indexBaseName . "_" . CirrusSearch\Connection::getIndexSuffixForNamespace($n) . "_". "first";
     }
@@ -70,48 +70,49 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
 
     $indexesCopy = $indexes;
 
-    $mediawikiFilter = CirrusSearch\Search\Filters::unify(array(
-      /*
-	 Filter based on namespace and category.
-       */
+    $mediawikiFilter = CirrusSearch\Search\Filters::unify(
+      array(
+	/*
+	   Filter based on namespace and category.
+	 */
 	new Elastica\Filter\Terms('namespace', $this->namespaces),
 	new Elastica\Filter\Term(array(
 	  'category.lowercase_keyword' => strtolower($this->category)
 	)),
 	new Elastica\Filter\Terms('_index', $indexesCopy)
-    ), array());
+      ),
+      array()
+    );
 
-    $steepFilter = CirrusSearch\Search\Filters::unify(array(
-      /*
-	 Returns Steep process-models, maps and map data which belong to this project, and aren't deleted.
-       */
-      new Elastica\Filter\Term(array(
-	'project' => $this->category
-      )),
+    $steepFilter = CirrusSearch\Search\Filters::unify(
+      array(
+	/*
+	   Returns Steep process-models, maps and map data which belong to this project, and aren't deleted.
+	 */
+	new Elastica\Filter\Term(array(
+	  'project' => $this->category
+	)),
 
-      new Elastica\Filter\Exists('data'),
+	new Elastica\Filter\Exists('data'),
 
-      new Elastica\Filter\Term(array(
-	'_type' => self::$steepType
-      )),
+	new Elastica\Filter\Term(array(
+	  '_type' => self::$steepType
+	)),
 
-      new Elastica\Filter\Term(array(
-	'_index' => self::$steepIndex
-      ))
-    ), array());
+	new Elastica\Filter\Term(array(
+	  '_index' => self::$steepIndex
+	))
+      ),
+      array()
+    );
 
-    $filter = new Elastica\Filter\BoolFilter();
+    $filter = new Elastica\Filter\Bool();
 
-    $filter.addShould($mediawikiFilter);
-    $filter.addShould($steepFilter);
+    $filter->addShould($mediawikiFilter);
+    $filter->addShould($steepFilter);
     
 
-    $query = Elastica\Query::create(
-      new \Elastica\Filter\BoolOr(array(
-	$mediawikiFilter,
-	$steepFilter
-      ))
-    );
+    $query = Elastica\Query::create($filter);
 
     $query->setFrom($this->offset);
     $query->setSize($this->limit);
@@ -127,8 +128,9 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
     $query->setParam('_source', $resultsType->getSourceFiltering());
     $query->setParam('fields', $resultsType->getFields());
 
+    $highlightSource = array();
     $query->setHighlight(
-      $resultsType->getHighlightingConfiguration()
+      $resultsType->getHighlightingConfiguration($highlightSource)
     );
 
     $indexes[] = self::$steepIndex;

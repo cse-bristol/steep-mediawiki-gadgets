@@ -13,30 +13,128 @@ var mongoClient = require('mongodb').MongoClient,
 	'shape-layers'
     ],
 
-    todo = {},
     successes = 0,
     errors = 0,
 
-    triggerEnd = function(coll, docName) {
-	delete todo[coll][docName];
-	if (!Object.keys(todo[coll]).length) {
-	    delete todo[coll];
-	}
-	if (!Object.keys(todo).length) {
+    nextCollection = function(db) {
+	if (collectionsQueue.length) {
+	    var next = collectionsQueue.pop();
+	    next.f(db, next.coll);
+	    
+	} else {
 	    console.log("MongoDB to ElasticSearch data migration", "successes", successes, "errors", errors);
 	    process.exit(0);
-	};
-    };
+	}
+    }, 
+
+    traverseCollection = function(db, c, elasticWrite, makeBody) {
+	var coll = db.collection(c),
+	    cursor = coll.find({}, function(error, cursor) {
+		if (error) {
+		    console.error("getting collection from mongo failed", c, error);
+		    process.exit(1);
+		} else {
+		    var handleDoc = function(err, doc) {
+			if (err) {
+			    errors++;
+			    
+			} else if (doc === null) {
+			    nextCollection(db);
+			    
+			} else {
+			    elasticWrite(
+				c,
+				doc._id,
+				makeBody(doc),
+				function(error, result) {
+				    if (error) {
+					console.error(c, doc, error);
+					errors++;
+				    } else {
+					successes++;
+				    }
+
+				    cursor.nextObject(handleDoc);
+				}
+			    );
+			}
+		    };
+		    
+		    console.log("starting collection", c);
+		    cursor.nextObject(handleDoc);
+		}
+	    });
+    },
+
+    traverseSnapshots = function(db, coll) {
+	traverseCollection(
+	    db,
+	    coll,
+	    elasticClient.writeSnapshot,
+	    function(snapshot) {
+		var body = {
+		    v: snapshot._v,
+		    type: snapshot._type,
+		    data: {}
+		};
+
+		Object.keys(snapshot).forEach(function(k) {
+		    if (k[0] !== "_") {
+			body.data[k] = snapshot[k];
+		    }
+		});
+
+		return body;
+
+	    }
+	);
+    },
+
+    traverseOps = function(db, coll) {
+	traverseCollection(
+	    db,
+	    coll,
+	    elasticClient.writeOp,
+	    function(op) {
+		return {
+		    v: op._v,
+		    src: op.src,
+		    seq: op.seq,
+		    meta: op.m,
+		    op: op.op,
+		    create: op.create,
+		    del: op.del
+		};
+	    }
+	);
+    },
+
+    collectionsQueue = collections
+	.map(function(c) {
+	    return {
+		f: traverseSnapshots,
+		coll: c
+	    };
+	})
+	.concat(
+	    collections.map(function(c) {
+		return {
+		    f: traverseOps,
+		    coll: c + "_ops"
+		};
+	    })
+	);
+
 
 console.log("Performing data migration", "connecting to Mongo");
 mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
     if (error) {
-	console.erorr("connecting to mongo failed", error);
+	console.error("connecting to mongo failed", error);
 	process.exit(1);
     } else {
 	console.log("connected to mongo");
     }
-    
+
     elasticClient.deleteMappings(function(error, result) {
 	if (error) {
 	    console.error("dropping mappings failed", error);
@@ -47,95 +145,9 @@ mongoClient.connect('mongodb://localhost:27017/share', function(error, db) {
 		    console.error("creating mappings", error);
 		    process.exit(1);
 		} else {
-		    if (collections.length === 0) {
-			console.log("No data found to migrate");
-			process.exit(0);
-		    }
-
-		    collections.forEach(function(c) {
-			var snapshots = db.collection(c),
-			    opsName = c + "_ops",
-			    ops = db.collection(opsName);
-
-			snapshots.find({}).toArray(function(error, docs) {
-			    if (docs.length) {
-				todo[c] = {};
-			    }
-			    
-			    docs.forEach(function(snapshot) {
-				todo[c][snapshot._id] = true;
-
-				var body = {
-				    v: snapshot._v,
-				    type: snapshot._type,
-				    data: {}
-				};
-
-				Object.keys(snapshot).forEach(function(k) {
-				    if (k[0] !== "_") {
-					body.data[k] = snapshot[k];
-				    }
-				});
-				
-				elasticClient.writeSnapshot(
-				    c,
-				    snapshot._id,
-				    body,
-				    function(error, result) {
-					if (error) {
-					    console.error(c, snapshot, error);
-					    errors++;
-					} else {
-					    successes++;
-					}
-					triggerEnd(c, snapshot._id);
-				    }
-				); 
-			    });
-			});
-			
-			ops.find({}).toArray(function(error, docs) {
-			    if (docs.length) {
-				todo[opsName] = {};
-			    }
-			    
-			    docs.forEach(function(op) {
-				todo[opsName][op._id] = true;
-
-				elasticClient.writeOp(
-				    opsName,
-				    op._id,
-				    {
-					v: op._v,
-					src: op.src,
-					seq: op.seq,
-					meta: op.m,
-					op: op.op,
-					create: op.create,
-					del: op.del
-				    },
-				    function(error, result) {
-					if (error) {
-					    console.error(opsName, op, error);
-					    errors++;
-					} else {
-					    successes++;
-					}
-					triggerEnd(opsName, op._id);
-				    }
-				);
-			    });
-			});
-
-			if (!Object.keys(todo).length) {
-			    console.log("No data found to migrate");
-			    process.exit(0);
-			}
-		    });
+		    nextCollection(db);
 		}
 	    });
 	}
     });
 });
-
-

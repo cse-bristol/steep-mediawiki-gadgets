@@ -104,7 +104,6 @@ class SteepNavbar {
 	$this->navIconLink(
 	  $this->getMsg('add-assets'),
 	  $addAssetsTitle->getLinkUrl(),
-	  '',
 	  'add-assets'	
 	),
 	$this->navIconLink(

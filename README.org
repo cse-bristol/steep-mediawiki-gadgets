@@ -47,6 +47,6 @@ Then modify your LocalSettings.php to include the following (replace any existin
 #+END_SRC
 
 ** Scripts
-The file "scripts/steep-deploy.sh" can run a fresh install or upgrade of the entire Steep platform.
+The file [[file:scripts/steep-deploy.sh][steep-deploy.sh]] can run a fresh install or upgrade of the entire Steep platform.
 
-The files "scripts/steep-backup.sh" and "scripts/steep-restore.sh" do what they say.
+The files [[file:scripts/backup/steep-backup.sh][steep-backup.sh]] and [[scripts/backup/steep-restore.sh][steep-restore.sh]] do what they say.

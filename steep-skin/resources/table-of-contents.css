@@ -13,7 +13,7 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
 }
 
 #table-of-contents > ul {
-    width: 13em;
+    width: 12em;
     transition: opacity 0.3s;
 }
 

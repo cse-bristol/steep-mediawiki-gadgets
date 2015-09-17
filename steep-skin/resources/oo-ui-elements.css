@@ -1,0 +1,107 @@
+/* buttons */
+
+body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button,
+.mw-ui-button.mw-ui-progressive,
+.mw-ui-button.mw-ui-primary {
+	background-color: #d6eec7;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	font-family: 'fira_sanssemibold';
+	font-size: 14px;
+	padding: 10px 25px;
+	line-height: 1;
+	-webkit-transition: background-color .2s linear;
+	-moz-transition: background-color .2s linear;
+	-o-transition: background-color .2s linear;
+	-ms-transition: background-color .2s linear;
+	transition: background-color .2s linear;
+	color: #282828 !important;
+	border: 0;
+}
+
+body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover,
+.mw-ui-button.mw-ui-progressive:hover,
+.mw-ui-button.mw-ui-primary:hover {
+	background-color: #90d565 !important;
+}
+
+body .oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-constructive > .oo-ui-buttonElement-button,
+body .oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button {
+	background-color: #d6eec7;
+}
+
+#new-category-page .oo-ui-buttonElement-button .oo-ui-iconElement-icon {
+	display: inline-block;
+}
+
+#new-category-page .oo-ui-buttonElement-button .oo-ui-iconElement-icon::before {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	content:'\006E';
+	display: inline-block;
+	margin-right: 0.5em;
+	position: relative;
+	top: 4px;
+}
+
+
+
+
+
+
+/* insert menu map and process model */
+
+ .oo-ui-popupToolGroup .oo-ui-tool-name-process-models .oo-ui-tool-link .oo-ui-iconElement-icon::after,
+ .oo-ui-popupToolGroup .oo-ui-tool-name-maps .oo-ui-tool-link .oo-ui-iconElement-icon::after {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 20px;
+	display: block;
+	text-align: center;
+	color: black;
+}
+
+.oo-ui-popupToolGroup .oo-ui-tool-name-process-models .oo-ui-tool-link .oo-ui-iconElement-icon::after {
+	content:'\006C';
+}
+
+ .oo-ui-popupToolGroup .oo-ui-tool-name-maps .oo-ui-tool-link .oo-ui-iconElement-icon::after {
+	content:'\006A';
+}
+
+
+
+
+
+/* modal dialogue */
+
+body .oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {
+	-webkit-box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow:    0px 2px 8px 0px rgba(0, 0, 0, 0.4);
+	box-shadow:         0px 2px 8px 0px rgba(0, 0, 0, 0.4);
+}
+
+
+
+
+
+
+
+
+
+/* popup widget */
+
+body .oo-ui-popupWidget-popup {
+	-webkit-box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow:    0px 2px 8px 0px rgba(0, 0, 0, 0.4);
+	box-shadow:         0px 2px 8px 0px rgba(0, 0, 0, 0.4);
+	line-height: 1.35em;
+}
+

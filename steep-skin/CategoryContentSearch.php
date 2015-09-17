@@ -5,16 +5,16 @@
    + Pages
    + Categories
    + Files
-   + ToDo Process Models and Maps.
+   + Process Models and Maps.
 
    Return the following columns:
    + Last change
-   + ToDo Watched status
+   + Watched status (for Mediawiki items only)
    + Title
    + Text snippet
    + Type (Page/Category/...)
 
-   Allow sorting on the above columns (exept for Text snippet).
+   Allow sorting on the Title, Type and Last Change.
  */
 class CategoryContentSearch extends \CirrusSearch\Searcher {
   private static $sortTypes = array(
@@ -89,12 +89,11 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
     $steepFilter = CirrusSearch\Search\Filters::unify(
       array(
 	/*
-	   ToDo
 	   Returns Steep process-models, maps and map data which belong to this project, and aren't deleted.
 	 */
-	/* new Elastica\Filter\Term(array(
-	   'project' => $this->category
-	   )), */
+	new Elastica\Filter\Term(array(
+	  'data.project' => $this->category
+	)),
 	
 	new Elastica\Filter\Term(array(
 	  'deleted' => 'false'
@@ -170,7 +169,7 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
 
     switch ($sort) {
       case 'title':
-	return  $isSteep . " ? doc['doc_raw'].value : doc['title.keyword'].value.toLowerCase()";
+	return  $isSteep . " ? doc['doc.raw'].value : doc['title.keyword'].value.toLowerCase()";
 	
       case 'latest':
 	return $isSteep . " ? doc['_timestamp'].value : doc['timestamp'].value";

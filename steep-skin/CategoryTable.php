@@ -183,9 +183,19 @@ class CategoryTable extends Article {
     $rows = "";
 
     while ($current = $searchResults->current()) {
-      $rows .= $this->categoryContentsRow(
-	$current->getData(),
-	$current->getHighlights()['text'][0]
+      $highlights = $current->getHighlights();
+      
+      if (array_key_exists('text', $highlights)) {
+	$highlightText = $highlights['text'][0];
+	
+      } else {
+	$highlightText = '';
+      }
+
+      $rows .= $this->categorycontentsrow(
+	$current->getFields(),
+	$highlightText,
+	$current->getIndex() === CategoryContentSearch::$steepIndex
       );
 
       $searchResults->next();
@@ -204,8 +214,42 @@ class CategoryTable extends Article {
     );
   }
 
-  function categoryContentsRow($row, $highlight) {
-    $title = Title::newFromText($row['title'], $row['namespace']);
+  function categoryContentsRow($row, $highlight, $isSteep) {
+    if ($isSteep) {
+      $type = $row['collection'][0];
+
+      $titleText = $row['doc'][0];
+
+      if ($type === 'process-models') {
+	$link = '/process-model/?name=' . $titleText;
+      } else if ($type === 'maps') {
+	$link = '/map/?name=' . $map;
+      } else {
+	$link = '';
+      }
+      
+      $watched = false;
+      $timestamp = $row['_timestamp'];
+      // Convert from ElasticSearch format to a Unix timestamp...
+      $timestamp = round($timestamp / 1000);
+      // ...and then to a Mediawiki timestamp.
+      $timestamp = wfTimestamp(TS_MW, $timestamp);
+
+    } else {
+      $title = Title::newFromText($row['title'][0], $row['namespace'][0]);
+
+      $type = $title->getNSText() ?: 'Page';
+      
+      if ($this->isProjectsPage && $type === 'Category') {
+	$type = 'Project';
+      }
+
+      $titleText = $title->getText();
+      $link = $title->getLinkURL();
+
+      $watched = $this->getContext()->getUser()->isWatched($title);
+      $timestamp = $row['timestamp'][0];
+    }
 
     return Html::rawElement(
       'tr',
@@ -213,22 +257,16 @@ class CategoryTable extends Article {
       join(
 	'',
 	array(
-	  $this->typeCell($title),
-	  $this->titleCell($title, $highlight),
-	  $this->watchedCell($title),
-	  $this->lastChangeCell($row['timestamp'])
+	  $this->typeCell($type),
+	  $this->titleCell($titleText, $link, $highlight),	  
+	  $this->watchedCell($watched),
+	  $this->lastChangeCell($timestamp)
 	)
       )
     );
   }
 
-  function typeCell($title) {
-    $type = $title->getNSText() ?: 'Page';
-
-    if ($this->isProjectsPage && $type === 'Category') {
-      $type = 'Project';
-    }
-    
+  function typeCell($type) {
     return $this->cell(
       '&nbsp;',
       array(
@@ -237,7 +275,26 @@ class CategoryTable extends Article {
     );
   }
 
-  function titleCell($title, $highlight) {
+  function titleCell($title, $link, $highlight) {
+    if ($highlight) {
+      // Search 'highlight' - a relevent snippet of text from the document.
+      $highlightText = Html::rawElement(
+	'span',
+	array(
+	  'class' => 'search-snippet'
+	),
+	$highlight
+      );
+    } else {
+      $highlightText = '';
+    }
+
+    $props = array();
+
+    if ($link) {
+      $props['href'] = $link;
+    }
+		     
     return $this->cell(
       join(
 	'',
@@ -245,20 +302,11 @@ class CategoryTable extends Article {
 	  // Title
 	  Html::rawElement(
 	    'a',
-	    array(
-	      'href' => $title->getLinkURL()
-	    ),
-	    $title->getText()
+	    $props,
+	    $title
 	  ),
 
-	  // Search 'highlight' - a relevent snippet of text from the document.
-	  Html::rawElement(
-	    'span',
-	    array(
-	      'class' => 'search-snippet'
-	    ),
-	    $highlight
-	  )
+	  $highlightText
 	)
       ),
       array(
@@ -267,9 +315,7 @@ class CategoryTable extends Article {
     );
   }
 
-  function watchedCell($title) {
-    $watched = $this->getContext()->getUser()->isWatched($title);
-    
+  function watchedCell($watched) {
     return $this->cell(
       '&nbsp;',
       array(
@@ -279,10 +325,16 @@ class CategoryTable extends Article {
   }
 
   function lastChangeCell($timestamp) {
-    return $this->cell(
-      $this->getContext()->getLanguage()->date(
+    if ($timestamp) {
+      $dateString = $this->getContext()->getLanguage()->date(
 	$timestamp
-      ),
+      );
+    } else {
+      $dateString = '';
+    }
+    
+    return $this->cell(
+      $dateString,
       array(
 	'class' => 'last-change'
       )

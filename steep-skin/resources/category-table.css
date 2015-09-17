@@ -63,12 +63,16 @@ A Project is a sub-type of Category which also belongs to Category:Projects.
     content: "File";
 }
 
-.type.process-model {
+.type.process-models:after {
     content: "Process Model";
 }
 
-.type.map {
+.type.maps:after {
     content: "Map";
+}
+
+.type.shape-layers:after {
+    content: "Layer";
 }
 
 .title-column .search-snippet {

@@ -5,22 +5,30 @@
    + Pages
    + Categories
    + Files
-   + ToDo Process Models and Maps.
+   + Process Models and Maps.
 
    Return the following columns:
    + Last change
-   + ToDo Watched status
+   + Watched status (for Mediawiki items only)
    + Title
    + Text snippet
    + Type (Page/Category/...)
 
-   Allow sorting on the above columns (exept for Text snippet).
+   Allow sorting on the Title, Type and Last Change.
  */
 class CategoryContentSearch extends \CirrusSearch\Searcher {
-  private static $sortLookup = array(
-    'title' => 'title.keyword',
-    'latest' => 'timestamp',
-    'type' => 'namespace'
+  private static $sortTypes = array(
+    'title' => 'string',
+    'latest' => 'number',
+    'type' => 'string'
+  );
+
+  public static $steepIndex = 'share';
+  private static $steepType = 'snapshot';
+  private static $steepCollections = array(
+    'process-models',
+    'maps',
+    'shape-layers'
   );
   
   public static function create($offset, $limit, $page) {
@@ -54,55 +62,124 @@ class CategoryContentSearch extends \CirrusSearch\Searcher {
      Returns an Elastica\ResultSet
    */
   function search($sort, $sortAscending) {
-    $query = Elastica\Query::create(
+    $indices = array();
+
+    foreach($this->namespaces as $n) {
       /*
-	 Filter based on namespace and category.
+	 It's not clear where the "_first" is actually supposed to come from, but it's present in te index.
        */
-      
-      CirrusSearch\Search\Filters::unify(array(
+      $indices[] = $this->indexBaseName . "_" . CirrusSearch\Connection::getIndexSuffixForNamespace($n) . "_". "first";
+    }
+
+    $indices = array_unique($indices);
+
+    $mediawikiFilter = CirrusSearch\Search\Filters::unify(
+      array(
+	/*
+	   Filter based on namespace and category.
+	 */
 	new Elastica\Filter\Terms('namespace', $this->namespaces),
 	new Elastica\Filter\Term(array(
 	  'category.lowercase_keyword' => strtolower($this->category)
 	))
-      ))
+      ),
+      array()
     );
+
+    $steepFilter = CirrusSearch\Search\Filters::unify(
+      array(
+	/*
+	   Returns Steep process-models, maps and map data which belong to this project, and aren't deleted.
+	 */
+	new Elastica\Filter\Term(array(
+	  'data.project' => $this->category
+	)),
+	
+	new Elastica\Filter\Term(array(
+	  'deleted' => 'false'
+	)),
+	
+	new Elastica\Filter\Term(array(
+	  '_type' => self::$steepType
+	)),
+
+	new Elastica\Filter\Terms('collection', self::$steepCollections)
+      ),
+      array()
+    );
+
+    $filter = new Elastica\Filter\Indices($mediawikiFilter, $indices);
+    $filter->setNoMatchFilter($steepFilter);
+    
+    $query = Elastica\Query::create($filter);
 
     $query->setFrom($this->offset);
     $query->setSize($this->limit);
 
-    $query->setSort(array(
-      self::$sortLookup[$sort] => ($sortAscending ? 'asc' : 'desc')
-    ));
+    $query->setSort(
+      array(
+	'_script' => array( 
+	  /*
+	     The Mediawiki and Steep indices contain different fields in their documents.
+	     Try both the possible fields for each document.
+	   */
+	  'script' => $this->sortScript($sort),
+	  'type' => self::$sortTypes[$sort],
+	  'order' => $sortAscending ? 'asc' : 'desc'
+	)
+      )
+    );
 
     $resultsType = new CirrusSearch\Search\FullTextResultsType(
       CirrusSearch\Search\FullTextResultsType::HIGHLIGHT_ALL
     );
 
-    $query->setParam('_source', $resultsType->getSourceFiltering());
-    $query->setParam('fields', $resultsType->getFields());
+    $query->setFields(array(
+      'title',
+      'namespace',
+      'timestamp',
+      'doc',
+      'collection',
+      '_timestamp',
+      '_index'
+    ));
 
+    $highlightSource = array();
     $query->setHighlight(
-      $resultsType->getHighlightingConfiguration()
+      $resultsType->getHighlightingConfiguration($highlightSource)
     );
 
-    $indexes = array();
+    $pageType = CirrusSearch\Connection::getPageType($indices[0], false);
 
-    foreach($this->namespaces as $n) {
-      // It's not clear where the "_first" is actually supposed to come from, but it's present in te index.
-      $indexes[] = $this->indexBaseName . "_" . CirrusSearch\Connection::getIndexSuffixForNamespace($n) . "_". "first";
+    $search = new Elastica\Search($pageType->getIndex()->getClient());
+
+    $search->addIndices($indices);
+    $search->addType($pageType);
+    
+    $search->addIndex(self::$steepIndex);
+    $search->addType(self::$steepType);
+
+    return $search->search($query);
+  }
+
+  function sortScript($sort) {
+    $isSteep = "(doc['_index'].value == '" . self::$steepIndex . "')";
+
+    $parseMediawikiDate = "import java.text.SimpleDateFormat; import java.text.ParsePosition;";
+
+    switch ($sort) {
+      case 'title':
+	return  $isSteep . " ? doc['doc.raw'].value : doc['title.keyword'].value.toLowerCase()";
+	
+      case 'latest':
+	return $isSteep . " ? doc['_timestamp'].value : doc['timestamp'].value";
+
+      case 'type':
+	return $isSteep . " ? doc['collection'].value : String.valueOf(doc['namespace'].value)";
+	
+      default:
+      throw new Exception("Unknown sort " . $sort);
     }
-
-    $indexes = array_unique($indexes);
-
-    $pageType = CirrusSearch\Connection::getPageType($indexes[0], false);
-
-    $search = $pageType->createSearch($query);
-
-    foreach(array_slice($indexes, 1) as $i) {
-      $search->addIndex($i);
-    }
-
-    return $search->search();
   }
 }
 ?>

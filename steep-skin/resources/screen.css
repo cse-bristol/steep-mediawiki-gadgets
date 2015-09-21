@@ -62,3 +62,24 @@ Everything other than the navbar.
 .left.hidden {
     margin-left: -15em;
 }
+
+.eu-logo {
+    /* See http://eacea.ec.europa.eu/about/logos/eu-emblem-rules-hr.pdf */    
+    margin-top: 1em;
+    width: 100%;
+    position:relative;
+}
+
+.eu-logo .eu-funding {
+    width: 75%;
+    font-size: small;
+    font-family: Calibri, Arial, Garamond, Trebuchet, Tahoma or Verdana;
+}
+
+.eu-logo img {
+    width: 20%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-height: 1cm;
+}

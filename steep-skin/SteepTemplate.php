@@ -216,7 +216,25 @@ class SteepTemplate extends BaseTemplate {
       array(
 	'class' => 'right last-modified'
       ),
-      $this->get('lastmod')
+      $this->get('lastmod') . Html::rawElement(
+	'div',
+	array(
+	  'class' => 'eu-logo'
+	),
+	Html::rawElement(
+	  'div',
+	  array(
+	    'class' => 'eu-funding'
+	  ),
+	  'This project has received funding from the European Union’s Seventh Framework Programme for research, technological development and demonstration under grant agreement no 314277.'
+	) . Html::rawElement(
+	  'img',
+	  array(
+	    'src' => "data:image/svg+xml;charset=utf8,%3C?xml version='1.0' standalone='no'?%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='810' height='540'%3E%3Cdesc%3EEuropean flag%3C/desc%3E %3Cdefs%3E%3Cg id='s'%3E%3Cg id='c'%3E%3Cpath id='t' d='M0,0v1h0.5z' transform='translate(0,-1)rotate(18)'/%3E%3Cuse xlink:href='%23t' transform='scale(-1,1)'/%3E%3C/g%3E%3Cg id='a'%3E%3Cuse xlink:href='%23c' transform='rotate(72)'/%3E%3Cuse xlink:href='%23c' transform='rotate(144)'/%3E%3C/g%3E%3Cuse xlink:href='%23a' transform='scale(-1,1)'/%3E%3C/g%3E%3C/defs%3E %3Crect fill='%23039' width='810' height='540'/%3E%3Cg fill='%23fc0' transform='scale(30)translate(13.5,9)'%3E%3Cuse xlink:href='%23s' y='-6'/%3E%3Cuse xlink:href='%23s' y='6'/%3E%3Cg id='l'%3E%3Cuse xlink:href='%23s' x='-6'/%3E%3Cuse xlink:href='%23s' transform='rotate(150)translate(0,6)rotate(66)'/%3E%3Cuse xlink:href='%23s' transform='rotate(120)translate(0,6)rotate(24)'/%3E%3Cuse xlink:href='%23s' transform='rotate(60)translate(0,6)rotate(12)'/%3E%3Cuse xlink:href='%23s' transform='rotate(30)translate(0,6)rotate(42)'/%3E%3C/g%3E%3Cuse xlink:href='%23l' transform='scale(-1,1)'/%3E%3C/g%3E %3C/svg%3E",
+	    'alt' => 'Flag of European Union'
+	  )
+	)
+      )
     );
   }
 

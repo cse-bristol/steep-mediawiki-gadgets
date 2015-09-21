@@ -2,18 +2,28 @@
 We would like the table of contents to display as a table.
 
 However, Mediawiki renders it as nested lists, so this css is quite complicated.
- */
+*/
 #table-of-contents {
     background-color: white;
-    position: relative;
-    left: -12em;
-    top: -4em;
-    width: 0;
-    height: 0;
+    position: fixed;
+    left: 15em;
+    top: 4em;
+    transition-property: left, top;
+    transition-duration: 0.3s;
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#table-of-contents.tochidden {
+    left: 2em;
+    top: 2em;
+    overflow-y: hidden;
+    width: 4em;
 }
 
 #table-of-contents > ul {
-    width: 13em;
+    width: 12em;
     transition: opacity 0.3s;
 }
 
@@ -22,12 +32,12 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
 }
 
 #toctitle h2 {
-	font-size: 1.2em;
+    font-size: 1.2em;
     text-align: left;
     padding: 0;
     margin-top: 4em;
     transition: opacity 0.3s;
-	font-family: 'fira_sansregular';
+    font-family: 'fira_sansregular';
     color: #666;
 }
 
@@ -42,26 +52,21 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
     height: 0;
     left: 0em;
     top: -6em;
-    transition: left 0.3s;
-	cursor: pointer;
-}
-
-.tochidden .toctoggle {
-    left: 2.5em;
+    cursor: pointer;
 }
 
 .toctoggle::after {
-	font-family: 'steep-icons';
-	font-style: normal;
-	font-weight: normal;
-	font-size: 20px;
-	content:'\0072';
+    font-family: 'steep-icons';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    content:'\0072';
     background-color: #eee;
     color: #282828;
-	padding: 10px 8px;
-	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
-	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4);
-	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+    padding: 10px 8px;
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+    box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4);
     transition: background-color 0.3s;
 }
 

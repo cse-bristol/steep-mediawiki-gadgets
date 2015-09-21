@@ -79,3 +79,11 @@ wfLoadSkins(array(
     'Steep',
     'Vector'
 ));
+
+$wgVisualEditorNamespaces = array_merge(
+  $wgContentNamespaces,
+  array(
+    NS_USER,
+    NS_CATEGORY
+  )
+);

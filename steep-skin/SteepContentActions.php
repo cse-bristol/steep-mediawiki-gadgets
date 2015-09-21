@@ -64,7 +64,7 @@ class SteepContentActions {
       array(
 	'class' => 'content-submenu-expander'
       ),
-      '...'
+      '&nbsp;'
     );
 
     $submenu = Html::rawElement(

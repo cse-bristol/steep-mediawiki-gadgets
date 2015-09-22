@@ -84,6 +84,7 @@ $wgVisualEditorNamespaces = array_merge(
   $wgContentNamespaces,
   array(
     NS_USER,
-    NS_CATEGORY
+    NS_CATEGORY,
+    NS_FILE
   )
 );

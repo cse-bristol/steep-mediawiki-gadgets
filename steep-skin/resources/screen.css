@@ -72,14 +72,13 @@ Everything other than the navbar.
 
 .eu-logo .eu-funding {
     width: 75%;
-    font-size: small;
     font-family: Calibri, Arial, Garamond, Trebuchet, Tahoma or Verdana;
+    display: inline-block;
 }
 
 .eu-logo img {
-    width: 20%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    margin-left: 10%;
+    width: 15%;
     min-height: 1cm;
+    display: inline-block;
 }

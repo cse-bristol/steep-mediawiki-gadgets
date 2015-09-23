@@ -31,25 +31,3 @@
     text-decoration: underline;
 	color: #666;
 }
-
-
-
-form#searchform,
-form.search-form {
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-}
-
-form#searchform input,
-form.search-form input {
-	-webkit-appearance: none;
-	border: 0;
-	height: 2em;
-}
-
-form#searchform input::before {
-	
-}

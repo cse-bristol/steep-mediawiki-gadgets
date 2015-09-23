@@ -2,14 +2,15 @@
 
 body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button,
 .mw-ui-button.mw-ui-progressive,
-.mw-ui-button.mw-ui-primary {
+.mw-ui-button.mw-ui-primary,
+.mw-ui-button.mw-ui-constructive {
 	background-color: #d6eec7;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
-	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4);
-	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4) !important;
+	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4) !important;
+	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4) !important;
 	font-family: 'fira_sanssemibold';
 	font-size: 14px;
 	padding: 10px 25px;
@@ -25,7 +26,8 @@ body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-but
 
 body .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover,
 .mw-ui-button.mw-ui-progressive:hover,
-.mw-ui-button.mw-ui-primary:hover {
+.mw-ui-button.mw-ui-primary:hover,
+.mw-ui-button.mw-ui-constructive:hover {
 	background-color: #90d565 !important;
 }
 
@@ -48,6 +50,23 @@ body .oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-flaggedElement-prima
 	margin-right: 0.5em;
 	position: relative;
 	top: 4px;
+}
+
+.oo-ui-buttonElement-framed.oo-ui-widget-disabled > .oo-ui-buttonElement-button {
+	color: white !important;
+}
+
+
+
+
+/* dropdown */
+
+body .oo-ui-dropdownWidget {
+	background-color: #eee;
+	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4) !important;
+	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4) !important;
+	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4) !important;
+	margin: 0;
 }
 
 

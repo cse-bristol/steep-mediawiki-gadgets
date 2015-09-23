@@ -1,3 +1,42 @@
+form#searchform,
+form.search-form {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+form#searchform input,
+form.search-form input {
+	-webkit-appearance: none;
+	border: 0;
+	height: 2em;
+}
+
+form#searchform span.search-icon::before {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	content:'\0078';
+	display: inline-block;
+	color: #999;
+	margin-top: 5px;
+	padding: 0 5px;
+}
+
+form.search-form {
+	margin-right: 10px;
+}
+
+form.search-form input {
+	height: 39px;
+	line-height: 39px;
+	width: 20em;
+}
+
+
 fieldset {
 	border: 0;
 	padding: 0;
@@ -22,16 +61,22 @@ td.mw-label label {
 	font-family: 'fira_sansregular';
 }
 
-input[type="submit"] {
-	background-color: #d6eec7;
+input {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+	border: 1px solid #ccc;
+	font-family: 'fira_sansregular';
+	font-size: 14px;
+	padding: 5px;
+}
+
+input[type="submit"] {
+	background-color: #d6eec7;
 	-webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
 	-moz-box-shadow:    0px 2px 2px 0px rgba(0, 0, 0, 0.4);
 	box-shadow:         0px 2px 2px 0px rgba(0, 0, 0, 0.4);
 	font-family: 'fira_sanssemibold';
-	font-size: 14px;
 	padding: 10px 25px;
 	line-height: 1;
 	-webkit-transition: background-color .2s linear;
@@ -43,7 +88,32 @@ input[type="submit"] {
 	border: 0;
 }
 
-input[type="submit"]:hover {
-	background-color: #08b030;
+input#wpPreview,
+input#wpDiff {
+	background-color: #eee;
 }
 
+input[type="submit"]:hover {
+	background-color: #90d565 !important;
+}
+
+
+select + input[type="submit"] {
+	margin-left: 0.5em;
+}
+
+
+select {
+	font-family: 'fira_sansbook';
+	font-size: 20px;
+}
+
+
+.editButtons input {
+	margin-right: 1em;
+}
+
+
+form.search-form {
+	float: right;
+}

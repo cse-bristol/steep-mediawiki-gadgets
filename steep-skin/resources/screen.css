@@ -66,20 +66,16 @@ Everything other than the navbar.
 .eu-logo {
     /* See http://eacea.ec.europa.eu/about/logos/eu-emblem-rules-hr.pdf */    
     margin-top: 1em;
-    width: 100%;
-    position:relative;
+    width: 20em;
+    float:right;
 }
 
 .eu-logo .eu-funding {
-    width: 83%;
-    text-align: right;
+    text-align: center;
     font-family: Calibri, Arial, Garamond, Trebuchet, Tahoma or Verdana;
-    display: inline-block;
 }
 
 .eu-logo img {
-    margin-left: 2%;
-    width: 15%;
     min-height: 1cm;
-    display: inline-block;
+    margin-bottom: 0.5em;
 }

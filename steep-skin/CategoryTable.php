@@ -224,7 +224,7 @@ class CategoryTable extends Article {
       if ($type === 'process-models') {
 	$link = '/process-model/?name=' . $titleText;
       } else if ($type === 'maps') {
-	$link = '/map/?name=' . $map;
+	$link = '/map/?name=' . $titleText;
       } else {
 	$link = '';
       }

@@ -70,6 +70,9 @@
 			"oo-ui-elements.css": {
 			    "media": "screen"
 			},
+			"lqt.css": {
+			    "media": "screen"
+			},
 			"forms.css": {
 			    "media": "screen"
 			}

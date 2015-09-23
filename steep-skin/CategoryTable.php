@@ -129,7 +129,6 @@ class CategoryTable extends Article {
 	    'type' => 'search',
 	    'name' => 'search',
 	    'placeholder' => 'Find',
-
 	  )
 	)
       )
@@ -204,8 +203,10 @@ class CategoryTable extends Article {
     return Html::rawElement(
       'table',
       array(
-	'class' => 'category-contents'
-      ),
+	'class' => 'category-contents',
+	'cellspacing' => '0',
+	'cellpadding' => '0'
+     ),
       Html::rawElement(
 	'tbody',
 	array(),

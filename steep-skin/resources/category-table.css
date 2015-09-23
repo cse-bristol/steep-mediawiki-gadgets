@@ -1,18 +1,25 @@
+#sort-category-page {
+	float: left;
+}
+
+
+#sort-category-table {
+	float: right;
+	width: 10em;
+}
+
 #sort-category-table .oo-ui-iconElement-icon {
-    background-color: pink;
 }
 
-#sort-category-table .oo-ui-iconElement-icon:before {
-    content: "Desc";
-    position: relative;
-    top: -0.2em;
-}
-
-#sort-category-table .oo-ui-iconElement-icon:after {
-    content: "Asc";
-    position: relative;
-    top: 0.8em;
-    left: -2em;
+#sort-category-table .oo-ui-iconElement-icon::before {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 20px;
+	display: inline-block;
+	content:'\0056';
+	margin-top: 3px;
+	color: #666;
 }
 
 #sort-category-table .oo-ui-labelElement-label {
@@ -25,54 +32,67 @@
 }
 
 #sort-category-table .oo-ui-labelElement-label.ascending:after {
-    content: "asc";
 }
 
-#sort-category-table .oo-ui-labelElement-label.descending:after {
-    content: "desc";
-}
 
 .category-contents {
     width: 100%;
+	clear: both;
+	margin: 2em 0;
+}
+
+.category-contents td {
+	border-bottom: 1px solid #ccc;
+	padding: 10px 5px;
+}
+
+.category-contents td a {
+	color: #333;
 }
 
 .category-contents td.expand {
     width: 99%;
 }
 
-.category-contents td {
-    white-space: nowrap;
+.category-contents td.last-change {
+	white-space: nowrap;
 }
 
-.type.Page:after {
-    content: "Page";
+.category-contents td.type::after {
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 20px;
+	color: #c2813c;
 }
 
-/*
-A Project is a sub-type of Category which also belongs to Category:Projects.
- */
-.type.Project:after {
-    content: "Project";
+.category-contents td.type.Page:after {
+	content:'\004D';
 }
 
-.type.Category:after {
-    content: "Category";
+.category-contents td.type.Project:after {
+    content:'\0071';
+	color: #1eb04d;
 }
 
-.type.File:after {
-    content: "File";
+.category-contents td.type.Category:after {
+    content:'\004B';
 }
 
-.type.process-models:after {
-    content: "Process Model";
+.category-contents td.type.File:after {
+    content:'\004B';
 }
 
-.type.maps:after {
-    content: "Map";
+.category-contents td.type.process-models:after {
+    content:'\0049';
 }
 
-.type.shape-layers:after {
-    content: "Layer";
+.category-contents td.type.maps:after {
+    content:'\0048';
+}
+
+.category-contents td.type.shape-layers:after {
+    content:'\0071';
 }
 
 .title-column .search-snippet {
@@ -89,9 +109,12 @@ A Project is a sub-type of Category which also belongs to Category:Projects.
 }
 
 .watched-status.watched:after {
-    content: 'W';
-    font-weight: bold;
-    text-align: center;
+	font-family: 'steep-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 20px;
+	content: '\0033';
+	color: #999;
 }
 
 .last-change {

@@ -1,6 +1,6 @@
 #first-heading {
     vertical-align: bottom;
-    margin: 1em 0 0.2em 0;
+    margin: 1em 0 0.5em 0;
     border-bottom: 1px solid #999;
     width: 100%;
 }
@@ -23,7 +23,7 @@
     margin: auto;
 }
 
-#content a {
+.mw-body-content a {
 	color: #08b030;
 	font-family: 'fira_sansregular';
 }
@@ -35,10 +35,6 @@
 .clutter #content.shrunk {
     margin-left: 13em;
 }
-
-
-
-
 
 
 ul#preftoc { 

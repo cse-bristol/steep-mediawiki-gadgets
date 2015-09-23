@@ -77,5 +77,6 @@ Everything other than the navbar.
 
 .eu-logo img {
     min-height: 1cm;
+    width: 20em;
     margin-bottom: 0.5em;
 }

@@ -4,7 +4,20 @@
 
 var mongoClient = require('mongodb').MongoClient,
     
-    elasticClient = require('livedb-elasticsearch')(null, 'share', true),
+    elasticClient = require('livedb-elasticsearch')(
+	null,
+	'share',
+	{
+	    extraMappings: {
+		snapshotData: {
+		    project: {
+			type: 'string',
+			index: 'not_analyzed'
+		    }
+		}
+	    }
+	}
+    ),
 
     collections = [
 	'demo',

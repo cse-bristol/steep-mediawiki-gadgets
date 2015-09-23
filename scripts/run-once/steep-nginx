@@ -54,7 +54,7 @@ server {
         }
 
         location ~* /mediawiki/?$ {
-            rewrite ^/mediawiki/?$ /mediawiki/index.php?title=Main_Page&$args;
+            rewrite ^/mediawiki/?$ /mediawiki/index.php$args;
         }
     }
 

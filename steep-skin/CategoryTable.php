@@ -151,6 +151,10 @@ class CategoryTable extends Article {
     $this->addHelpLink('Help:Categories');
   }
 
+  function showMissingArticle() {
+    // Overriding this method because we do not want to show the missing article message for categories..
+  }
+
   function viewSort() {
     $widget = new OOUI\DropdownInputWidget(
       array(

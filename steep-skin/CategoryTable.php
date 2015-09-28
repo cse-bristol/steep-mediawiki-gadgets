@@ -32,8 +32,8 @@ class CategoryTable extends Article {
      */
   );
 
-  public static function hook() {
-    $wgHooks['CategoryPageView'][] = 'CategoryTable::drawCategoryAsTable';
+  public static function markStale(&$modifiedTimes) {
+    $modifiedTimes['page'] = wfTimestampNow();
   }
 
   public static function drawCategoryAsTable($categoryPage) {
@@ -96,10 +96,16 @@ class CategoryTable extends Article {
   function out($html) {
     $this->getContext()->getOutput()->addHTML($html);
   }
-  
+
   function view() {
-    parent::view();
+    /*
+       Don't cache category pages in the browser (we would return a 304 stale otherwise).
+    */
+    global $wgHooks;
+    $wgHooks['OutputPageCheckLastModified'][] = 'CategoryTable::markStale';
     
+    parent::view();
+
     $this->getContext()->getOutput()->enableOOUI();
 
     $this->out(

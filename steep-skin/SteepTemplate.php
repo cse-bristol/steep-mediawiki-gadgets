@@ -184,6 +184,44 @@ class SteepTemplate extends BaseTemplate {
     }
   }
 
+  function categoriesList() {
+    if (count($this->get('categoryLinks')) == 0) {
+      return '';
+    }
+    
+    $header = Html::rawElement(
+      'h2',
+      array(),
+      wfMessage('pagecategories')
+    );
+
+    $linksList = Html::rawElement(
+      'div',
+      array(
+	'class' => 'mw-normal-catlinks'
+      ),
+      join('', $this->get('categoryLinks'))
+    );
+
+    $more = Html::rawElement(
+      'a',
+      array(
+	'href' => urlencode(wfMessage('pagecategorieslink')),
+	'class' => 'see-more-categories'
+      ),
+      wfMessage('see-more-categories')
+    );
+
+    return Html::rawElement(
+      'div',
+      array(
+	'id' => 'catlinks',
+	'class' => 'catlinks'
+      ),
+      $header . $linksList . $more
+    );
+  }
+
   function subTitles() {
     $result = '';
 
@@ -216,7 +254,7 @@ class SteepTemplate extends BaseTemplate {
       array(
 	'class' => 'right last-modified'
       ),
-      $this->get('lastmod')
+      $this->categoriesList() . $this->get('lastmod')
     );
   }
 

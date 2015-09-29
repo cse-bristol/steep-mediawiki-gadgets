@@ -78,7 +78,11 @@
 		},
 		"forms.css": {
 		    "media": "screen"
+		},
+		"catlinks.css": {
+		    "media": "screen"
 		}
+		
 	    }
 	},
 	"skins.steep.js": {

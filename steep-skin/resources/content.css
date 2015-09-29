@@ -16,26 +16,24 @@
     display: none;
 }
 
-#content {
-    transition: margin-left 0.3s;
-    transition: width 0.3s;
-    width: 80%;
-    margin: auto;
-}
-
 .mw-body-content a {
 	color: #08b030;
 	font-family: 'fira_sansregular';
 }
 
-.clutter #content {
-    width: auto;
+#content {
+    transition: margin-left 0.3s;
+    transition: width 0.3s;
+    margin: auto;
 }
 
-.clutter #content.shrunk {
+#content.page {
+    width: 80%;
+}
+
+.clutter #content.contains-contents {
     margin-left: 13em;
 }
-
 
 ul#preftoc { 
 	list-style-type: none;

@@ -128,7 +128,7 @@ class SteepTemplate extends BaseTemplate {
       'div',
       array(
 	'id' => 'content',
-	'class' => 'mw-body' . (($this->hasContents && (!$this->contentsHidden)) ? ' shrunk' : '')
+	'class' => 'mw-body' . ($this->hasContents ? ' contains-contents' : '') . ($this->get('isPage') ? ' page' : '')
       ),
       $this->title() . $this->bodyContent()
     );
@@ -168,7 +168,7 @@ class SteepTemplate extends BaseTemplate {
       1
     );
 
-    if ($this->hasContents && $this->contentsHidden) {
+    if ($this->hasContents && $this->fullScreen) {
       /*
 	 Add the tochidden class.
        */
@@ -222,9 +222,9 @@ class SteepTemplate extends BaseTemplate {
 
   public function execute() {
     $this->hasContents = (preg_match('/id="toc"/', $this->get('bodytext')) === 1);
-    $this->contentsHidden = $this->haveData('hidetoc') && ($this->get('hidetoc') == 1);
+    $this->fullScreen = $this->haveData('hidetoc') && ($this->get('hidetoc') == 1);
     
-    $this->navbar = new SteepNavbar($this->get('sitename'), $this->get('logopath'), $this->data['nav_urls']['mainpage']['href'], $this->translator);
+    $this->navbar = new SteepNavbar($this->get('sitename'), $this->get('logopath'), $this->data['nav_urls']['mainpage']['href'], $this->translator, $this->get('isPage'));
     $this->contentActions = new SteepContentActions($this->get('content_actions'), $this->get('viewurl'));
     
     $this->html('headelement');
@@ -232,7 +232,7 @@ class SteepTemplate extends BaseTemplate {
     echo Html::rawElement(
       'div',
       array(
-	'class' => 'container' . (($this->hasContents && $this->contentsHidden) ? '' : ' clutter')
+	'class' => 'container' . ($this->fullScreen ? '' : ' clutter')
       ),
       $this->top() . $this->bottom()
     );

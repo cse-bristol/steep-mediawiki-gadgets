@@ -41,7 +41,7 @@
 	    "position": "top",
 	    "styles": {
 		"fonts.css": {
-		    "media": "screen"
+		    "media": "all"
 		},
 		"screen.css": {
 		    "media": "screen"
@@ -59,10 +59,10 @@
 		    "media": "screen"
 		},
 		"content.css": {
-		    "media": "screen"
+		    "media": "all"
 		},
 		"table-of-contents.css": {
-		    "media": "screen"
+		    "media": "all"
 		},
 		"search-in-category.css": {
 		    "media": "screen"
@@ -81,8 +81,11 @@
 		},
 		"catlinks.css": {
 		    "media": "screen"
+		},
+
+		"print.css": {
+		    "media": "print"
 		}
-		
 	    }
 	},
 	"skins.steep.js": {

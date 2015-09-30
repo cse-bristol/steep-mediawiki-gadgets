@@ -1,0 +1,53 @@
+#catlinks {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.clutter #catlinks {
+    opacity: 1;
+}
+
+#catlinks h2 {
+    color: #333;
+}
+
+/*
+Put separators between the links in the list.
+*/
+.mw-normal-catlinks a {
+    display: inline;
+    color: #666;
+    text-decoration: underline;
+    position: relative;
+    margin-right: 1em;
+}
+
+.mw-normal-catlinks a + a::before {
+    content: '.';
+    text-decoration: none !important;
+    pointer-events: none;
+    position: absolute;
+    top: -0.2em;
+    left: -0.6em;
+}
+
+#catlinks .see-more-categories {
+    color: #08b030;
+    text-decoration: none;
+    display: block;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-weight: bold;
+}
+
+#catlinks .see-more-categories::after {
+    content: '\0074';
+    padding-left: 0.3em;
+    font-size: small;
+    font-family: steep-icons;
+}

@@ -1,6 +1,6 @@
 .user-tools {
     margin: 0;
-    margin-top: -2em;
+    margin-top: -2.5em;
     list-style-type: none;
     text-align: right;
     text-decoration: none;
@@ -10,7 +10,6 @@
 
 .clutter .user-tools {
     margin-top: 0.75em;
-
 }
 
 .user-tools li {

@@ -7,11 +7,12 @@
  */
 
 class SteepNavbar {
-  function __construct($siteName, $logoPath, $homeHref, $translator) {
+  function __construct($siteName, $logoPath, $homeHref, $translator, $isPage) {
     $this->siteName = $siteName;
     $this->logoPath = $logoPath;
     $this->homeHref = htmlspecialchars($homeHref);
     $this->translator = $translator;
+    $this->isPage = $isPage;
   }
 
   function getMsg ($msg) {
@@ -67,7 +68,17 @@ class SteepNavbar {
     );
   }
 
-  public function upperNavItems () {
+  function fullScreenToggle () {
+    return Html::rawElement(
+      'a',
+      array(
+	'class' => 'fullscreen-toggle'
+      ),
+      '&nbsp;'
+    );
+  }
+
+  public function upperNavItems() {
     $addAssetsTitle = Title::newFromText(
       'Upload',
       MWNamespace::getCanonicalIndex('special')      
@@ -76,6 +87,7 @@ class SteepNavbar {
     return join(
       '',
       array(
+	($this->isPage ? $this->fullScreenToggle() : ''),
 	$this->navImgLink(
 	  $this->siteName,
 	  $this->homeHref,

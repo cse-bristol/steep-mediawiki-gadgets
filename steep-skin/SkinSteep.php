@@ -42,10 +42,20 @@ class SkinSteep extends SkinTemplate {
     $action = $this->getRequest()->getVal('action');
     $isTalk = $this->getTitle()->isTalkPage();
     $viewLink = $this->getTitle()->getSubjectPage()->getLinkURL();
-    
+
     $template->set(
       'viewurl',
       ($action === 'history' || $isTalk) ? $viewLink : ''
+    );
+
+    $template->set(
+      'isPage',
+      $this->getTitle()->isContentPage()
+    );
+
+    $template->set(
+      'categoryLinks',
+      $this->getOutput()->getCategoryLinks()['normal']
     );
    
     return $template;

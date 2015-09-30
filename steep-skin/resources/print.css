@@ -28,5 +28,10 @@
 
     #table-of-contents ul {
 	padding-left: 0;
+	width: 100%;
+    }
+
+    .toctext {
+	max-width: none;
     }
 }

@@ -87,15 +87,19 @@
 	},
 	"skins.steep.js": {
 	    "scripts": [
+		"steep.js",
+		
 		"steep-utils.js",
 		
 		"fullscreen-toggle.js",
 
-		"new-document-in-category.js",
-		"new-project-dialogue.js",
-		"add-asset-dialogue.js",
-		"new-document-in-category-button.js",
-
+		"add-to-category/add-to-category-process.js",
+		"add-to-category/add-to-category-dialogue.js",
+		"add-to-category/new-project-dialogue.js",
+		"add-to-category/add-asset-dialogue.js",
+		"add-to-category/add-asset-to-project-dialogue.js",
+		"add-to-category/add-asset-to-category-dialogue.js",
+		"add-to-category/add-to-category-button.js",
 		
 		"search-in-category.js",
 		"sort-category-table.js"

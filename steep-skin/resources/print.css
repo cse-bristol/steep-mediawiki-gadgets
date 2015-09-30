@@ -1,0 +1,32 @@
+@media print {
+
+    .left {
+	display: none;
+    }
+
+    .bottom {
+	display: none;
+    }
+
+    .top {
+	display: block !important;
+	width: 80%;
+	margin: auto;
+    }
+
+    .user-tools {
+	display: none;
+    }
+
+    .content-actions {
+	display: none;
+    }
+
+    #table-of-contents {
+	position: static;
+    }
+
+    #table-of-contents ul {
+	padding-left: 0;
+    }
+}

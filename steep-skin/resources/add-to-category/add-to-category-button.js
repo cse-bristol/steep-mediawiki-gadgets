@@ -1,8 +1,10 @@
 "use strict";
 
-/*global mediaWiki, jQuery, OO*/
+/*global mediaWiki, jQuery, OO, steep*/
 
-(function(mw, $, OO) {
+(function(mw, $, OO, steep) {
+    var projectsPage = 'Projects';
+    
     /*
      Used when viewing a 'Category:NameOfCategory' page.
      
@@ -15,13 +17,16 @@
 
 	var newDocumentButton = OO.ui.infuse('new-category-page'),
 	    category = mw.config.values.wgTitle || "",
-	    isProjectsPage = category === "Projects",
+	    isProjectsPage = category === projectsPage,
+	    isAProject = !isProjectsPage && mw.config.values.wgCategories.indexOf(projectsPage) >= 0,
 	    windowManager = new OO.ui.WindowManager();
 	
 	$('body').append(windowManager.$element);
 
-	var dialogue = isProjectsPage ? new mw.NewProjectDialogue() : new mw.AddAssetDialogue();
-	dialogue.category = category;
+	var dialogue = isProjectsPage ? new steep.NewProjectDialogue(category) : (
+	    isAProject ? new steep.AddAssetToProjectDialogue(category) :
+		new steep.AddAssetToCategoryDialogue(category)
+	);
 	
 	windowManager.addWindows([dialogue]);
 
@@ -33,4 +38,4 @@
 	});	
     });
     
-}(mediaWiki, jQuery, OO));
+}(mediaWiki, jQuery, OO, steep));

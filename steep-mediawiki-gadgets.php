@@ -3,27 +3,28 @@
 $wgMessagesDirs['ViewFiles'] = __DIR__ . '/i18n';
 
 $wgResourceModules['ext.steep-mediawiki-gadgets'] = array(
-    'scripts' => array(
-        'js/ve.dm.SteepNode.js',
-        'js/ve.ce.SteepNode.js',
-        'js/ve.dm.ProcessModelNode.js',
-        'js/ve.ce.ProcessModelNode.js',
-        'js/ve.dm.MapNode.js',
-        'js/ve.ce.MapNode.js',        
-        'js/steep-dialogue-and-tool.js'
-    ),
-    'messages' => array(
-        'visualeditor-mwprocessmodel-button',
-        'visualeditor-mwprocessmodel-dialogue',
-        'visualeditor-mwmap-button',
-        'visualeditor-mwmap-dialogue'
-    ),
-    'dependencies' => array(
-        'ext.visualEditor.core',
-        'mediawiki.jqueryMsg'
-    ),
-    'localBasePath' => __DIR__,
-    'remoteExtPath' => 'steep-mediawiki-gadgets'
+  'scripts' => array(
+    'js/VersionPicker.js',
+    'js/ve.dm.SteepNode.js',
+    'js/ve.ce.SteepNode.js',
+    'js/ve.dm.ProcessModelNode.js',
+    'js/ve.ce.ProcessModelNode.js',
+    'js/ve.dm.MapNode.js',
+    'js/ve.ce.MapNode.js',        
+    'js/steep-dialogue-and-tool.js'
+  ),
+  'messages' => array(
+    'visualeditor-mwprocessmodel-button',
+    'visualeditor-mwprocessmodel-dialogue',
+    'visualeditor-mwmap-button',
+    'visualeditor-mwmap-dialogue'
+  ),
+  'dependencies' => array(
+    'ext.visualEditor.core',
+    'mediawiki.jqueryMsg'
+  ),
+  'localBasePath' => __DIR__,
+  'remoteExtPath' => 'steep-mediawiki-gadgets'
 );
 
 $wgExtensionCredits['steep-mediawiki-gadgets'][] = array(

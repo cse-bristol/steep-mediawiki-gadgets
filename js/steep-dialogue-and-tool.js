@@ -1,19 +1,19 @@
 "use strict";
 
-/*global mw, ve, OO, jQuery*/
+/*global mediaWiki, ve, OO, jQuery, steep*/
 
 /*
- Adds 'Process Model' and 'Map' tools to the insert tool group inside the Visual Editor toolbar.
+ 'Process Model' and 'Map' tools to the insert tool group inside the Visual Editor toolbar.
 
  This will produce a dialogue box, which allows the user to search for an existing Process Model or Map to insert.
  */
-(function() {
+(function(mw, ve, OO, $) {
     var makeInsertTool = function(buttonMessage, dialogueMessage, collection, element, modelClass) {
 	var dialogueName = collection + " dialogue",
 	    toolName = collection + " tool",
 
 	    makeSearchRequest = function(value, callback) {
-		jQuery.getJSON(
+		$.getJSON(
 		    "/channel/search/" + collection,
 		    {
 			q: value
@@ -25,11 +25,10 @@
 	    makeResult = function(value) {
      		return new OO.ui.OptionWidget(
     		    {
-              data: {
-                name: value.name,
-                v: value.v
-              },
-    			    label: " " + value.name
+			data: {
+			    name: value.name
+			},
+    			label: " " + value.name
     		    }
     		);
 	    };
@@ -82,16 +81,11 @@
 		 When we're finished with our dialogue, Insert an xml element in the page.
 		 */
 		insert = function() {
-		    /*
-		     If lockToVersionControl is checked, include the version.
-		     */
 		    var options = {
 			name: currentSelection.name,
-			v: lockToVersionControl.$input.attr("checked") ?
-			    versionControl.getValue()
-			    : null,
 			width: widthControl.getValue() + "%",
-			height: heightControl.getValue() + "px"
+			height: heightControl.getValue() + "px",
+			v: instance.version.getValue()
 		    },
 			model = new modelClass(options)
 		    	    .toLinearModel();
@@ -113,18 +107,14 @@
 		changeSelection = function(data) {
 		    currentSelection = data;
 
-		    instance.actions.setAbilities({"save": !!currentSelection });
-		    
-		    var maxV = currentSelection && currentSelection.v ? currentSelection.v : 0;
-		    
-		    // Set the maximum and current value for the slider.
-		    versionControl.$input.attr("max", maxV);
-		    versionControl.setValue(maxV);
-		    versionControl.$input.attr("disabled", true);
+		    instance.actions.setAbilities({ "save": !!currentSelection });
 
-		    // Enable or disable the lock to version checkbox based on whether or not this is a new page. 
-		    lockToVersionControl.$input.attr("disabled", (maxV === undefined || maxV === null) ? true : null);
-		    lockToVersionControl.$input.attr("checked", null);
+		    if (data) {
+			instance.version.loadVersions(data.name);
+			
+		    } else {
+			instance.version.clearVersions();
+		    }
 		},
 
 		/*
@@ -181,31 +171,20 @@
 		    {
 			label: "Height (px)"
 		    }
-		),
+		);
 
-		lockToVersionControl = new OO.ui.InputWidget(),
-		lockToVersion = new OO.ui.FieldLayout(
-		    lockToVersionControl,
-		    {
-			label: "Lock to Version"
-		    }
-		),
 
-		versionControl = new OO.ui.InputWidget(),
-		version = new OO.ui.FieldLayout(
-		    versionControl,
-		    {
-			label: "Version"
-		    }),
-
-		form = new OO.ui.FieldsetLayout({
-		    $content: [
-			width.$element,
-			height.$element,
-			lockToVersion.$element,
-			version.$element
-		    ]
-		}),
+	    this.version = new mw.VersionPicker({
+		collection: collection
+	    });
+	    
+	    var form = new OO.ui.FieldsetLayout({
+		$content: [
+		    width.$element,
+		    height.$element,
+		    this.version.$element
+		]
+	    }),
 
 		search = new OO.ui.SearchWidget(),
 		searchPanel = new OO.ui.PanelLayout({
@@ -250,22 +229,8 @@
 
 	    heightControl.$input.attr("type", "number");
 
-	    lockToVersionControl.$input.attr("type", "checkbox");
-	    lockToVersionControl.$input.attr("disabled", "true");
-	    lockToVersionControl.$input.on("change", function() {
-		var wasChecked = lockToVersionControl.$input.attr("checked");
-
-		lockToVersionControl.$input.attr("checked", wasChecked ? null : true);
-		versionControl.$input.attr("disabled", wasChecked ? true : null);
-	    });
-
-	    versionControl.$input.attr("type", "number");
-	    versionControl.$input.attr("min", "0");
-	    versionControl.$input.attr("disabled", "true");
-	    
 	    widthControl.$input.css("width", "100%");
 	    heightControl.$input.css("width", "100%");
-	    versionControl.$input.css("width", "100%");
 
 	    search.query.on("change", doSearch);
 
@@ -316,4 +281,4 @@
 	ve.dm.MapNode
     );
     
-}());
+}(mediaWiki, ve, OO, jQuery));

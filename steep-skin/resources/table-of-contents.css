@@ -52,15 +52,17 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
 #table-of-contents ul a {
     color: #666;
     text-decoration: none;
+    display: table-row;
 }
 
 .tocnumber {
     width: 2em;
-    display: inline-block;
     vertical-align: top;
+    display: table-cell;
+    padding-right: 0.3em;
 }
 
 .toctext {
     max-width: 10em;
-    display: inline-block;
+    display: table-cell;
 }

@@ -264,19 +264,31 @@ class SteepTemplate extends BaseTemplate {
       ),
       'This project has received funding from the European Union’s Seventh Framework Programme for research, technological development and demonstration under grant agreement no 314277.'
     );
+
+    $euLogo = Html::rawElement(
+      'div',
+      array(
+	'class' => 'eu-logo'
+      ),
+      $euEmblem . $euText
+    );
     
     return Html::rawElement(
       'div',
       array(
-	'class' => 'right last-modified'
+	'class' => 'right'
       ),
-      $this->categoriesList() . $this->get('lastmod') . Html::rawElement(
-	'div',
-	array(
-	  'class' => 'eu-logo'
-	),
-	$euEmblem . $euText
-      )
+      $this->categoriesList() . $this->lastModified() . $euLogo
+    );
+  }
+
+  function lastModified() {
+    return Html::rawElement(
+      'div',
+      array(
+	'class' => 'last-modified'
+      ),
+      $this->categoriesList() . $this->get('lastmod')
     );
   }
 

@@ -17,7 +17,6 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-
 }
 
 .clutter .content-actions {
@@ -25,6 +24,10 @@
     pointer-events: all;
 }
 
+.ve-activating .content-actions, .ve-active .content-actions, .ve-activated .content-actions {
+    opacity: 0;
+    pointer-events: none;
+}
 
 .content-action {
     display: inline-block;

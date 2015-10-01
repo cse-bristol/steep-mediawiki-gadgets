@@ -6,6 +6,7 @@
     left: 15em;
     transition: top 0.3s;
     cursor: pointer;
+    z-index: 9999;
 }
 
 .clutter .fullscreen-toggle {

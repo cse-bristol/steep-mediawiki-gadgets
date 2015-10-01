@@ -1,5 +1,6 @@
 .navbar {
     background-color: #282828;
+    max-width: 13em;
 }
 
 .navbar a {
@@ -21,51 +22,56 @@
 .nav-icon-link {
     padding: 1.25em 2em;    
     color: white;
-	white-space: nowrap;
+    white-space: nowrap;
+}
+
+.nav-image-link img {
+    /* max-width of navbar - (2 * horizontal padding) */
+    max-width: 9em;
 }
 
 .nav-icon-link::before {
-	font-family: 'steep-icons';
-	font-style: normal;
-	font-weight: normal;
-	font-size: 30px;
-	display: block;
-	margin-bottom: 10px;
+    font-family: 'steep-icons';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    display: block;
+    margin-bottom: 10px;
 }
 
 .nav-icon-link.all-projects::before {
-	content:'\0071';
-	color: #1eb04d;
+    content:'\0071';
+    color: #1eb04d;
 }
 
 .nav-icon-link.new-process-model::before {
-	content:'\006B';
-	color: #92cdef;
+    content:'\006B';
+    color: #92cdef;
 }
 
 .nav-icon-link.new-map::before {
-	content:'\0069';
-	color: #50b685;
+    content:'\0069';
+    color: #50b685;
 }
 
 .nav-icon-link.add-assets::before {
-	content:'\0042';
-	color: #d9e0ad;
+    content:'\0042';
+    color: #d9e0ad;
 }
 
 .nav-icon-link.manage-assets::before {
-	content:'\0043';
-	color: #c2813c;
+    content:'\0043';
+    color: #c2813c;
 }
 
 .nav-icon-link.manage-users::before {
-	content:'\0032';
-	color: #107728;
+    content:'\0032';
+    color: #107728;
 }
 
 .nav-icon-link.about::before {
-	content:'\0041';
-	color: #666;
+    content:'\0041';
+    color: #666;
 }
 
 
@@ -76,6 +82,6 @@
 .nav-text-link {
     padding: 0.2em;
     color: #999999;
-	font-size: 0.9em;
+    font-size: 0.9em;
 }
 

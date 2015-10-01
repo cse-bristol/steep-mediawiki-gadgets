@@ -12,8 +12,8 @@
  + date formatting
  + click handling
  */
-(function(mw, $, OO){
-    mw.VersionPicker = function(options) {
+(function(mw, $, OO, steepVE){
+    steepVE.VersionPicker = function(options) {
 	if (!options) {
 	    throw new Error("VersionPicker needs some options on construction.");
 	}
@@ -27,9 +27,9 @@
 	OO.ui.DropdownInputWidget.call(this, options);
     };
 
-    OO.inheritClass(mw.VersionPicker, OO.ui.DropdownInputWidget);
+    OO.inheritClass(steepVE.VersionPicker, OO.ui.DropdownInputWidget);
 
-    mw.VersionPicker.prototype._clear = function() {
+    steepVE.VersionPicker.prototype._clear = function() {
 	/*
 	 Clear the currently selected value, and remove all the options from the list.
 
@@ -38,8 +38,8 @@
 	this.setOptions();
     };
 
-    mw.VersionPicker.prototype.setOptions = function(options) {
-	var result = mw.VersionPicker.parent.prototype.setOptions.call(
+    steepVE.VersionPicker.prototype.setOptions = function(options) {
+	var result = steepVE.VersionPicker.parent.prototype.setOptions.call(
 	    this,
 	    [{
 		label: 'Latest',
@@ -52,12 +52,12 @@
 	);
     };
     
-    mw.VersionPicker.prototype.clearVersions = function() {
+    steepVE.VersionPicker.prototype.clearVersions = function() {
 	this.currentDocument = null;
 	this._clear();
     };
 
-    mw.VersionPicker.prototype.loadVersions = function(document) {
+    steepVE.VersionPicker.prototype.loadVersions = function(document) {
 	var picker = this;
 	
 	if (document && this.currentDocument !== document) {
@@ -88,4 +88,4 @@
 	}
     };
 
-}(mediaWiki, jQuery, OO));
+}(mediaWiki, jQuery, OO, steep.ve));

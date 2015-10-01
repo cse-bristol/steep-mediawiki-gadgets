@@ -7,7 +7,7 @@
 
  This will produce a dialogue box, which allows the user to search for an existing Process Model or Map to insert.
  */
-(function(mw, ve, OO, $) {
+(function(mw, ve, OO, $, steepVE) {
     var makeInsertTool = function(buttonMessage, dialogueMessage, collection, element, modelClass) {
 	var dialogueName = collection + " dialogue",
 	    toolName = collection + " tool",
@@ -174,7 +174,7 @@
 		);
 
 
-	    this.version = new mw.VersionPicker({
+	    this.version = new steepVE.VersionPicker({
 		collection: collection
 	    });
 	    
@@ -270,7 +270,7 @@
 	"visualeditor-mwprocessmodel-dialogue",
 	"process-models",
 	"process-model",
-	ve.dm.ProcessModelNode
+	steepVE.model.ProcessModel
     );
 
     makeInsertTool(
@@ -278,7 +278,7 @@
 	"visualeditor-mwmap-dialogue",
 	"maps",
 	"data-map",
-	ve.dm.MapNode
+	steepVE.model.Map
     );
     
-}(mediaWiki, ve, OO, jQuery));
+}(mediaWiki, ve, OO, jQuery, steep.ve));

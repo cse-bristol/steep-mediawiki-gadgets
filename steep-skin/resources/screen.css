@@ -52,18 +52,14 @@ Everything other than the navbar.
 
 .bottom .right {
     vertical-align: bottom;
+    padding-left: 15em;
 }
 
 .bottom .last-modified {
-	font-size: 0.85em;
+    font-size: 0.85em;
     color: #666;
 }
 
 .left.hidden {
     margin-left: -15em;
 }
-
-
-
-
-

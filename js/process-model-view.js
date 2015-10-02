@@ -11,7 +11,7 @@
     };
     OO.inheritClass(steepVE.view.ProcessModel, steepVE.view.Steep);
 
-    steepVE.view.ProcessModel.static.name = steepVE.dm.ProcessModelNode.static.name;
+    steepVE.view.ProcessModel.static.name = steepVE.model.ProcessModel.static.name;
 
     steepVE.view.ProcessModel.prototype.toolUrl = function() {
 	return "process-model";

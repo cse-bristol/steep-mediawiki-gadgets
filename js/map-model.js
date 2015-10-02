@@ -8,7 +8,7 @@
 	steepVE.model.Map.super.apply(this, arguments);
 
     };
-    OO.inheritClass(steepVE.model.Map, ve.dm.SteepNode);
+    OO.inheritClass(steepVE.model.Map, steepVE.model.Steep);
 
     steepVE.model.Map.static.matchRdfaTypes = ['mw:Extension/data-map'];
     steepVE.model.Map.static.name = "data-map";

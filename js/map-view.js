@@ -11,7 +11,7 @@
     };
     OO.inheritClass(steepVE.view.Map, steepVE.view.Steep);
 
-    steepVE.view.Map.static.name = steepVE.dm.MapNode.static.name;
+    steepVE.view.Map.static.name = steepVE.model.Map.static.name;
 
     steepVE.view.Map.prototype.toolUrl = function() {
 	return "map";

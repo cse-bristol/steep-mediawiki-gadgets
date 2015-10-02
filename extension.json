@@ -39,6 +39,12 @@
 		"js/version-picker.js",
 		"js/dialogue-and-tool.js"
 	    ],
+	    "messages": [
+		"visualeditor-mwprocessmodel-button",
+		"visualeditor-mwmap-button",
+		"visualeditor-mwmap-dialogue",
+		"visualeditor-mwprocessmodel-dialogue"
+	    ],
 	    "position": "bottom",
 	    "dependencies": [
 		"oojs-ui",

@@ -25,6 +25,12 @@
 
     "ResourceModules": {
 	"ext.steep-ve.js": {
+	    "styles": {
+		"css/steep-ve.css": {
+		    "media": "screen"
+		}
+	    },
+	    
 	    "scripts": [
 		"js/steep.js",
 
@@ -43,7 +49,11 @@
 		"visualeditor-mwprocessmodel-button",
 		"visualeditor-mwmap-button",
 		"visualeditor-mwmap-dialogue",
-		"visualeditor-mwprocessmodel-dialogue"
+		"visualeditor-mwprocessmodel-dialogue",
+
+		"steepve-popout",
+		"steepve-history",
+		"steepve-set-viewpoint"
 	    ],
 	    "position": "bottom",
 	    "dependencies": [

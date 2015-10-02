@@ -57,7 +57,7 @@
 	this._clear();
     };
 
-    steepVE.VersionPicker.prototype.loadVersions = function(document) {
+    steepVE.VersionPicker.prototype.loadVersions = function(document, targetVersion) {
 	var picker = this;
 	
 	if (document && this.currentDocument !== document) {
@@ -79,6 +79,10 @@
 				    };
 				})
 			);
+
+			if (targetVersion !== undefined) {
+			    picker.setValue(targetVersion);
+			}
 		    } else {
 			picker._clear();
 			throw new Error(result);

@@ -5,7 +5,7 @@
 /*
  A Visual Editor node which represents an XML tag used by the Steep extension.
  */
-(function(OO, ve, steepVE) {
+(function(ve, OO, steepVE) {
 
     steepVE.model.Steep = function(options) {
 	steepVE.model.Steep.super.apply(this, arguments);

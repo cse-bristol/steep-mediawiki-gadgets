@@ -1,0 +1,66 @@
+{
+    "name": "Steep-VE",
+    "author": [
+	"Glenn Searby"
+    ],
+    "url": "https://github.com/cse-bristol/steep-mediawiki-gadgets",
+    "descriptionmsg": "steepve-desc",
+    "namemsg": "steepve-name",
+    "license-name": "MIT",
+    "type": "extension",
+    "ConfigRegistry": {
+    },
+    "MessagesDirs": {
+	"Steep-ve": [
+	    "i18n"
+	]
+    },
+    "AutoloadClasses": {
+	"IncludeSteepGadgets": "IncludeSteepGadgets.php"
+    },
+
+    "Hooks": {
+	"ParserFirstCallInit": "IncludeSteepGadgets::HookParser"
+    },
+
+    "ResourceModules": {
+	"ext.steep-ve.js": {
+	    "scripts": [
+		"js/steep.js",
+
+		"js/steep-model.js",
+		"js/map-model.js",
+		"js/process-model-model.js",
+		
+		"js/steep-view.js",
+		"js/map-view.js",
+		"js/process-model-view.js",
+		
+		"js/version-picker.js",
+		"js/dialogue-and-tool.js"
+	    ],
+	    "messages": [
+		"visualeditor-mwprocessmodel-button",
+		"visualeditor-mwmap-button",
+		"visualeditor-mwmap-dialogue",
+		"visualeditor-mwprocessmodel-dialogue"
+	    ],
+	    "position": "bottom",
+	    "dependencies": [
+		"oojs-ui",
+		"ext.visualEditor.core",
+		"mediawiki.jqueryMsg"
+	    ]
+	}
+    },
+    "VisualEditorPluginModules": [
+        "ext.steep-ve.js"
+    ],
+    
+    "ResourceFileModulePaths": {
+	"localBasePath": "",
+	"remoteExtPath": "steep-mediawiki-gadgets"
+	
+    },
+    "manifest_version": 1
+}

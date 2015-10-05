@@ -3,6 +3,34 @@
     padding: 0.5em;
 }
 
+#steep-set-viewpoint .oo-ui-iconElement-icon {
+    display: inline;
+    font-family: steep-icons;
+    vertical-align: middle;
+    margin-left: -0.5em;
+    margin-right: 0.3em;
+}
+
+#steep-set-viewpoint .oo-ui-iconElement-icon::after {
+    content: '\0079';
+}
+
 #steep-history {
     display: inline-block;
+    width: 15em;
 }
+
+#steep-history .oo-ui-iconElement-icon {
+    /*
+OO js ui overrides a lot of these properties for dropdowns, so we re-specify them here.
+     */
+    font-family: steep-icons;
+    position: relative;
+    vertical-align: middle;
+    top: -0.1em;
+}
+
+#steep-history .oo-ui-iconElement-icon::after {
+    content: '\0062';
+}
+

@@ -57,6 +57,18 @@
 	this._clear();
     };
 
+    steepVE.VersionPicker.prototype.getValue = function() {
+	var v = steepVE.VersionPicker.parent.prototype.getValue.call(this);
+	if (v === 0 || v) {
+	    return parseInt(v);
+	} else {
+	    /*
+	     Return null instead of empty string, undefined etc.
+	     */
+	    return null;
+	}
+    };
+
     steepVE.VersionPicker.prototype.loadVersions = function(document, targetVersion) {
 	var picker = this;
 	

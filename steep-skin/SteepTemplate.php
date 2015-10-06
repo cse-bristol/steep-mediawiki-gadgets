@@ -288,7 +288,7 @@ class SteepTemplate extends BaseTemplate {
       array(
 	'class' => 'last-modified'
       ),
-      $this->categoriesList() . $this->get('lastmod')
+      $this->get('lastmod')
     );
   }
 

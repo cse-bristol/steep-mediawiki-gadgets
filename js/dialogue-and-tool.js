@@ -81,15 +81,14 @@
 		 When we're finished with our dialogue, Insert an xml element in the page.
 		 */
 		insert = function() {
-		    var options = {
-			name: currentSelection.name,
-			width: widthControl.getValue() + "%",
-			height: heightControl.getValue() + "px",
-			v: instance.version.getValue()
-		    },
-			model = new modelClass(options)
-		    	    .toLinearModel();
-
+		    var model = modelClass.static.toLinearModel(
+			element,
+			currentSelection.name,
+			instance.version.getValue(),
+			widthControl.getValue() + "%",
+			heightControl.getValue() + "px"
+		    );
+		    
 		    ve.init.target
 		    	.getSurface()
 		    	.getModel()

@@ -9,13 +9,6 @@
 
     steepVE.model.Steep = function(options) {
 	steepVE.model.Steep.super.apply(this, arguments);
-
-	if (options) {
-	    this.name = options.name;
-	    this.v = options.v;
-	    this.width = options.width;
-	    this.height = options.height;
-	}
     };
 
     OO.inheritClass(steepVE.model.Steep, ve.dm.LeafNode);
@@ -23,50 +16,48 @@
     steepVE.model.Steep.static.matchTagNames = ['iframe'];
     steepVE.model.Steep.static.isContent = true;
     steepVE.model.Steep.static.enableAboutGrouping = true;
+    steepVE.model.Steep.static.preserveHtmlAttributes = false;
 
     steepVE.model.Steep.static.toDomElements =  function (dataElement, doc) {
 	if (this.matchTagNames && dataElement.type == this.name) {
-	    var tagElement = doc.createElement(this.name);
+	    var tagElement = doc.createElement(this.name),
+		attrs = dataElement.attributes;
 
-	    tagElement.setAttribute("name", dataElement.name);
-	    tagElement.setAttribute("width", dataElement.width);
-	    tagElement.setAttribute("height", dataElement.height);
+	    tagElement.setAttribute("name", attrs.name);
+	    tagElement.setAttribute("width", attrs.width);
+	    tagElement.setAttribute("height", attrs.height);
 	    
-	    if(dataElement.v){
-		tagElement.setAttribute("version", dataElement.v);
+	    if(!isNaN(parseInt(attrs.v))) {
+	    	tagElement.setAttribute("v", attrs.v);
 	    }
-	    
+
 	    return [tagElement];
 	} else {
 	    throw new Error('ve.dm.Model subclass must match a single tag name or implement toDomElements');
 	}
     };
 
-    steepVE.model.Steep.static.toDataElementHelper = function(domElements, converter) {
+    steepVE.model.Steep.static.toDataElement = function(domElements, converter) {
 	var iframe = domElements[0],
 	    data = JSON.parse(
 		iframe.getAttribute("data-mw"));
 
 	return {
-	    name: data.attrs.name,
-	    v: data.attrs.v,
-	    width: data.attrs.width,
-	    height: data.attrs.height
+	    type: data.name,
+	    attributes: data.attrs
 	};
     };
 
-    steepVE.model.Steep.prototype.toLinearModel = function() {
-	var data = {
-	    type: this.type,
-	    name: this.name,
-	    v: this.v,
-	    width: this.width,
-	    height: this.height
-	};
-	
-	this.addModelData(data);
-
-	return [data];
+    steepVE.model.Steep.static.toLinearModel = function(type, name, v, width, height) {
+	return [{
+	    type: type,
+	    attributes: {
+		name: name,
+		v: v,
+		width: width,
+		height: height
+	    }
+	}];
     };
 
 }(ve, OO, steep.ve));

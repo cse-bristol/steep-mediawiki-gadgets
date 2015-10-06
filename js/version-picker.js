@@ -51,6 +51,32 @@
 	    !options || !options.length
 	);
     };
+
+    var changing = false;
+
+    steepVE.VersionPicker.prototype.setValue = function(v) {
+	var i = parseInt(v);
+
+	if (i === this.getValue()) {
+	    return;
+	}
+
+	if (changing) {
+	    // Prevent event loops.
+	    return;
+	}
+
+	try {
+	    changing = true;
+
+	    steepVE.VersionPicker.parent.prototype.setValue.call(
+		this,
+		isNaN(i) ? null : i
+	    );
+	} finally {
+	    changing = false;
+	}
+    };
     
     steepVE.VersionPicker.prototype.clearVersions = function() {
 	this.currentDocument = null;

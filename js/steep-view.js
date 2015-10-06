@@ -22,11 +22,11 @@
 	}
 
 	var view = this,
-	    url = this.buildSrc(model);
-	
+	    modelAttributes = model.getElement().attributes;
+
 	this.$element = $('<div/>')
 	    .addClass('steep-node')
-            .attr('typeof', model.type)
+            .attr('typeof', model.getElement().type)
 	    .attr('contenteditable', false)
 	    .css("overflow", "hidden");
 
@@ -44,10 +44,24 @@
 	    collection: config.collection
 	});
 
-	this.history.loadVersions(model.name, model.v);
+	this.history.loadVersions(modelAttributes.name, modelAttributes.v);
 	this.history.on('change', function(e) {
-	    model.v = view.history.getValue();
-	    view.$frame.attr('src', view.buildSrc(model));
+	    var newV = view.history.getValue();
+
+	    if (newV === view.model.getElement().attributes.v) {
+		// No change
+		return;
+	    }
+
+	    view.root.getSurface().getModel().change(
+		ve.dm.Transaction.newFromAttributeChanges(
+		    view.model.getDocument(),
+		    view.getOffset(),
+		    {
+			v: newV
+		    }
+		)
+	    );
 	});
 
 	this.popout = new OO.ui.ButtonInputWidget({
@@ -56,7 +70,7 @@
 	});
 	this.popout.on('click', function(e) {
 	    window.open(
-		view.buildSrc(model),
+		view.buildSrc(),
 		'_blank'
 	    );
 	});
@@ -67,27 +81,40 @@
 	this.$tools.append(this.popout.$element);
 
 	this.$frame = $('<iframe/>')
-	    .attr('src', url);	
+	    .attr('src', this.buildSrc());	
 
-	if (model.width) {
-	    this.$frame.css("width", model.width);
+	if (modelAttributes.width) {
+	    this.$frame.css("width", modelAttributes.width);
 	}
 
-	if (model.height) {
-	    this.$frame.css("height", model.height);
+	if (modelAttributes.height) {
+	    this.$frame.css("height", modelAttributes.height);
 	}
 
 	this.$element.append(this.$tools);
 	this.$element.append(this.$frame);
+
+	model.on('update', this.update.bind(this));
     };
 
     OO.inheritClass(steepVE.view.Steep, ve.ce.LeafNode);
 
-    steepVE.view.Steep.prototype.buildSrc = function(model) {
-	var url = "/" + this.toolUrl + "/?name=" + encodeURIComponent(model.name),
-	    args = this.srcArgs(model);
+    steepVE.view.Steep.prototype.update = function() {
+	this.history.setValue(
+	    this.model.getElement().attributes.v
+	);
 
-	args.v = model.v;
+	this.$frame
+	    .attr('src', this.buildSrc());
+    };
+
+    steepVE.view.Steep.prototype.buildSrc = function() {
+	var modelAttributes = this.model.getElement().attributes;
+	
+	var url = "/" + this.toolUrl + "/?name=" + encodeURIComponent(modelAttributes.name),
+	    args = this.srcArgs(modelAttributes);
+
+	args.v = modelAttributes.v;
 
 	Object.keys(args).forEach(function(k) {
 	    var val = args[k];

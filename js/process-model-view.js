@@ -5,17 +5,17 @@
 (function(ve, OO, steepVE) {
     
     steepVE.view.ProcessModel = function ProcessModelNode(model, config) {
-	steepVE.view.ProcessModel.parent.apply(this, arguments);
+	config = config || {};
+	config.toolUrl = 'process-model';
+	config.collection = 'process-models';
+	
+	steepVE.view.ProcessModel.parent.call(this, model, config);
 
 	this.$element.addClass("ve-ce-process-model-node");
     };
     OO.inheritClass(steepVE.view.ProcessModel, steepVE.view.Steep);
 
     steepVE.view.ProcessModel.static.name = steepVE.model.ProcessModel.static.name;
-
-    steepVE.view.ProcessModel.prototype.toolUrl = function() {
-	return "process-model";
-    };
 
     steepVE.view.ProcessModel.prototype.srcArgs = function(model) {
 	return {

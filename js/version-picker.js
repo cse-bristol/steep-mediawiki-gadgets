@@ -51,13 +51,51 @@
 	    !options || !options.length
 	);
     };
+
+    var changing = false;
+
+    steepVE.VersionPicker.prototype.setValue = function(v) {
+	var i = parseInt(v);
+
+	if (i === this.getValue()) {
+	    return;
+	}
+
+	if (changing) {
+	    // Prevent event loops.
+	    return;
+	}
+
+	try {
+	    changing = true;
+
+	    steepVE.VersionPicker.parent.prototype.setValue.call(
+		this,
+		isNaN(i) ? null : i
+	    );
+	} finally {
+	    changing = false;
+	}
+    };
     
     steepVE.VersionPicker.prototype.clearVersions = function() {
 	this.currentDocument = null;
 	this._clear();
     };
 
-    steepVE.VersionPicker.prototype.loadVersions = function(document) {
+    steepVE.VersionPicker.prototype.getValue = function() {
+	var v = steepVE.VersionPicker.parent.prototype.getValue.call(this);
+	if (v === 0 || v) {
+	    return parseInt(v);
+	} else {
+	    /*
+	     Return null instead of empty string, undefined etc.
+	     */
+	    return null;
+	}
+    };
+
+    steepVE.VersionPicker.prototype.loadVersions = function(document, targetVersion) {
 	var picker = this;
 	
 	if (document && this.currentDocument !== document) {
@@ -79,6 +117,10 @@
 				    };
 				})
 			);
+
+			if (targetVersion !== undefined) {
+			    picker.setValue(targetVersion);
+			}
 		    } else {
 			picker._clear();
 			throw new Error(result);

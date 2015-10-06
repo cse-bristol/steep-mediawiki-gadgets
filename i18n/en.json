@@ -6,5 +6,9 @@
     "visualeditor-mwmap-dialogue": "Insert Map",
 
     "steepve-name": "Steep VisualEditor Plugins",
-    "steepve-desc": "This extension adds the ability to include Process Models and Energy Efficiency Maps in a wiki page."
+    "steepve-desc": "This extension adds the ability to include Process Models and Energy Efficiency Maps in a wiki page.",
+
+    "steepve-popout": "Open Original",
+    "steepve-history": "History",
+    "steepve-set-viewpoint": "Set Viewpoint"
 }

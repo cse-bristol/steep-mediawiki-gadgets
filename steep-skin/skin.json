@@ -58,6 +58,11 @@
 		"content-actions.css": {
 		    "media": "screen"
 		},
+
+		"breadcrumbs.css": {
+		    "media": "all"
+		},
+		
 		"content.css": {
 		    "media": "all"
 		},

@@ -44,6 +44,11 @@ class SkinSteep extends SkinTemplate {
     $viewLink = $this->getTitle()->getSubjectPage()->getLinkURL();
 
     $template->set(
+      'mwTitle',
+      $this->getTitle()
+    );
+
+    $template->set(
       'viewurl',
       ($action === 'history' || $isTalk) ? $viewLink : ''
     );

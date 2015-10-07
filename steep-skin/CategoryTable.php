@@ -255,7 +255,17 @@ class CategoryTable extends Article {
 	$type = 'Project';
       }
 
+      /*
+	 If the title includes the text of the current page (because of our faux-sub-page implementation), hide this section.
+       */
+      $myTitleText = $this->getTitle()->getText();
       $titleText = $title->getText();
+      $titleText = preg_replace(
+	'/^' . preg_quote($this->getTitle()->getText() . '/', '/') . '/',
+	'',
+	$title->getText()
+      );
+      
       $link = $title->getLinkURL();
 
       $watched = $this->getContext()->getUser()->isWatched($title);

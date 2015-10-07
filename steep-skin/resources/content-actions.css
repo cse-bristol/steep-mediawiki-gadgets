@@ -10,6 +10,8 @@
     transition: opacity 0.3s;
     pointer-events: none;
 
+    z-index: 99999;
+
     /* Cross-browser disable text selection. */
     user-select: none;
     -webkit-touch-callout: none;
@@ -21,6 +23,9 @@
 
 .clutter .content-actions {
     opacity: 1;
+}
+
+.clutter .content-action, .clutter .content-submenu {
     pointer-events: all;
 }
 
@@ -32,40 +37,42 @@
 .content-action {
     display: inline-block;
     vertical-align: top;
-	margin-left: 1em;
+    margin-left: 1em;
+    pointer-events: auto;
 }
 
 .content-submenu {
     display: inline-block;
-    overflow: hidden;
-	margin-left: 1em;
+    margin-left: 1em;
 }
 
 .content-submenu-expander {
     background-color: white;
     cursor: default;
-	text-indent: -5000px;
-}
-
-.content-submenu-wrapper {
-    overflow: hidden;
+    height: 2em;
 }
 
 .content-submenu-list {
     list-style: none;
-    padding: 0;
+    padding: 0.5em;
     margin: 0;
+    margin-left: -0.5em;
+    opacity:0;
+    transition: opacity 0.3s;
     background-color: white;
-    transform: translateY(-110%);
-    transition: transform 1s;
 }
 
 .content-submenu:hover .content-submenu-list {
-    transform: none;
+    opacity:1;
+}
+
+.content-submenu:hover .content-submenu-expander::before {
+    color: #08b030;
 }
 
 .content-submenu-list .content-action {
     display: block;
+    margin: 0;
 }
 
 a.content-action-link {
@@ -76,16 +83,16 @@ a.content-action-link {
 
 a.content-action-link::after,
 .content-submenu-expander::before {
-	font-family: 'steep-icons';
-	font-style: normal;
-	font-weight: normal;
-	font-size: 20px;
-	text-indent: 0;
+    font-family: 'steep-icons';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    text-indent: 0;
 }
 
 .content-submenu-expander::before {
-	content: '\006D';
-	display: block;
+    content: '\006D';
+    display: block;
     color: #ababab;
 }
 
@@ -141,19 +148,19 @@ a.content-action-link::after,
     position: absolute;
     top: 2em;
     right: 1em;
-	white-space: nowrap;
-	line-height: 30px;
+    white-space: nowrap;
+    line-height: 30px;
 }
 
 .back-to-page::after {
-	font-family: 'steep-icons';
-	font-style: normal;
-	font-weight: normal;
-	font-size: 20px;
-	content: '\0050';
-	padding-left: 10px;
+    font-family: 'steep-icons';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    content: '\0050';
+    padding-left: 10px;
 }
 
 .back-to-page:hover {
-	color: #333;
+    color: #333;
 }

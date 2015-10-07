@@ -67,19 +67,17 @@ class SteepContentActions {
       '&nbsp;'
     );
 
-    $submenu = Html::rawElement(
-      'div',
-      array(
-	'class' => 'content-submenu-wrapper'
-      ),
-      Html::rawElement(
+    if ($contentSubmenu) {
+      $submenu = Html::rawElement(
 	'ul',
 	array(
 	  'class' => 'content-submenu-list'
 	),
 	$contentSubmenu
-      )
-    );
+      );
+    } else {
+      $submenu = '';
+    }
 
     return Html::rawElement(
       'li',

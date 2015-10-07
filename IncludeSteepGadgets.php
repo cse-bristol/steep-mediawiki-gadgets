@@ -36,14 +36,14 @@ class IncludeSteepGadgets {
                 $version = "";
             }
 
-            if (isset($args['focus'])) {
-                $focus = "&focus=" . $args['focus'];
+            if (isset($args['viewpoint'])) {
+                $viewpoint = "&viewpoint=" . $args['viewpoint'];
             } else {
-                $focus = '';
+                $viewpoint = '';
             }
             
             $iframeAttrs = array(
-                "src" => $location . "/?name=" . $args['name'] . $version . $focus,
+                "src" => $location . "/?name=" . $args['name'] . $version . $viewpoint,
                 "style" => "width:" . $width . "; height:" . $height . "; display:inline-block; overflow: hidden;"
             );
 

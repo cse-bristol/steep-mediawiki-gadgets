@@ -37,6 +37,14 @@
 	    label: mw.message('steepve-set-viewpoint').text(),
 	    id: 'steep-set-viewpoint'
 	});
+	
+	this.setViewpoint.on('click', function(e) {
+	    view.$frame[0].contentWindow.postMessage('getViewpoint', window.location.origin);
+	});
+	/*
+	 Listen for messages coming from the iframe with a viewpoint component in them.
+	 */
+	$(window).on('message', this.receiveViewpoint.bind(this));
 
 	this.history = new steepVE.VersionPicker({
 	    label: mw.message('steepve-history').text(),
@@ -108,13 +116,43 @@
 	    .attr('src', this.buildSrc());
     };
 
+    steepVE.view.Steep.prototype.receiveViewpoint = function(e) {
+	var source = e.source || e.originalEvent.source;
+
+	if (source === this.$frame[0].contentWindow) {
+	    var data = (e.originalEvent && e.originalEvent.data) || e.data;	    
+	    
+	    if (data && data.viewpoint) {
+		if (typeof(data.viewpoint) !== 'string') {
+		    throw new Error("Viewpoint must be a string, was: " + typeof(data.viewpoint));
+		}
+		
+		if (data.viewpoint === this.model.getElement().attributes.viewpoint) {
+		    // No change
+		    return;
+		}
+
+		this.root.getSurface().getModel().change(
+		    ve.dm.Transaction.newFromAttributeChanges(
+			this.model.getDocument(),
+			this.getOffset(),
+			{
+			    viewpoint: data.viewpoint
+			}
+		    )
+		);
+	    }
+	}
+    };
+
     steepVE.view.Steep.prototype.buildSrc = function() {
 	var modelAttributes = this.model.getElement().attributes;
 	
 	var url = "/" + this.toolUrl + "/?name=" + encodeURIComponent(modelAttributes.name),
-	    args = this.srcArgs(modelAttributes);
+	    args = {};
 
 	args.v = modelAttributes.v;
+	args.viewpoint = modelAttributes.viewpoint;
 
 	Object.keys(args).forEach(function(k) {
 	    var val = args[k];
@@ -127,10 +165,6 @@
 	});
 	
 	return url;
-    };
-
-    steepVE.view.Steep.prototype.srcArgs = function(model) {
-	throw new Error("Not implemented: srcArgs should be overridden in subtype.");
     };
 
 }(mediaWiki, ve, OO, jQuery, steep.ve));

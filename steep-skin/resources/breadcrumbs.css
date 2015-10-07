@@ -1,0 +1,53 @@
+#first-heading a {
+    text-decoration: none;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-right: 1em;
+}
+
+#first-heading a:hover {
+    text-decoration: underline;
+}
+
+#first-heading a + a::before {
+    content: '>';
+    font-size: small;
+    pointer-events: none;
+    position: absolute;
+    bottom: 0;
+    left: -0.85em;
+}
+
+.ancestor-breadcrumb {
+    vertical-align: middle;
+    color: #999;
+    font-size: medium;
+}
+
+.ancestor-breadcrumb:hover span {
+    /* It's not clear to me why I need to repeat this, but it doesn't work otherwise. */
+    text-decoration: underline;
+}
+
+.ancestor-breadcrumb span {
+    vertical-align: middle;
+    max-width: 7em;    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.self-breadcrumb {
+    color: #333;
+}
+
+.self-breadcrumb::before {
+    bottom: 0.65em !important;
+    color: #999;
+}
+
+.subpages {
+    display: none;
+}

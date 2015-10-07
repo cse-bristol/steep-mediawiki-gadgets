@@ -130,20 +130,77 @@ class SteepTemplate extends BaseTemplate {
 	'id' => 'content',
 	'class' => 'mw-body' . ($this->hasContents ? ' contains-contents' : '') . ($this->get('isPage') ? ' page' : '')
       ),
-      $this->title() . $this->bodyContent()
+      $this->breadcrumbs() . $this->bodyContent()
     );
   }
 
-  function title() {
+  function breadcrumbs() {
+    /*
+       Start with a 'home' link.
+     */
+    $breadcrumbs = $this->crumb(
+      $this->getMsg('home'),
+      $this->homeHref,
+      false
+    );
+
+    /*
+       Split the title on '/' and make each part a link.
+
+       This is like namespaces, except:
+       + The pages don't actually have to exist.
+       + Pages earlier in the breadcrumbsd are assumed to be categories.
+     */
+    $mwTitle = $this->get('mwTitle');
+    $titleParts = explode('/', $mwTitle->getText());
+    $last = count($titleParts) - 1;
+
+    $titleSoFar = '';
+    
+    foreach ($titleParts as $i => $titlePart) {
+      $isLast = $i === $last;
+
+      if ($titleSoFar) {
+	$titleSoFar .= '/';
+      }
+      $titleSoFar .= $titlePart;
+      
+      $mwTitlePart = Title::newFromText(
+	$titleSoFar,
+	$isLast ? $mwTitle->getNamespace() : NS_CATEGORY
+      );
+      
+      $breadcrumbs .= $this->crumb(
+	$titlePart,
+	$mwTitlePart->getLinkUrl(),
+	$isLast
+      );
+    }
+    
     return Html::rawElement(
       'h1',
       array(
 	'id' => 'first-heading'
       ),
-      $this->get('title')
+      $breadcrumbs
     );
   }
 
+  function crumb($text, $link, $isLast) {
+    return Html::rawElement(
+      'a',
+      array(
+	'href' => $link,
+	'class' => $isLast ? 'self-breadcrumb' : 'ancestor-breadcrumb'
+      ),
+      Html::rawElement(
+	'span',
+	array(),
+	$text
+      )
+    );
+  }
+    
   function bodyContent() {
     return Html::rawElement(
       'div',
@@ -295,8 +352,9 @@ class SteepTemplate extends BaseTemplate {
   public function execute() {
     $this->hasContents = (preg_match('/id="toc"/', $this->get('bodytext')) === 1);
     $this->fullScreen = $this->haveData('hidetoc') && ($this->get('hidetoc') == 1);
+    $this->homeHref = $this->data['nav_urls']['mainpage']['href'];
     
-    $this->navbar = new SteepNavbar($this->get('sitename'), $this->get('logopath'), $this->data['nav_urls']['mainpage']['href'], $this->translator, $this->get('isPage'));
+    $this->navbar = new SteepNavbar($this->get('sitename'), $this->get('logopath'), $this->homeHref, $this->translator, $this->get('isPage'));
     $this->contentActions = new SteepContentActions($this->get('content_actions'), $this->get('viewurl'));
     
     $this->html('headelement');

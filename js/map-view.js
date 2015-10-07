@@ -17,11 +17,6 @@
 
     steepVE.view.Map.static.name = steepVE.model.Map.static.name;
 
-    steepVE.view.Map.prototype.srcArgs = function(model) {
-	return {
-	};
-    };
-
     ve.ce.nodeFactory.register(steepVE.view.Map);
 
 }(ve, OO, steep.ve));

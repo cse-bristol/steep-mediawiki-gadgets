@@ -26,6 +26,10 @@
 	    tagElement.setAttribute("name", attrs.name);
 	    tagElement.setAttribute("width", attrs.width);
 	    tagElement.setAttribute("height", attrs.height);
+
+	    if (attrs.viewpoint) {
+		tagElement.setAttribute("viewpoint", attrs.viewpoint);
+	    }
 	    
 	    if(!isNaN(parseInt(attrs.v))) {
 	    	tagElement.setAttribute("v", attrs.v);
@@ -55,7 +59,8 @@
 		name: name,
 		v: v,
 		width: width,
-		height: height
+		height: height,
+		viewpoint: null
 	    }
 	}];
     };

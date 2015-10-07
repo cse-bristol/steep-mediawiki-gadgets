@@ -20,7 +20,7 @@
 
 	var api = new mw.Api(),
 	    mwTitle = new mw.Title(
-		title,
+		(categories.length ? categories[0] + '/' : '') + title,
 		namespace
 	    ),
 	    

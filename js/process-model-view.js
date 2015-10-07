@@ -17,12 +17,6 @@
 
     steepVE.view.ProcessModel.static.name = steepVE.model.ProcessModel.static.name;
 
-    steepVE.view.ProcessModel.prototype.srcArgs = function(model) {
-	return {
-	    focus: model.focus
-	};
-    };
-
     ve.ce.nodeFactory.register(steepVE.view.ProcessModel);
 
 }(ve, OO, steep.ve));

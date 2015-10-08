@@ -59,7 +59,7 @@ class SteepTemplate extends BaseTemplate {
       array(
 	'class' => 'right'
       ),
-      $this->header() . $this->contentActions->contentNavigation() . $this->content()
+      $this->header() . $this->content()
     );
   }
 
@@ -128,9 +128,9 @@ class SteepTemplate extends BaseTemplate {
       'div',
       array(
 	'id' => 'content',
-	'class' => 'mw-body' . ($this->hasContents ? ' contains-contents' : '') . ($this->get('isPage') ? ' page' : '')
+	'class' => 'mw-body'
       ),
-      $this->breadcrumbs() . $this->bodyContent()
+      $this->contentActions->contentNavigation() . $this->breadcrumbs() . $this->bodyContent()
     );
   }
 
@@ -338,7 +338,7 @@ class SteepTemplate extends BaseTemplate {
     echo Html::rawElement(
       'div',
       array(
-	'class' => 'container' . ($this->fullScreen ? '' : ' clutter')
+	'class' => 'container' . ($this->fullScreen ? '' : ' clutter') . ($this->hasContents ? ' contains-contents' : '') . ($this->get('isPage') ? ' content-page' : '')
       ),
       $this->top() . $this->bottom()
     );

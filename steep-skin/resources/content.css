@@ -1,3 +1,10 @@
+#content {
+    /* Allows us to position the content-actions absolutely with respect to this. */
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
 #first-heading {
     vertical-align: bottom;
     margin: 1em 0 0.5em 0;
@@ -25,14 +32,6 @@
     transition: margin-left 0.3s;
     transition: width 0.3s;
     margin: auto;
-}
-
-#content.page {
-    width: 80%;
-}
-
-.clutter #content.contains-contents {
-    margin-left: 13em;
 }
 
 ul#preftoc { 

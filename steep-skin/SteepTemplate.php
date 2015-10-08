@@ -215,16 +215,6 @@ class SteepTemplate extends BaseTemplate {
   function bodyText() {
     $text = $this->get('bodytext');
 
-    /*
-       We rename this to prevent mediawiki.toc.js from fiddling with it.
-     */
-    $text = preg_replace(
-      '/id=\"toc/',
-      'id="table-of-contents',
-      $text,
-      1
-    );
-
     if ($this->hasContents && $this->fullScreen) {
       /*
 	 Add the tochidden class.

@@ -11,7 +11,7 @@
     var animationLength = 200;
     
     mw.hook('wikipage.content').add(function (content) {
-	var toc = content.find('#table-of-contents'),
+	var toc = content.find('#toc'),
 	    contentDiv = $('#content'),
 	    
 	    container = $('.container'),
@@ -30,7 +30,7 @@
 
 	    toggle = function() {
 		var shouldExpand = container.hasClass('clutter');
-		
+
 		mw.cookie.set(
 		    'hidetoc',
 		    shouldExpand ? '1' : '0'
@@ -40,8 +40,15 @@
 	    };
 
 	if (fullScreenToggle.length) {
+	    /*
+	     Some operations (e.g. going into Visual Editor, then saving) re-run this JavaScript without reloading the whole page.
+
+	     As a result, we need to make sure we only end up with one click handler.
+	     */
+	    fullScreenToggle.off('click');
+	    
 	    fullScreenToggle
-		.click(function ( e ) {
+		.on('click', function (e) {
 		    e.preventDefault();
 		    toggle();
 		});

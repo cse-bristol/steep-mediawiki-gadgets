@@ -28,6 +28,7 @@ Reskins Mediawiki to have fewer controls, and to support a projects structure ba
  * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_25 branch.
  * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Note that this does not require the Parsoid extension be installed into Mediawiki.
  * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
+ * ElasticSearch and the CirrusSearch plugin.
 
 The Steep Project also uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]], but we do not actually require that for these components.
 

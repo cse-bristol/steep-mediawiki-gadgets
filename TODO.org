@@ -28,6 +28,11 @@ It would be useful if we could reduce the amount that this happens:
  + When we set the viewpoint, we don't really need to reload the iframe. We only need to mark it on the model.
 
 * Skin
+** Search uses dynamic scripts
+Our [[file:steep-skin/CategoryContentSearch.php][search]] uses dynamic (Groovy) scripting. We'd like to remove this dependency.
+
+It was just acceptable at the time because Mediawiki (via CirrusSearch) has the same requirement.
+
 ** Manage Assets Page
 This was designed, but never implemented due to lack of time.
 

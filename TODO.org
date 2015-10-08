@@ -1,4 +1,20 @@
 * VisualEditor Extension
+** Security
+If we add [[*Access%20Control][Access Control]] (see below), then we would like to extend it to process-models and maps.
+
+*** Implementation Notes
+There's a cookie called enwikiSession (domain specific). Can we use this?
+
+If it doesn't exist, provide a login/register link?
+
+http://www.mediawiki.org/wiki/Security_issues_with_authorization_extensions
+
+http://tools.ietf.org/html/rfc6265
+
+document.cookie doesn't work.
+
+mediawikiUserID=12; mediawikiUserName=GlennSearby; mediawikiToken; mediawikiSession all get sent. Can I do something with those server-side? Probably.
+
 ** Resize/Move
 After inserting a process-model or map, it would be useful to be able to arrange it on the page.
 
@@ -35,16 +51,23 @@ The watch/unwatch buttons are being controlled by Mediawiki's own JavaScript. As
 
 We should replace the HTMl changing side-effect with one which works better for our skin.
 
-* Deployment
-** Move Extension Code
-The VisualEditor extension code should have its own folder.
+** Export
+Mediawiki has documents which are a single, scrollable page, don't usually get too big, and are hyperlinked.
 
-We could put it directly inside the =/mediawiki= folder, and then add an extra symlink to put the VisualEditor extension into =/mediawiki/extensions=. 
+Sometimes we need to produce printable documents. These are long and organized in pages. Usually done as PDFs.
+
+At present, we can transclude many pages into a single one, and then print the result. It might be helpful to have a tool to help with this job.
 
 ** Access Control
 Read and write restrictions with at least project-level control.
 
 We were considering using [[http://wiki.4intra.net/IntraACL][IntraACL]], but it doesn't yet support Mediawiki 1.25.
+
+* Deployment
+** Move Extension Code
+The VisualEditor extension code should have its own folder.
+
+We could put it directly inside the =/mediawiki= folder, and then add an extra symlink to put the VisualEditor extension into =/mediawiki/extensions=. 
 
 ** Backup/Restore
 The backup and restore functions were designed when we were using MongoDB as a backend.

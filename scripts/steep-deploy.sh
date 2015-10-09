@@ -28,7 +28,6 @@ MEDIAWIKI_DIR="${TARGET_DIR}/mediawiki";
 NEW_DIR="${MEDIAWIKI_DIR}_${REL}";
 EXT_DIR="${NEW_DIR}/extensions";
 EXTRA_CONFIG_FILE="SteepSettings.php";
-EXTRA_CONFIG="${NEW_DIR}/${EXTRA_CONFIG_FILE}";
 
 PROCESS_MODEL_DIR="${TARGET_DIR}/process-model";
 MAP_DIR="${TARGET_DIR}/energy-efficiency-planner";
@@ -92,9 +91,6 @@ if [ -d $MEDIAWIKI_DIR ]; then
 
     cp "${OLD_DIR}/images" "${NEW_DIR}" -R;
 
-    # Overwrite SteepSettings.php
-    cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";        
-
 else
     rm -f "${NEW_DIR}/LocalSettings.php";
     
@@ -106,7 +102,6 @@ else
     echo "\$wgConfirmAccountContact=\"${ACCOUNT_CONTACT}\";" >> "${LOCAL_SETTINGS}";
     echo "\$wgServer=\"${WG_SERVER}\";" >> "${LOCAL_SETTINGS}";
     echo "require_once \"\$IP/${EXTRA_CONFIG_FILE}\";" >> "${LOCAL_SETTINGS}";
-    cp "${EXTRA_CONFIG_FILE}" "${EXTRA_CONFIG}";
 
     if [ "$CONFIRM_ACCOUNTS" = true ] ; then
 	cp 'ConfirmUsers.php' "${NEW_DIR}";

@@ -9,4 +9,8 @@ set -e;
 # Symlink it into the skins directory.
 ln -s -T "${STEEP_DIR}/steep-skin" "${NEW_DIR}/skins/Steep";
 
+source "steep-settings-symlink.sh";
+
+# Migrate from MongoDB to ElasticSearch.
 source "search.sh";
+

@@ -120,11 +120,17 @@ class SteepNavbar {
 	),
 	$this->navIconLink(
 	  $this->getMsg('manage-assets'),
-	  Skin::makeNSUrl(
-	    $this->getMsg('manage-assets-page'),
-	    '',
-	    NS_SPECIAL
-	  ),
+	  SpecialPage::getTitleFor('Listfiles')->getLinkUrl(),
+	  /*
+	     We haven't yet defined this special page, so just using the files list for now.
+	   */
+	  /*
+	     Skin::makeNSUrl(
+	     $this->getMsg('manage-assets-page'),
+	     '',
+	     NS_SPECIAL
+	     ),
+	   */
 	  'manage-assets'	
 	),
 	$this->navIconLink(

@@ -3,16 +3,24 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 [[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
 
 * Steep VisualEditor Extension
-Adds buttons to Mediawiki's Visual Editor to allow you to insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]].
+Adds buttons to Mediawiki's Visual Editor to allow you to insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]] as an iframe.
 
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
 
-*** TODO Better display in Visual Editor
-Having added a process-model or map to the document, at present you get a little snippet of XML.
+** Set Viewpoint
+Determines the initial view that the map or process-model will show on opening the document. It does this by adding a /&viewpoint=/ parameter to the /src/ of the iframe.
 
-It would be better if this was a GUI control which allowed you to change aspects of that link, or remove it entirely.
+You can also save viewpoints when you are editing a process-model or viewpoint directly in its own Window. The 'Set Viewpoint' button we are providing in VisualEditor overrides this, allow you to look at several different parts of the same map or process-model in a document.
 
-* TODO Steep Skin
+** History
+Choose which version of the process-model or map will be displayed.
+
+Choose 'Latest' to ensure that the document will always show the most recent version.
+
+** Open Original
+This opens the process-model or map in a new window or tab depending on browser configuration.
+
+* Steep Skin
 Reskins Mediawiki to have fewer controls, and to support a projects structure based around the Category:Project page.
 
 * Dependencies
@@ -20,6 +28,7 @@ Reskins Mediawiki to have fewer controls, and to support a projects structure ba
  * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_25 branch.
  * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Note that this does not require the Parsoid extension be installed into Mediawiki.
  * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
+ * ElasticSearch and the CirrusSearch plugin.
 
 The Steep Project also uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]], but we do not actually require that for these components.
 
@@ -50,3 +59,6 @@ Then modify your LocalSettings.php to include the following (replace any existin
 The file [[file:scripts/steep-deploy.sh][steep-deploy.sh]] can run a fresh install or upgrade of the entire Steep platform.
 
 The files [[file:scripts/backup/steep-backup.sh][steep-backup.sh]] and [[scripts/backup/steep-restore.sh][steep-restore.sh]] do what they say.
+
+* Future Plans
+See [[file:TODO.org][TODO.org]].

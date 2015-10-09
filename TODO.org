@@ -1,0 +1,110 @@
+* VisualEditor Extension
+** Security
+If we add [[*Access%20Control][Access Control]] (see below), then we would like to extend it to process-models and maps.
+
+*** Implementation Notes
+There's a cookie called enwikiSession (domain specific). Can we use this?
+
+If it doesn't exist, provide a login/register link?
+
+http://www.mediawiki.org/wiki/Security_issues_with_authorization_extensions
+
+http://tools.ietf.org/html/rfc6265
+
+document.cookie doesn't work.
+
+mediawikiUserID=12; mediawikiUserName=GlennSearby; mediawikiToken; mediawikiSession all get sent. Can I do something with those server-side? Probably.
+
+** Resize/Move
+After inserting a process-model or map, it would be useful to be able to arrange it on the page.
+
+See [[https://doc.wikimedia.org/VisualEditor/master/#!/api/ve.dm.ResizableNode][ve.dm.ResizableNode]] and [[https://doc.wikimedia.org/VisualEditor/master/#!/api/ve.ce.ResizableNode][ve.ce.ResizableNode]].
+
+** Iframe Reloading
+There is very frequent iframe reloading in VisualEditor. This is slow and annoying.
+
+It would be useful if we could reduce the amount that this happens:
+ + Sometimes the =src= property didn't even really change. Can we somehow buffer this?
+ + When we set the viewpoint, we don't really need to reload the iframe. We only need to mark it on the model.
+
+* Skin
+** Search uses dynamic scripts
+Our [[file:steep-skin/CategoryContentSearch.php][search]] uses dynamic (Groovy) scripting. We'd like to remove this dependency.
+
+It was just acceptable at the time because Mediawiki (via CirrusSearch) has the same requirement.
+
+** Manage Assets Page
+This was designed, but never implemented due to lack of time.
+
+It should be a table listing all the process-models, maps, map layers and files wchih exist, regardless of project.
+
+** Map Layers as Assets
+We haven't done any design for this yet.
+
+It will also require changes to the map itself, which currently automatically uploads layers to the server. It should present the user with an extra upload dialogue on save instead.
+
+** Icons per file type
+When displaying files in the wiki, if they are of a known type (based on extension? MIME type?), we should display the icons which were made for them in the Steep skin.
+
+** Search
+This applies to the main search page (type something in the search bar and press enter straight away) and the special search bars for projects.
+
+These should be able to show process-models, maps and map layers.
+
+** Watch/Unwatch
+The watch/unwatch buttons are being controlled by Mediawiki's own JavaScript. As well as doing the action, this also modifies the HTML in ways that don't make sense for our skin.
+
+We should replace the HTMl changing side-effect with one which works better for our skin.
+
+** Export
+Mediawiki has documents which are a single, scrollable page, don't usually get too big, and are hyperlinked.
+
+Sometimes we need to produce printable documents. These are long and organized in pages. Usually done as PDFs.
+
+At present, we can transclude many pages into a single one, and then print the result. It might be helpful to have a tool to help with this job.
+
+** Access Control
+Read and write restrictions with at least project-level control.
+
+We were considering using [[http://wiki.4intra.net/IntraACL][IntraACL]], but it doesn't yet support Mediawiki 1.25.
+
+* Deployment
+** Move Extension Code
+The VisualEditor extension code should have its own folder.
+
+We could put it directly inside the =/mediawiki= folder, and then add an extra symlink to put the VisualEditor extension into =/mediawiki/extensions=. 
+
+** Backup/Restore
+The backup and restore functions were designed when we were using MongoDB as a backend.
+
+They need replacing to work with ElasticSearch instead.
+
+*** Implementation Notes
+path.repo: ["/mount/backups", "/mount/longterm_backups"] in the elasticsearch.yml file.
+
+First register a repository:
+#+BEGIN_SRC js2
+  // PUT /_snapshot/my_backup
+  var thing = {
+      "type": "fs",
+      "settings": {
+          compress: true,
+          location: "/somewhere"
+      }
+  };
+
+#+END_SRC
+
+Then add a snapshot:
+#+BEGIN_SRC js2
+  // PUT /_snapshot/my_backup/snapshot
+  var thing = {
+      indices: 'share',
+      ignore_unavailable: false,
+      include_global_state: false,
+      partial: false,
+      wait_for_completion: true
+  };
+#+END_SRC
+
+We can do POST /_snapshot/my_backup/snapshot_1/_restore

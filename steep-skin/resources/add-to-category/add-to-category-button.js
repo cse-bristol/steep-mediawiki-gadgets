@@ -11,7 +11,10 @@
      Finds the button #new-category-page and adds click behaviour for it to delegate to one of two dialogues.
      */
     mw.hook('wikipage.content').add(function(content) {
-	if (!mw.viewingCategoryPage) {
+	if ($('#new-category-page').length === 0) {
+	    /*
+	     There's no button for us to set up.
+	     */
 	    return;
 	}
 

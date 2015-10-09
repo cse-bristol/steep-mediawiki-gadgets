@@ -3,14 +3,7 @@
 /*global mediaWiki, jQuery, OO, steep*/
 
 /*
- A module provides some user-selectable things.
-
- ToDo:
- + set the size to keep it open
- + toggle behaviour
- + scrolling if too many versions
- + date formatting
- + click handling
+ Provides a selection box which shows the different available versions of a process-model or map.
  */
 (function(mw, $, OO, steepVE){
     steepVE.VersionPicker = function(options) {

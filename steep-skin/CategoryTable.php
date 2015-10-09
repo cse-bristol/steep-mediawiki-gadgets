@@ -97,6 +97,14 @@ class CategoryTable extends Article {
     $this->getContext()->getOutput()->addHTML($html);
   }
 
+  function canEdit() {
+    return $this->getTitle()->userCan(
+      'edit',
+      $this->getContext()->getUser(),
+      'quick'
+    );
+  }
+
   function view() {
     /*
        Don't cache category pages in the browser (we would return a 304 stale otherwise).
@@ -108,16 +116,19 @@ class CategoryTable extends Article {
 
     $this->getContext()->getOutput()->enableOOUI();
 
-    $this->out(
-      new OOUI\ButtonWidget(
-	array(
-	  'id' => 'new-category-page',
-	  'infusable' => true,
-	  'label' => $this->isProjectsPage ? 'New Project' : 'Add Asset',
-	  'href' => '#'
+
+    if ($this->canEdit()) {
+      $this->out(
+	new OOUI\ButtonWidget(
+	  array(
+	    'id' => 'new-category-page',
+	    'infusable' => true,
+	    'label' => $this->isProjectsPage ? 'New Project' : 'Add Asset',
+	    'href' => '#'
+	  )
 	)
-      )
-    );
+      );
+    }
 
     $this->out(
       $this->viewSort()

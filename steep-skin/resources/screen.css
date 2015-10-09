@@ -46,13 +46,28 @@ Everything other than the navbar.
     padding: 0 2em 2em 2em;    
 }
 
+.right {
+    padding-left: 10%;
+    padding-right: 10%;
+    transition: padding 0.3s;
+}
+
+.clutter .right {
+    padding-left: 5em;
+    padding-right: 5em;
+}
+
+.contains-contents.clutter .right {
+    padding-left: 15em;
+    padding-right: 15em;
+}
+
 .top .right {
     vertical-align: top;
 }
 
 .bottom .right {
     vertical-align: bottom;
-    padding-left: 15em;
 }
 
 .bottom .last-modified {

@@ -3,66 +3,92 @@ We would like the table of contents to display as a table.
 
 However, Mediawiki renders it as nested lists, so this css is quite complicated.
 */
-#table-of-contents {
-    background-color: white;
-    position: fixed;
-    left: 15em;
-    top: 8em;
-    transition-property: left, top;
-    transition-duration: 0.3s;
-    height: 60%;
-    overflow-x: hidden;
-    overflow-y: auto;
+
+@media screen {
+    #toc {
+	position: fixed;
+	left: 15em;
+	top: 8em;
+	transition-property: left, top;
+	transition-duration: 0.3s;
+	height: 90%;
+	overflow-x: hidden;
+	overflow-y: auto;
+    }
+
+    #toc.tochidden {
+	left: 2em;
+	top: 2em;
+	overflow-y: hidden;
+	width: 4em;
+    }
+
+    .toctext {
+	max-width: 10em;
+    }
+
+    #toc > ul {
+	width: 12em;
+	transition: opacity 0.3s;
+    }
 }
 
-#table-of-contents.tochidden {
-    left: 2em;
-    top: 2em;
-    overflow-y: hidden;
-    width: 4em;
+@media print {
+    #toc {
+	width: 100%;
+	border: none;
+    }
+    
+    #toc ul {
+	padding-left: 0;
+    }
 }
 
-#table-of-contents > ul {
-    width: 12em;
-    transition: opacity 0.3s;
-}
+@media all {
+    #toc {
+	background-color: white;
+    }
+    
+    .tochidden > ul {
+	opacity: 0;    
+    }
 
-.tochidden > ul {
-    opacity: 0;    
-}
+    #toctitle h2 {
+	font-size: 1.2em;
+	text-align: left;
+	padding: 0;
+	transition: opacity 0.3s;
+	font-family: 'fira_sansregular';
+	color: #666;
+    }
 
-#toctitle h2 {
-    font-size: 1.2em;
-    text-align: left;
-    padding: 0;
-    transition: opacity 0.3s;
-    font-family: 'fira_sansregular';
-    color: #666;
-}
+    .tochidden #toctitle h2 {
+	opacity: 0;
+    }
 
-.tochidden #toctitle h2 {
-    opacity: 0;
-}
+    #toc ul {
+	list-style-type: none;
+	margin: 0 !important;
+    }
 
-#table-of-contents ul {
-    list-style-type: none;
-    margin: 0 !important;
-}
+    #toc ul a {
+	color: #666;
+	text-decoration: none;
+	display: table-row;
+    }
 
-#table-of-contents ul a {
-    color: #666;
-    text-decoration: none;
-    display: table-row;
-}
+    .tocnumber {
+	width: 2em;
+	vertical-align: top;
+	display: table-cell;
+	padding-right: 0.3em;
+    }
 
-.tocnumber {
-    width: 2em;
-    vertical-align: top;
-    display: table-cell;
-    padding-right: 0.3em;
-}
+    .toctext {
+	display: table-cell;
+    }
 
-.toctext {
-    max-width: 10em;
-    display: table-cell;
+    .toctoggle {
+	display: none;
+    }
 }

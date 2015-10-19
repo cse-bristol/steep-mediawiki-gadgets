@@ -28,10 +28,45 @@ It would be useful if we could reduce the amount that this happens:
  + When we set the viewpoint, we don't really need to reload the iframe. We only need to mark it on the model.
 
 * Skin
+** Projects Page
+The projects page includes all projects and sub-projects and sub-sub-projects and so on.
+
+We'd like it to just include top-level projects. However, we still need to be able to get a list of all levels of projects so that we can add process-models and maps in the right places.
+
+*** Option A: Build up the full list
+When populating our projects list, make two requests:
+ 1. get our categories hierarcy (from mw API? from ElasticSearch?)
+ 2. get all things in it.
+
+mediawiki_general
+mediawiki_content
+
+At the moment we make one little Elasticsearch query.
+
+This would be tricky.
+
+*** Option B: filter down the full list
+If, after we take out Projects/ and our own page name, there is more than one slash left, reject it.
+
+*** Option C: tag it twice
+Have a separate ProjectsAndSubProjects category?
+
+This might be the thing? This is a denormalized version of A, so prefer A if possible.
+
 ** Search uses dynamic scripts
 Our [[file:steep-skin/CategoryContentSearch.php][search]] uses dynamic (Groovy) scripting. We'd like to remove this dependency.
 
 It was just acceptable at the time because Mediawiki (via CirrusSearch) has the same requirement.
+
+** Add Asset Page
+At present, you can add files to projects by editing their page and adding the project as a category.
+
+We'd like this to be an easier process. We could use [[https://www.mediawiki.org/wiki/Extension:CategorySuggest][CategorySuggest]].
+
+*** Autofill
+We'd also like it to be automatically filled in when you go to 'Add Asset' from within a project.
+
+Perhaps we could add a /?category=/ URL parameter, and then write some JavaScript to detect this and fill it in.
 
 ** Manage Assets Page
 This was designed, but never implemented due to lack of time.

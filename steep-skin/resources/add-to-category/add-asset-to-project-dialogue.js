@@ -36,7 +36,7 @@
 	    return new steep.AddToCategoryProcess(
 		dialogue.pageTitle.getValue(),
 		mw.config.values.wgNamespaceIds.category,
-		[dialogue.category, 'Projects']
+		[dialogue.category, 'ProjectsAndSubProjects']
 	    );
 	    
 	default:

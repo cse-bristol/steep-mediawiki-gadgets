@@ -53,7 +53,7 @@
 	var dialogue = this;
 
 	if (action === 'create-page') {
-	    return new steep.AddToCategoryProcess(dialogue.pageTitle.getValue(), mw.config.values.wgNamespaceIds.category, ['Projects']);
+	    return new steep.AddToCategoryProcess(dialogue.pageTitle.getValue(), mw.config.values.wgNamespaceIds.category, ['Projects', 'ProjectsAndSubProjects']);
 	};
 	return steep.NewProjectDialogue.parent.prototype.getActionProcess.apply(this, arguments);
     };

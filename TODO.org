@@ -33,6 +33,16 @@ Our [[file:steep-skin/CategoryContentSearch.php][search]] uses dynamic (Groovy) 
 
 It was just acceptable at the time because Mediawiki (via CirrusSearch) has the same requirement.
 
+** Add Asset Page
+At present, you can add files to projects by editing their page and adding the project as a category.
+
+We'd like this to be an easier process. We could use [[https://www.mediawiki.org/wiki/Extension:CategorySuggest][CategorySuggest]].
+
+*** Autofill
+We'd also like it to be automatically filled in when you go to 'Add Asset' from within a project.
+
+Perhaps we could add a /?category=/ URL parameter, and then write some JavaScript to detect this and fill it in.
+
 ** Manage Assets Page
 This was designed, but never implemented due to lack of time.
 

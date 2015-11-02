@@ -157,8 +157,8 @@ class SteepNavbar {
 	  'about'	
 	),
 	$this->navLink(
-	  $this->getMsg('help'),
-	  $this->getMsg('helppage')
+		$this->getMsg('help'),
+        "http://tools.smartsteep.eu/wiki/User_Manual"
 	),
 	$this->navLink(
 	  $this->getMsg('privacy'),

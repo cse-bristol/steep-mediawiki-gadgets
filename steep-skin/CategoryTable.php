@@ -243,9 +243,9 @@ class CategoryTable extends Article {
       $titleText = $row['doc'][0];
 
       if ($type === 'process-models') {
-	$link = '/process-model/?name=' . $titleText;
+	$link = '/process-model/?name=' . urlencode($titleText);
       } else if ($type === 'maps') {
-	$link = '/map/?name=' . $titleText;
+	$link = '/map/?name=' . urlencode($titleText);
       } else {
 	$link = '';
       }

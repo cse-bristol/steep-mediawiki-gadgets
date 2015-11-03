@@ -84,6 +84,8 @@ class CategoryTable extends Article {
        // mParseOutput
      */
 
+    $output = $tablePage->getContext()->getOutput();
+    $output->addModules('ext.category-tables');
     
     $tablePage->view();
     

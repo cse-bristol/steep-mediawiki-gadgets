@@ -1,0 +1,14 @@
+{
+    "visualeditor-mwprocessmodel-button": "Process Model",
+    "visualeditor-mwprocessmodel-dialogue": "Insert Process Model",
+    
+    "visualeditor-mwmap-button": "Map",
+    "visualeditor-mwmap-dialogue": "Insert Map",
+
+    "steeptags-name": "Steep Tags",
+    "steeptags-desc": "This extension adds the ability to include Process Models and Energy Efficiency Maps in a wiki page.",
+
+    "steeptags-popout": "Open Original",
+    "steeptags-history": "History",
+    "steeptags-set-viewpoint": "Set Viewpoint"
+}

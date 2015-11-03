@@ -1,8 +1,8 @@
 "use strict";
 
-/*global mediaWiki, jQuery, OO, steep*/
+/*global mediaWiki, jQuery, OO*/
 
-(function(mw, $, OO, steep) {
+(function(mw, $, OO) {
     var projectsPage = 'Projects';
     
     /*
@@ -26,9 +26,9 @@
 	
 	$('body').append(windowManager.$element);
 
-	var dialogue = isProjectsPage ? new steep.NewProjectDialogue(category) : (
-	    isAProject ? new steep.AddAssetToProjectDialogue(category) :
-		new steep.AddAssetToCategoryDialogue(category)
+	var dialogue = isProjectsPage ? new OO.NewProjectDialogue(category) : (
+	    isAProject ? new OO.AddAssetToProjectDialogue(category) :
+		new OO.AddAssetToCategoryDialogue(category)
 	);
 	
 	windowManager.addWindows([dialogue]);
@@ -41,4 +41,4 @@
 	});	
     });
     
-}(mediaWiki, jQuery, OO, steep));
+}(mediaWiki, jQuery, OO));

@@ -14,3 +14,5 @@ source "steep-settings-symlink.sh";
 # Migrate from MongoDB to ElasticSearch.
 source "search.sh";
 
+source "category-tables-extension.sh";
+source "thing-extension.sh";

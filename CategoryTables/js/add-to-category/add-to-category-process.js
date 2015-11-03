@@ -1,6 +1,6 @@
 "use strict";
 
-/*global mediaWiki, jQuery, OO, steep*/
+/*global mediaWiki, jQuery, OO*/
 
 /*
  A process which operates on a title, a namespace, a list of categories.
@@ -9,8 +9,8 @@
 
  Navigates to the page.
  */
-(function (mw, $, OO, steep) {
-    steep.AddToCategoryProcess = function(title, namespace, categories) {
+(function (mw, $, OO) {
+    OO.AddToCategoryProcess = function(title, namespace, categories) {
 	if (!title) {
 	    throw new Error("Must specify options.title");
 	}
@@ -99,7 +99,7 @@
 	    });
     };
 
-    OO.inheritClass(steep.AddToCategoryProcess, OO.ui.Process);
+    OO.inheritClass(OO.AddToCategoryProcess, OO.ui.Process);
     
-}(mediaWiki, jQuery, OO, steep));
+}(mediaWiki, jQuery, OO));
 

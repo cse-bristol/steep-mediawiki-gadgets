@@ -3,6 +3,7 @@
     "author": [
 	"Glenn Searby"
     ],
+    "version": "1.0.0",
     "url": "https://github.com/cse-bristol/steep-mediawiki-gadgets",
     "descriptionmsg": "steepskin-desc",
     "namemsg": "steepskin-name",
@@ -23,17 +24,11 @@
 	"SteepTemplate": "SteepTemplate.php",
 	"SteepNavbar": "SteepNavbar.php",
 	"SteepContentActions": "SteepContentActions.php",
-	"CategoryContentSearch": "CategoryContentSearch.php",
-	"CategoryTable": "CategoryTable.php",
 	"SpecialManageUsers": "SpecialManageUsers.php"
     },
 
     "SpecialPages": {
 	"ManageUsers": "SpecialManageUsers"
-    },
-
-    "Hooks": {
-	"CategoryPageView": "CategoryTable::drawCategoryAsTable"
     },
 
     "ResourceModules": {
@@ -69,12 +64,6 @@
 		"table-of-contents.css": {
 		    "media": "all"
 		},
-		"search-in-category.css": {
-		    "media": "screen"
-		},
-		"category-table.css": {
-		    "media": "screen"
-		},
 		"oo-ui-elements.css": {
 		    "media": "screen"
 		},
@@ -95,30 +84,13 @@
 	},
 	"skins.steep.js": {
 	    "scripts": [
-		"steep.js",
-
-		"steep-utils.js",
-
 		"scroll-fix.js",
 		
-		"fullscreen-toggle.js",
-
-		"add-to-category/add-to-category-process.js",
-		"add-to-category/add-to-category-dialogue.js",
-		"add-to-category/new-project-dialogue.js",
-		"add-to-category/add-asset-dialogue.js",
-		"add-to-category/add-asset-to-project-dialogue.js",
-		"add-to-category/add-asset-to-category-dialogue.js",
-		"add-to-category/add-to-category-button.js",
-		
-		"search-in-category.js",
-		"sort-category-table.js"
+		"fullscreen-toggle.js"
 	    ],
 	    "position": "bottom",
 	    "dependencies": [
 		"mediawiki.cookie",
-		"mediawiki.api.category",
-		"mediawiki.api.edit",
 		"oojs-ui"
 	    ]
 	}

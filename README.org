@@ -2,8 +2,20 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 
 [[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
 
-* Steep VisualEditor Extension
-Adds buttons to Mediawiki's Visual Editor to allow you to insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]] as an iframe.
+* Steep Skin
+Reskins Mediawiki to have a simpler look and feel with fewer buttons.
+
+* Steep Tags Extension
+Adds two XML-like tags =<data-map>= and =<process-model>= to Mediawiki. These insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]] as an iframe.
+
+There can be controlled with the following properties:
+ + =name= sets the name of the document to load.
+ + =v= sets the version of the document to load.
+ + =viewpoint= overrides the default viewpoint of the document.
+ + =width=
+ + =height=
+
+Adds buttons to Mediawiki's Visual Editor's /Insert/ menu to allow you to insert these tags more easily.
 
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
 
@@ -20,8 +32,12 @@ Choose 'Latest' to ensure that the document will always show the most recent ver
 ** Open Original
 This opens the process-model or map in a new window or tab depending on browser configuration.
 
-* Steep Skin
-Reskins Mediawiki to have fewer controls, and to support a projects structure based around the Category:Project page.
+* CategoryTables
+
+* ProjectStructure
+Provides a projects structure based around the Category:Project page.
+
+Depends on CategoryTables.
 
 * Dependencies
  * Mediawiki v1.25.1

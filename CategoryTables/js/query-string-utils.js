@@ -2,6 +2,12 @@
 
 /*global mediaWiki, jQuery*/
 
+/*
+ Adds some helper functions to the mw object:
+ * getHrefWithUpdatedQueryString
+ * getQueryParam
+ * updatedQueryString
+*/
 (function(mw, $) {
     mw.isCategoryPage = mw.config.values.wgNamespaceNumber === mw.config.values.wgNamespaceIds.category;
     mw.viewingCategoryPage = mw.isCategoryPage && mw.config.values.wgAction === 'view';
@@ -21,10 +27,19 @@
 	    );
 	};
 
+    /*
+     Gets the href of the current window. Changes it to include the specified query string paramed. Returns the result as a string.
+    */
     mw.getHrefWithUpdatedQueryString = function(param, value) {
 	return mw.updatedQueryString(window.location.href, param, value);
     };
 
+    /*
+     Given a URL and a query string parameter to search for, find the value of that query string.
+
+     If multiple, this will be an array.
+     If empty, this will be null.
+    */
     mw.getQueryParam = function(url, param) {
 	a.href = url;
 
@@ -53,12 +68,13 @@
 	}
     };
 
-    mw.updatedQueryString = function(url, param, value) {
-	/*
-	 A function which modifies the query string by setting one parameter to a single value.
+    /*
+     A function which modifies the query string by setting one parameter to a single value.
 
-	 Any other instances of setting that parameter will be removed/replaced.
-	 */
+     Any other instances of setting that parameter will be removed/replaced.
+     */
+    mw.updatedQueryString = function(url, param, value) {
+
 	var fragment = encodeURIComponent(param) + '=' + encodeURIComponent(value);
 
 	a.href = url;

@@ -1,11 +1,12 @@
 {
-    "name": "Steep-VE",
+    "name": "SteepTags",
     "author": [
 	"Glenn Searby"
     ],
+    "version": "1.0.0",
     "url": "https://github.com/cse-bristol/steep-mediawiki-gadgets",
-    "descriptionmsg": "steepve-desc",
-    "namemsg": "steepve-name",
+    "descriptionmsg": "steeptags-desc",
+    "namemsg": "steeptags-name",
     "license-name": "MIT",
     "type": "extension",
     "ConfigRegistry": {
@@ -53,9 +54,9 @@
 		"visualeditor-mwmap-dialogue",
 		"visualeditor-mwprocessmodel-dialogue",
 
-		"steepve-popout",
-		"steepve-history",
-		"steepve-set-viewpoint"
+		"steeptags-popout",
+		"steeptags-history",
+		"steeptags-set-viewpoint"
 	    ],
 	    "position": "bottom",
 	    "dependencies": [
@@ -72,7 +73,7 @@
     
     "ResourceFileModulePaths": {
 	"localBasePath": "",
-	"remoteExtPath": "steep-mediawiki-gadgets"
+	"remoteExtPath": "SteepTags"
 	
     },
     "manifest_version": 1

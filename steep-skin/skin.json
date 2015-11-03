@@ -96,8 +96,10 @@
 	"skins.steep.js": {
 	    "scripts": [
 		"steep.js",
-		
+
 		"steep-utils.js",
+
+		"scroll-fix.js",
 		
 		"fullscreen-toggle.js",
 

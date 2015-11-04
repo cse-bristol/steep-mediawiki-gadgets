@@ -63,7 +63,8 @@
 		"oojs-ui",
 		"ext.visualEditor.core",
 		"ext.visualEditor.mwcore",
-		"mediawiki.jqueryMsg"
+		"mediawiki.jqueryMsg",
+		"ext.steep-icons"
 	    ]
 	}
     },

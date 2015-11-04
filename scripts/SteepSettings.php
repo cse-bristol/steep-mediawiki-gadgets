@@ -37,7 +37,8 @@ require_once "$IP/extensions/R/R.php";
 // enableIntraACL();
 
 wfLoadExtensions(array(
-	'SteepTags',
+    'SteepIcons',
+    'SteepTags',
     'CategoryTables'
 ));
 
@@ -80,7 +81,7 @@ $wgDefaultSkin = "steep";
 # Enabled skins.
 # The following skins were automatically enabled:
 wfLoadSkins(array(
-    #'Steep',
+    'Steep',
     'Vector'
 ));
 

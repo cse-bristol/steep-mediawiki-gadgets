@@ -53,7 +53,8 @@
 	    "dependencies": [
 		"mediawiki.api.category",
 		"mediawiki.api.edit",
-		"oojs-ui"
+		"oojs-ui",
+		"ext.steep-icons"
 	    ]
 	}
     },

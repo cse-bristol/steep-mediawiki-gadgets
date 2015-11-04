@@ -22,7 +22,9 @@ class SkinSteep extends SkinTemplate {
 
     $out->addModuleStyles(
       array(
-        'skins.steep.styles'
+          ## Icons must happen before skin styles, otherwise the user will briefly see the characters that the icons turn into.
+          'ext.steep-icons',
+          'skins.steep.styles'
       )
     );
   }

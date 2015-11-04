@@ -17,11 +17,13 @@
 	]
     },
     "AutoloadClasses": {
-	"IncludeSteepGadgets": "IncludeSteepGadgets.php"
+	"IncludeSteepGadgets": "IncludeSteepGadgets.php",
+	"SteepNavButtons": "SteepNavButtons.php"
     },
 
     "Hooks": {
-	"ParserFirstCallInit": "IncludeSteepGadgets::HookParser"
+	"ParserFirstCallInit": "IncludeSteepGadgets::HookParser",
+	"SkinBuildSidebar": "SteepNavButtons::OnSkinBuildSidebar"
     },
 
     "ResourceModules": {

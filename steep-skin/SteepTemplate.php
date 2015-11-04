@@ -320,7 +320,7 @@ class SteepTemplate extends BaseTemplate {
     $this->fullScreen = $this->haveData('hidetoc') && ($this->get('hidetoc') == 1);
     $this->homeHref = $this->data['nav_urls']['mainpage']['href'];
     
-    $this->navbar = new SteepNavbar($this->get('sitename'), $this->get('logopath'), $this->homeHref, $this->translator, $this->get('isPage'));
+    $this->navbar = new SteepNavbar($this->get('sidebar')['navigation'], $this->get('sitename'), $this->get('logopath'), $this->homeHref, $this->translator, $this->get('isPage'));
     $this->contentActions = new SteepContentActions($this->get('content_actions'), $this->get('viewurl'));
     
     $this->html('headelement');

@@ -1,28 +1,28 @@
 "use strict";
 
-/*global mediaWiki, jQuery, OO, steep*/
+/*global mediaWiki, jQuery, OO*/
 
-(function(mw, jQuery, OO, steep) {
-    steep.AddAssetToCategoryDialogue = function(category) {
-	steep.AddAssetDialogue.call(this, category);
+(function(mw, jQuery, OO) {
+    OO.AddAssetToCategoryDialogue = function(category) {
+	OO.AddAssetDialogue.call(this, category);
     };
 
-    OO.inheritClass(steep.AddAssetToCategoryDialogue, steep.AddAssetDialogue);
+    OO.inheritClass(OO.AddAssetToCategoryDialogue, OO.AddAssetDialogue);
 
-    steep.AddAssetToCategoryDialogue.static.actions = steep.AddAssetDialogue.static.actions.concat([
+    OO.AddAssetToCategoryDialogue.static.actions = OO.AddAssetDialogue.static.actions.concat([
 	{ modes: 'category', action: 'create-category', label: 'Create Category', flags: ['constructive', 'primary'] },
 	{ modes: 'choose', action: 'category', label: 'Sub-Category', flags: 'constructive' }
     ]);
 
-    steep.AddAssetToCategoryDialogue.prototype.setCreateAbilities = function(titleValid) {
-	steep.AddAssetToCategoryDialogue.parent.prototype.setCreateAbilities.call(this, titleValid);
+    OO.AddAssetToCategoryDialogue.prototype.setCreateAbilities = function(titleValid) {
+	OO.AddAssetToCategoryDialogue.parent.prototype.setCreateAbilities.call(this, titleValid);
 	
 	this.actions.setAbilities({
 	    'create-category': titleValid
 	});
     }; 
 
-    steep.AddAssetToCategoryDialogue.prototype.getActionProcess = function(action) {
+    OO.AddAssetToCategoryDialogue.prototype.getActionProcess = function(action) {
 	var dialogue = this;
 	
 	switch (action) {
@@ -33,7 +33,7 @@
 	    });
 	    
 	case 'create-category':
-	    return new steep.AddToCategoryProcess(
+	    return new OO.AddToCategoryProcess(
 		dialogue.pageTitle.getValue(),
 		mw.config.values.wgNamespaceIds.category,
 		[dialogue.category]
@@ -41,8 +41,8 @@
 	    
 	    
 	    default:
-	    return steep.AddAssetDialogue.prototype.getActionProcess.call(this, action);
+	    return OO.AddAssetDialogue.prototype.getActionProcess.call(this, action);
 	}
     };
     
-}(mediaWiki, jQuery, OO, steep));
+}(mediaWiki, jQuery, OO));

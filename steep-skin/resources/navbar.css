@@ -85,3 +85,7 @@
     font-size: 0.9em;
 }
 
+#n-Index::before {
+    content: '\0071';
+    /* color: #08b030; */
+}

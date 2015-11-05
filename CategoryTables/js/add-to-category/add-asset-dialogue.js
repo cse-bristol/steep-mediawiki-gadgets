@@ -18,15 +18,15 @@
 
     OO.inheritClass(OO.AddAssetDialogue, OO.AddToCategoryDialogue);
 
-    OO.AddAssetDialogue.static.title = "Add asset dialogue";
+    OO.AddAssetDialogue.static.title = mw.msg('add-asset-dialogue');
     OO.AddAssetDialogue.static.actions = [
-	{ modes: 'page', action: 'create-page', label: 'Create Page', flags: ['constructive', 'primary'] },
+	{ modes: 'page', action: 'create-page', label: mw.msg('add-asset-page'), flags: ['constructive', 'primary'] },
 
-	{ modes: 'choose', action: 'page', label: 'Page', flags: 'constructive' },
-	{ modes: 'choose', action: 'file', label: 'File', flags: 'constructive' },
+	{ modes: 'choose', action: 'page', label: mw.msg('add-asset-mode-page'), flags: 'constructive' },
+	{ modes: 'choose', action: 'file', label: mw.msg('add-asset-mode-file'), flags: 'constructive' },
 
-	{ modes: ['page', 'category', 'project'], action: 'back', label: 'Back', flags: 'safe' },
-	{ modes: 'choose', label: 'Cancel', flags: 'safe' }
+	{ modes: ['page', 'category', 'project'], action: 'back', label: mw.msg('back'), flags: 'safe' },
+	{ modes: 'choose', label: mw.msg('cancel'), flags: 'safe' }
     ];
 
     OO.AddAssetDialogue.prototype.focus = function() {
@@ -76,7 +76,7 @@
 
     OO.AddAssetDialogue.prototype.switchCreateMode = function(mode) {
 	this.actions.setMode(mode);
-	this.setPlaceholder('Name of' + mode);
+	this.setPlaceholder(mw.msg('add-asset-name-of') + ' ' + mode);
 	this.stack.setItem(this.pagePanel);
 	this.pageTitle.focus();
     };

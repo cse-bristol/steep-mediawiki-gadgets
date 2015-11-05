@@ -10,8 +10,8 @@
     OO.inheritClass(OO.AddAssetToCategoryDialogue, OO.AddAssetDialogue);
 
     OO.AddAssetToCategoryDialogue.static.actions = OO.AddAssetDialogue.static.actions.concat([
-	{ modes: 'category', action: 'create-category', label: 'Create Category', flags: ['constructive', 'primary'] },
-	{ modes: 'choose', action: 'category', label: 'Sub-Category', flags: 'constructive' }
+	{ modes: 'category', action: 'create-category', label: mw.msg('create-category'), flags: ['constructive', 'primary'] },
+	{ modes: 'choose', action: 'category', label: mw.msg('sub-category'), flags: 'constructive' }
     ]);
 
     OO.AddAssetToCategoryDialogue.prototype.setCreateAbilities = function(titleValid) {

@@ -1,0 +1,60 @@
+{
+    "name": "ProjectStructure",
+    "author": [
+	"Glenn Searby"
+    ],
+    "version": "1.0.0",
+    "url": "https://github.com/cse-bristol/steep-mediawiki-gadgets",
+    "namemsg": "projectstructure-name",
+    "descriptionmsg": "projectstructure-desc",
+    "license-name": "MIT",
+    "type": "extensions",
+    "MessagesDirs": {
+	"ProjectStructure": [
+	    "i18n"
+	]
+    },
+
+    "AutoloadClasses": {
+	"ProjectsNavigation": "ProjectsNavigation.php",
+	"NewProjectsButton": "NewProjectsButton.php"
+    },
+
+    "Hooks": {
+	"SkinBuildSidebar": "ProjectsNavigation::OnSkinBuildSidebar",
+	"CategoryTableAddToCategory": "NewProjectsButton::OnCategoryTableAddToCategory"
+    },
+
+    "ResourceModules": {
+	"ext.project-structure": {
+	    "scripts": [
+		"js/add-asset-to-project-dialogue.js",
+		"js/new-project-dialogue.js",
+		"js/new-project-button.js"
+	    ],
+
+	    "messages": [
+		"all-projects-page",
+		"all-projects-and-subprojects-page",
+		"sub-project",
+		"create-sub-project",
+		"new-project-dialogue",
+		"cancel",
+		"create"
+	    ],
+
+	    "position": "bottom",
+	    "dependencies": [
+		"oojs-ui",
+		"ext.category-tables"
+	    ]
+	}
+    },
+
+    "ResourceFileModulePaths": {
+	"localBasePath": "",
+	"remoteExtPath": "ProjectStructure"
+    },
+
+    "manifest_version": 1
+}

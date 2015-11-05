@@ -1,0 +1,16 @@
+{
+    "projectstructure-name": "Project Structure",
+    "projectstructure-desc": "Provides a hierarchical arrangement of projects, sub-projects, sub-sub-projects and so on using categories",
+
+    "new-project": "New Project",
+    
+    "all-projects": "Projects",
+    "all-projects-page": "Projects",
+
+    "all-projects-and-subprojects-page": "ProjectsAndSubProjects",
+
+    "sub-project": "Sub-Project",
+    "create-sub-project": "Create Sub-Project",
+
+    "new-project-dialogue": "New Project dialogue"
+}

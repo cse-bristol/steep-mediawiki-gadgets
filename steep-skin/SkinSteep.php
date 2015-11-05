@@ -60,9 +60,12 @@ class SkinSteep extends SkinTemplate {
       $this->getTitle()->isContentPage()
     );
 
+    $catLinks = $this->getOutput()->getCategoryLinks();
+    $catLinks = array_key_exists('normal', $catLinks) ? $catLinks['normal'] : array();
+
     $template->set(
       'categoryLinks',
-      $this->getOutput()->getCategoryLinks()['normal']
+      $catLinks
     );
    
     return $template;

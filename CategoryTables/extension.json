@@ -4,7 +4,7 @@
 	"Glenn Searby"
     ],
     "version": "1.0.0",
-    "url": "https://github.com/cse-bristol/",
+    "url": "https://github.com/cse-bristol/steep-mediawiki-gadgets",
     "descriptionmsg": "categorytables-desc",
     "namemsg": "categorytables-name",
     "license-name": "MIT",
@@ -27,7 +27,6 @@
     "ResourceModules": {
 	"ext.category-tables": {
 	    "styles": [
-		"css/search-in-category.css",
 		"css/category-table.css"
 	    ],
 
@@ -36,9 +35,7 @@
 		
 		"js/add-to-category/add-to-category-process.js",
 		"js/add-to-category/add-to-category-dialogue.js",
-		"js/add-to-category/new-project-dialogue.js",
 		"js/add-to-category/add-asset-dialogue.js",
-		"js/add-to-category/add-asset-to-project-dialogue.js",
 		"js/add-to-category/add-asset-to-category-dialogue.js",
 		"js/add-to-category/add-to-category-button.js",
 		
@@ -47,6 +44,15 @@
 	    ],
 
 	    "messages": [
+		"add-asset-dialogue",
+		"add-asset-page",
+		"add-asset-mode-page",
+		"add-asset-mode-file",
+		"add-asset-name-of",
+		"create-category",
+		"sub-category",
+		"cancel",
+		"back"
 	    ],
 	    
 	    "position": "bottom",

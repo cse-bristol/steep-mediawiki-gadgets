@@ -93,12 +93,14 @@ class SteepNavbar {
         foreach ($this->navItems as $key => $item) {
             ## Ignore things we've listed at the top.
             if (!in_array($item['id'], $this->excludedNavigation)) {
+                $itemClass = array_key_exists('class', $item) ? ' ' . $item['class'] : '';
+			
                 $sidebarNavigation[] = Html::rawElement(
                     'a',
                     array(
                         'id' => $item['id'],
                         'href' => $item['href'],
-                        'class' => 'nav-icon-link ' . $item['class']
+                        'class' => 'nav-icon-link ' . $itemClass
                     ),
                     $item['text']
                 );
@@ -123,15 +125,6 @@ class SteepNavbar {
                     $this->homeHref,
                     $this->logoPath,
                     $this->getMsg('home')
-                ),
-                $this->navIconLink(
-                    $this->getMsg('all-projects'),
-                    Skin::makeNSUrl(
-                        $this->getMsg('all-projects-page'),
-                        '',
-                        NS_CATEGORY
-                    ),
-                    'all-projects'	
                 ),
                 $this->standardNavItems(),
                 $this->navIconLink(

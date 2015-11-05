@@ -10,8 +10,8 @@
     OO.inheritClass(OO.AddAssetToProjectDialogue, OO.AddAssetDialogue);
 
     OO.AddAssetToProjectDialogue.static.actions = OO.AddAssetDialogue.static.actions.concat([
-    	{ modes: 'project', action: 'create-project', label: 'Create Sub-Project', flags: ['constructive', 'primary'] },
-    	{ modes: 'choose', action: 'project', label: 'Sub-Project', flags: 'constructive' },
+    	{ modes: 'project', action: 'create-project', label: mw.msg('create-sub-project'), flags: ['constructive', 'primary'] },
+    	{ modes: 'choose', action: 'project', label: mw.msg('sub-project'), flags: 'constructive' },
     ]);
 
     OO.AddAssetToProjectDialogue.prototype.setCreateAbilities = function(titleValid) {
@@ -36,7 +36,7 @@
 	    return new OO.AddToCategoryProcess(
 		dialogue.pageTitle.getValue(),
 		mw.config.values.wgNamespaceIds.category,
-		[dialogue.category, 'ProjectsAndSubProjects']
+		[dialogue.category, mw.msg('all-projects-and-subprojects-page')]
 	    );
 	    
 	default:

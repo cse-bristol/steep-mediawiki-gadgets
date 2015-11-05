@@ -14,10 +14,10 @@
 
     OO.inheritClass(OO.NewProjectDialogue, OO.AddToCategoryDialogue);
 
-    OO.NewProjectDialogue.static.title = "New project dialogue";
+    OO.NewProjectDialogue.static.title = mw.msg('new-project-dialogue');
     OO.NewProjectDialogue.static.actions = [
-	{ action: 'create-page', label: 'Create', flags: 'primary'},
-	{ label: 'Cancel', flags: 'safe' }
+	{ action: 'create-page', label: mw.msg('create'), flags: 'primary'},
+	{ label: mw.msg('cancel'), flags: 'safe' }
     ];
 
     OO.NewProjectDialogue.prototype.initialize = function() {
@@ -53,7 +53,11 @@
 	var dialogue = this;
 
 	if (action === 'create-page') {
-	    return new OO.AddToCategoryProcess(dialogue.pageTitle.getValue(), mw.config.values.wgNamespaceIds.category, ['Projects', 'ProjectsAndSubProjects']);
+	    return new OO.AddToCategoryProcess(
+		dialogue.pageTitle.getValue(),
+		mw.config.values.wgNamespaceIds.category,
+		[mw.msg('all-projects-page'), mw.msg('all-projects-and-subprojects-page')]
+	    );
 	};
 	return OO.NewProjectDialogue.parent.prototype.getActionProcess.apply(this, arguments);
     };

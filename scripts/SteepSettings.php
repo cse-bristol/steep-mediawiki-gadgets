@@ -40,7 +40,7 @@ wfLoadExtensions(array(
     'SteepIcons',
     'SteepTags',
     'CategoryTables',
-	'ProjectStructure'    
+    'ProjectStructure'    
 ));
 
 ## Stuff to configure the URL rewriting stuff

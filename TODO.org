@@ -27,7 +27,6 @@ It would be useful if we could reduce the amount that this happens:
  + Sometimes the =src= property didn't even really change. Can we somehow buffer this?
  + When we set the viewpoint, we don't really need to reload the iframe. We only need to mark it on the model.
 
-
 * CategoryTable
 /CategoryTable/ has some built in knowledge about process-models and maps, and how to search for and display them.
 

@@ -12,7 +12,7 @@ set -e;
 wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -;
 echo "deb http://packages.elastic.co/elasticsearch/1.7/debian stable main" | sudo tee /etc/apt/sources.list.d/elasticsearch-1.7.list;
 sudo aptitude update -y;
-sudo aptitude install openjdk-7-jre;
+sudo aptitude install openjdk-7-jre -y;
 # Make sure there's no existing ElasticSearch config.
 sudo aptitude purge elasticsearch -y;
 sudo aptitude install elasticsearch -y;

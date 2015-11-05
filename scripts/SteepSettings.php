@@ -1,8 +1,6 @@
 <?php
 
-if ($wgLogo === "/wiki/resources/assets/wiki.png" || !$wgLogo) {
-  $wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
-}
+$wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/bsecc-logo.jpg";
 
 $wgEmergencyContact = "wiki@smartsteep.eu";
 $wgPasswordSender = "wiki@smartsteep.eu";
@@ -39,8 +37,7 @@ require_once "$IP/extensions/R/R.php";
 wfLoadExtensions(array(
     'SteepIcons',
     'SteepTags',
-    'CategoryTables',
-    'ProjectStructure'    
+    'CategoryTables'
 ));
 
 ## Stuff to configure the URL rewriting stuff

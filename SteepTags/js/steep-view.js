@@ -34,7 +34,7 @@
 	    .addClass('steep-view-tools');
 
 	this.setViewpoint = new OO.ui.ButtonInputWidget({
-	    label: mw.message('steepve-set-viewpoint').text(),
+	    label: mw.message('steeptags-set-viewpoint').text(),
 	    id: 'steep-set-viewpoint'
 	});
 	
@@ -47,7 +47,7 @@
 	$(window).on('message', this.receiveViewpoint.bind(this));
 
 	this.history = new steepVE.VersionPicker({
-	    label: mw.message('steepve-history').text(),
+	    label: mw.message('steeptags-history').text(),
 	    id: 'steep-history',
 	    collection: config.collection
 	});
@@ -73,7 +73,7 @@
 	});
 
 	this.popout = new OO.ui.ButtonInputWidget({
-	    label: mw.message('steepve-popout').text(),
+	    label: mw.message('steeptags-popout').text(),
 	    id: 'steep-popout'
 	});
 	this.popout.on('click', function(e) {

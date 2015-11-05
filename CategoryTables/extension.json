@@ -1,0 +1,74 @@
+{
+    "name": "CategoryTables",
+    "author": [
+	"Glenn Searby"
+    ],
+    "version": "1.0.0",
+    "url": "https://github.com/cse-bristol/steep-mediawiki-gadgets",
+    "descriptionmsg": "categorytables-desc",
+    "namemsg": "categorytables-name",
+    "license-name": "MIT",
+    "type": "extensions",
+    "MessagesDirs": {
+	"CategoryTables": [
+	    "i18n"
+	]
+    },
+    
+    "AutoloadClasses": {
+	"CategoryContentSearch": "CategoryContentSearch.php",
+	"CategoryTable": "CategoryTable.php"
+    },
+
+    "Hooks": {
+	"CategoryPageView": "CategoryTable::drawCategoryAsTable"
+    },
+
+    "ResourceModules": {
+	"ext.category-tables": {
+	    "styles": [
+		"css/category-table.css"
+	    ],
+
+	    "scripts": [
+		"js/query-string-utils.js",
+		
+		"js/add-to-category/add-to-category-process.js",
+		"js/add-to-category/add-to-category-dialogue.js",
+		"js/add-to-category/add-asset-dialogue.js",
+		"js/add-to-category/add-asset-to-category-dialogue.js",
+		"js/add-to-category/add-to-category-button.js",
+		
+		"js/search-in-category.js",
+		"js/sort-category-table.js"
+	    ],
+
+	    "messages": [
+		"add-asset-dialogue",
+		"add-asset-page",
+		"add-asset-mode-page",
+		"add-asset-mode-file",
+		"add-asset-name-of",
+		"create-category",
+		"sub-category",
+		"cancel",
+		"back"
+	    ],
+	    
+	    "position": "bottom",
+	    "dependencies": [
+		"mediawiki.api.category",
+		"mediawiki.api.edit",
+		"oojs-ui",
+		"ext.steep-icons"
+	    ]
+	}
+    },
+
+    "ResourceFileModulePaths": {
+	"localBasePath": "",
+	"remoteExtPath": "CategoryTables"
+    },
+    
+    "manifest_version": 1
+}

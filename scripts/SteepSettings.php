@@ -37,7 +37,10 @@ require_once "$IP/extensions/R/R.php";
 // enableIntraACL();
 
 wfLoadExtensions(array(
-  'steep-mediawiki-gadgets'
+    'SteepIcons',
+    'SteepTags',
+    'CategoryTables',
+    'ProjectStructure'    
 ));
 
 ## Stuff to configure the URL rewriting stuff

@@ -67,16 +67,12 @@
 }
 
 .category-contents td.type.Page:after {
-	content:'\004D';
-}
-
-.category-contents td.type.Project:after {
-    content:'\0071';
-	color: #1eb04d;
+    content:'\004D';
 }
 
 .category-contents td.type.Category:after {
-    content:'\004B';
+    content:'\0071';
+    color: #1eb04d;
 }
 
 .category-contents td.type.File:after {

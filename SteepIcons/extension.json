@@ -1,0 +1,37 @@
+{
+    "name": "SteepIcons",
+    "author": [
+	"Glenn Searby"
+    ],
+    "version": "1.0.0",
+    "url": "https://github.com/cse-bristol/",
+    "descriptionmsg": "steepicons-desc",
+    "namemsg": "steepicons-name",
+    "license-name": "MIT",
+    "type": "extensions",
+    "MessagesDirs": {
+	"SteepIcons": [
+	    "i18n"
+	]
+    },
+    
+    "ResourceModules": {
+	"ext.steep-icons": {
+	    "styles": [
+		"css/fonts.css"
+	    ],
+	    
+	    "position": "top",
+
+	    "dependencies": [
+	    ]
+	}
+    },
+
+    "ResourceFileModulePaths": {
+	"localBasePath": "",
+	"remoteExtPath": "SteepIcons"
+    },
+    
+    "manifest_version": 1
+}

@@ -2,8 +2,25 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 
 [[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
 
-* Steep VisualEditor Extension
-Adds buttons to Mediawiki's Visual Editor to allow you to insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]] as an iframe.
+* Steep Icons Extension
+Provides an icon font. The skin and other extensions listed here depend on this to display properly.
+
+* Steep Skin
+Reskins Mediawiki to have a simpler look and feel with fewer buttons.
+
+It also provides /breadcrumbs/ in page and category titles which contain the '/' character. These act a bit like sub-pages, except that it doesn't check whether the parent pages exist.
+
+* Steep Tags Extension
+Adds two XML-like tags =<data-map>= and =<process-model>= to Mediawiki. These insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]] as an iframe.
+
+There can be controlled with the following properties:
+ + =name= sets the name of the document to load.
+ + =v= sets the version of the document to load.
+ + =viewpoint= overrides the default viewpoint of the document.
+ + =width=
+ + =height=
+
+Adds buttons to Mediawiki's Visual Editor's /Insert/ menu to allow you to insert these tags more easily.
 
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
 
@@ -20,8 +37,27 @@ Choose 'Latest' to ensure that the document will always show the most recent ver
 ** Open Original
 This opens the process-model or map in a new window or tab depending on browser configuration.
 
-* Steep Skin
-Reskins Mediawiki to have fewer controls, and to support a projects structure based around the Category:Project page.
+* Category Tables Extension
+Modifies the display of categories to be a sortable, paged table.
+
+Adds a box to search within the category.
+
+Adds a button to add items (pages, files, sub-categories) within that category. 
+
+Added pages and sub-categories are treated much like sub-pages: they get the category they belong to pre-pended to their name, creating a hierarchy.
+
+* Project Structure Extension
+Provides a project structure build around categories.
+
+This makes two categories special: /Categories:Projects/ and /Categories:ProjectsAndSubProjects/:
+ + Every category added to /Category:Projects/ also gets added to /Categories:ProjectsAndSubProjects/
+ + Every sub-category, sub-sub-category and so-on inside /Categories:ProjectsAndSubProjects/ also gets added to /Category:ProjectsAndSubProjects/.
+
+Adds a navigation link to /Categories:Projects/.
+
+Modifies the text in various places to talk about "Projects" rather than "Categories".
+
+Depends on CategoryTables.
 
 * Dependencies
  * Mediawiki v1.25.1
@@ -40,8 +76,20 @@ To add this extension to an existing Mediawiki installation, run the following f
   # Checkout the code into the extensions folder.
   git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/steep-mediawiki-gadgets;
 
-  # Synlink the skin into the right place
+  # Icon fonts
+  ln -s -T extensions/steep-mediawiki-gadgets/SteepIcons extensions/SteepIcons;
+
+  # Steep skin
   ln -s -T extensions/steep-mediawiki-gadgets/steep-skin skins/Steep;
+
+  # Steep Tags
+  ln -s -T extensions/steep-mediawiki-gadgets/SteepTags extensions/SteepTags;
+
+  # Category Tables
+  ln -s -T extensions/steep-mediawiki-gadgets/CategoryTables extensions/CategoryTables;
+
+  # Project Structure
+  ln -s -T extensions/steep-mediawiki-gadgets/ProjectStructure extensions/ProjectStructure;
 #+END_SRC
 
 Then modify your LocalSettings.php to include the following (replace any existing wfLoadSkins call):
@@ -53,6 +101,13 @@ Then modify your LocalSettings.php to include the following (replace any existin
       'Vector'
   ));
   $wgDefaultSkin = "steep";
+
+  wfLoadExtensions(array(
+      'SteepIcons',
+      'SteepTags',
+      'CategoryTables',
+      'ProjectStructure'    
+  ));
 #+END_SRC
 
 ** Scripts

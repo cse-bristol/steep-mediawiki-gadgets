@@ -22,7 +22,9 @@ class SkinSteep extends SkinTemplate {
 
     $out->addModuleStyles(
       array(
-        'skins.steep.styles'
+          ## Icons must happen before skin styles, otherwise the user will briefly see the characters that the icons turn into.
+          'ext.steep-icons',
+          'skins.steep.styles'
       )
     );
   }
@@ -58,9 +60,12 @@ class SkinSteep extends SkinTemplate {
       $this->getTitle()->isContentPage()
     );
 
+    $catLinks = $this->getOutput()->getCategoryLinks();
+    $catLinks = array_key_exists('normal', $catLinks) ? $catLinks['normal'] : array();
+
     $template->set(
       'categoryLinks',
-      $this->getOutput()->getCategoryLinks()['normal']
+      $catLinks
     );
    
     return $template;

@@ -1,6 +1,6 @@
 "use strict";
 
-/*global mediaWiki, jQuery, OO, steep*/
+/*global mediaWiki, jQuery, OO*/
 
 /*
  Abstract class - do not instantiate directly.
@@ -9,32 +9,32 @@
 
  Does this using the add-to-category dialogue and process classes.
  */
-(function(mw, $, OO, steep) {
-    steep.AddAssetDialogue = function(category) {
-	steep.AddToCategoryDialogue.call(this);
+(function(mw, $, OO) {
+    OO.AddAssetDialogue = function(category) {
+	OO.AddToCategoryDialogue.call(this);
 
 	this.category = category;
     };
 
-    OO.inheritClass(steep.AddAssetDialogue, steep.AddToCategoryDialogue);
+    OO.inheritClass(OO.AddAssetDialogue, OO.AddToCategoryDialogue);
 
-    steep.AddAssetDialogue.static.title = "Add asset dialogue";
-    steep.AddAssetDialogue.static.actions = [
-	{ modes: 'page', action: 'create-page', label: 'Create Page', flags: ['constructive', 'primary'] },
+    OO.AddAssetDialogue.static.title = mw.msg('add-asset-dialogue');
+    OO.AddAssetDialogue.static.actions = [
+	{ modes: 'page', action: 'create-page', label: mw.msg('add-asset-page'), flags: ['constructive', 'primary'] },
 
-	{ modes: 'choose', action: 'page', label: 'Page', flags: 'constructive' },
-	{ modes: 'choose', action: 'file', label: 'File', flags: 'constructive' },
+	{ modes: 'choose', action: 'page', label: mw.msg('add-asset-mode-page'), flags: 'constructive' },
+	{ modes: 'choose', action: 'file', label: mw.msg('add-asset-mode-file'), flags: 'constructive' },
 
-	{ modes: ['page', 'category', 'project'], action: 'back', label: 'Back', flags: 'safe' },
-	{ modes: 'choose', label: 'Cancel', flags: 'safe' }
+	{ modes: ['page', 'category', 'project'], action: 'back', label: mw.msg('back'), flags: 'safe' },
+	{ modes: 'choose', label: mw.msg('cancel'), flags: 'safe' }
     ];
 
-    steep.AddAssetDialogue.prototype.focus = function() {
+    OO.AddAssetDialogue.prototype.focus = function() {
 	// Do nothing.
     };
 
-    steep.AddAssetDialogue.prototype.initialize = function() {
-	steep.AddAssetDialogue.parent.prototype.initialize.apply(this, arguments);
+    OO.AddAssetDialogue.prototype.initialize = function() {
+	OO.AddAssetDialogue.parent.prototype.initialize.apply(this, arguments);
 
 	this.emptyPanel = new OO.ui.PanelLayout({});
 
@@ -58,14 +58,14 @@
 	this.$body.append(this.stack.$element);
     };
 
-    steep.AddAssetDialogue.prototype.setCreateAbilities = function(titleValid) {
+    OO.AddAssetDialogue.prototype.setCreateAbilities = function(titleValid) {
 	this.actions.setAbilities({
 	    'create-page': titleValid
 	});
     };
 
-    steep.AddAssetDialogue.prototype.getSetupProcess = function(data) {
-	return steep.AddAssetDialogue.super.prototype.getSetupProcess.call(this, data)
+    OO.AddAssetDialogue.prototype.getSetupProcess = function(data) {
+	return OO.AddAssetDialogue.super.prototype.getSetupProcess.call(this, data)
 	    .next(
 		function() {
 		    this.actions.setMode('choose');
@@ -74,25 +74,25 @@
 	    );
     };
 
-    steep.AddAssetDialogue.prototype.switchCreateMode = function(mode) {
+    OO.AddAssetDialogue.prototype.switchCreateMode = function(mode) {
 	this.actions.setMode(mode);
-	this.setPlaceholder('Name of' + mode);
+	this.setPlaceholder(mw.msg('add-asset-name-of') + ' ' + mode);
 	this.stack.setItem(this.pagePanel);
 	this.pageTitle.focus();
     };
 
-    steep.AddAssetDialogue.prototype.setCreateAbilities = function(titleValid) {
+    OO.AddAssetDialogue.prototype.setCreateAbilities = function(titleValid) {
 	this.actions.setAbilities({
 	    'create-page': titleValid
 	});
     };    
 
-    steep.AddAssetDialogue.prototype.getActionProcess = function (action) {
+    OO.AddAssetDialogue.prototype.getActionProcess = function (action) {
 	var dialogue = this;
 	
 	switch (action) {
 	case 'create-page':
-	    return new steep.AddToCategoryProcess(
+	    return new OO.AddToCategoryProcess(
 		dialogue.pageTitle.getValue(),
 		mw.config.values.wgNamespaceIds[''],
 		[dialogue.category]
@@ -125,8 +125,8 @@
 	    });
 	    
 	default:
-	    return steep.AddAssetDialogue.parent.prototype.getActionProcess.apply(this, arguments);
+	    return OO.AddAssetDialogue.parent.prototype.getActionProcess.apply(this, arguments);
 	}
     };
     
-}(mediaWiki, jQuery, OO, steep));
+}(mediaWiki, jQuery, OO));

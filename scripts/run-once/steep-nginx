@@ -48,7 +48,7 @@ server {
             rewrite ^/mediawiki/(MediaWiki:.*)$ /mediawiki/index.php?title=$1&$args;
         }        
 
-        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|ttf|woff|eot)$ {
             expires max;
             log_not_found off;
         }

@@ -1,0 +1,16 @@
+{
+    "categorytables-name": "Category Tables",
+    "categorytables-desc": "Display category pages as sortable tables of the category's contents.",
+
+    "add-asset-dialogue": "Add Asset dialogue",
+
+    "add-asset-page": "Create Page",
+    "add-asset-mode-page": "Page",
+    "add-asset-mode-file": "File",
+    "add-asset-name-of": "Name of",
+
+    "create-category": "Create Category",
+    "sub-category": "Sub-Category",
+
+    "back": "Back"
+}

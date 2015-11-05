@@ -1,4 +1,4 @@
-* VisualEditor Extension
+* SteepTags Extension
 ** Security
 If we add [[*Access%20Control][Access Control]] (see below), then we would like to extend it to process-models and maps.
 
@@ -26,6 +26,11 @@ There is very frequent iframe reloading in VisualEditor. This is slow and annoyi
 It would be useful if we could reduce the amount that this happens:
  + Sometimes the =src= property didn't even really change. Can we somehow buffer this?
  + When we set the viewpoint, we don't really need to reload the iframe. We only need to mark it on the model.
+
+* CategoryTable
+/CategoryTable/ has some built in knowledge about process-models and maps, and how to search for and display them.
+
+It should get this from /SteepTags/ instead, or possibly from some new project which depends on them both.
 
 * Skin
 ** Search uses dynamic scripts
@@ -78,12 +83,7 @@ Read and write restrictions with at least project-level control.
 
 We were considering using [[http://wiki.4intra.net/IntraACL][IntraACL]], but it doesn't yet support Mediawiki 1.25.
 
-* Deployment
-** Move Extension Code
-The VisualEditor extension code should have its own folder.
-
-We could put it directly inside the =/mediawiki= folder, and then add an extra symlink to put the VisualEditor extension into =/mediawiki/extensions=. 
-
+* Scripts
 ** Backup/Restore
 The backup and restore functions were designed when we were using MongoDB as a backend.
 

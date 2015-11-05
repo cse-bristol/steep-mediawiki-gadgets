@@ -1,9 +1,10 @@
 "use strict";
 
-/*global mediaWiki, jQuery, OO, steep*/
+/*global mediaWiki, jQuery, OO*/
 
-(function(mw, $, OO, steep) {
-    var projectsPage = 'Projects';
+(function(mw, $, OO) {
+    OO.addToCategory = {};
+    OO.addToCategory.dialogueConstructor = OO.AddAssetToCategoryDialogue;
     
     /*
      Used when viewing a 'Category:NameOfCategory' page.
@@ -20,25 +21,21 @@
 
 	var newDocumentButton = OO.ui.infuse('new-category-page'),
 	    category = mw.config.values.wgTitle || "",
-	    isProjectsPage = category === projectsPage,
-	    isAProject = !isProjectsPage && mw.config.values.wgCategories.indexOf(projectsPage) >= 0,
 	    windowManager = new OO.ui.WindowManager();
 	
 	$('body').append(windowManager.$element);
 
-	var dialogue = isProjectsPage ? new steep.NewProjectDialogue(category) : (
-	    isAProject ? new steep.AddAssetToProjectDialogue(category) :
-		new steep.AddAssetToCategoryDialogue(category)
-	);
-	
-	windowManager.addWindows([dialogue]);
-
 	newDocumentButton.on('click', function () {
-	    var window = windowManager.openWindow(dialogue)
+	    if (!OO.addToCategory.dialogue) {
+		OO.addToCategory.dialogue = new OO.addToCategory.dialogueConstructor(category);
+		windowManager.addWindows([OO.addToCategory.dialogue]);
+	    }
+	    
+	    var window = windowManager.openWindow(OO.addToCategory.dialogue)
 		    .done(function() {
-			dialogue.focus();			
+			OO.addToCategory.dialogue.focus();
 		    });
 	});	
     });
     
-}(mediaWiki, jQuery, OO, steep));
+}(mediaWiki, jQuery, OO));

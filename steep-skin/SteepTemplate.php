@@ -295,13 +295,65 @@ class SteepTemplate extends BaseTemplate {
     return result;
   }
 
+    function branding() {
+        $greenCapitalLogo = Html::rawElement(
+            'img',
+            array(
+                'src' => '/mediawiki/extensions/steep-mediawiki-gadgets/Bristol 2015 Medium Logo_RGB.png',
+                'class' => 'bristol-green-capital-2015-logo',
+                'alt' => 'Bristol Green Capital 2015 logo'
+            )
+        );
+
+        $cseLogo = Html::rawElement(
+            'img',
+            array(
+                'src' => '/mediawiki/extensions/steep-mediawiki-gadgets/CSE logo.png',
+                'class' => 'cse-logo',
+                'alt' => 'Centre for Sustainable Energy logo'
+            )
+        );
+
+        $logoSeparator = Html::rawElement(
+            'span',
+            array(
+                'class' => 'logo-separator'
+            ),
+            '&nbsp'
+        );
+        
+        $logos = Html::rawElement(
+            'div',
+            array(
+                'class' => 'bristol-green-capital-logos'
+            ),
+            $greenCapitalLogo . $logoSeparator . $cseLogo
+        );
+
+        $officialSupplier = Html::rawElement(
+            'div',
+            array(
+                'class' => 'bristol-green-capital-official-supplier'
+            ),
+            'OFFICIAL SUPPLIER'
+        );
+        
+        return Html::rawELement(
+            'div',
+            array(
+                'class' => 'bristol-green-capital-branding'
+            ),
+            $logos . $officialSupplier
+        );
+    }
+
   function bottomRight() {
     return Html::rawElement(
       'div',
       array(
 	'class' => 'right'
       ),
-      $this->categoriesList() . $this->lastModified()
+      $this->categoriesList() . $this->lastModified() . $this->branding()
     );
   }
 

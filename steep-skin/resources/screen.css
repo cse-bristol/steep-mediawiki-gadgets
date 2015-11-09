@@ -78,3 +78,36 @@ Everything other than the navbar.
 .left.hidden {
     margin-left: -15em;
 }
+
+/* See the Bristol Green Capital 2015 Official Sponsor Good Use Guide */
+.bristol-green-capital-branding {
+    float:right;
+}
+
+.bristol-green-capital-official-supplier {
+    font-family: Museo Sans, Neutraface, Helvetica;
+    font-weight: bold;
+    color: #240078;
+    text-align: center;
+}
+
+.bristol-green-capital-logos {
+    margin-bottom: 0.5em;
+}
+
+.bristol-green-capital-logos img {
+    height: 4em;
+    display: inline-block;
+}
+
+.logo-separator {
+    height: 2.5em;
+    vertical-align: top;
+    margin-top: 0.75em;
+    /* We use padding on the left and margin on the right so that border-right goes in the middle. */
+    padding-left: 0.75em;
+    margin-right: 0.75em;
+    border-right: 1px solid #240078;
+    display: inline-block;
+
+}

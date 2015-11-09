@@ -1,6 +1,6 @@
 <?php
 
-$wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/bsecc-logo.jpg";
+$wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/BSECC.png";
 
 $wgEmergencyContact = "wiki@smartsteep.eu";
 $wgPasswordSender = "wiki@smartsteep.eu";

@@ -297,20 +297,32 @@ class SteepTemplate extends BaseTemplate {
 
     function branding() {
         $greenCapitalLogo = Html::rawElement(
-            'img',
+            'a',
             array(
-                'src' => '/mediawiki/extensions/steep-mediawiki-gadgets/Bristol 2015 Medium Logo_RGB.png',
-                'class' => 'bristol-green-capital-2015-logo',
-                'alt' => 'Bristol Green Capital 2015 logo'
+                'href' => 'https://www.bristol2015.co.uk/',
+                'class' => 'bristol-green-capital-2015-logo'
+            ),
+            Html::rawElement(
+                'img',
+                array(
+                    'src' => '/mediawiki/extensions/steep-mediawiki-gadgets/Bristol 2015 Medium Logo_RGB.png',
+                    'alt' => 'Bristol Green Capital 2015 logo'
+                )
             )
         );
-
+            
         $cseLogo = Html::rawElement(
-            'img',
+            'a',
             array(
-                'src' => '/mediawiki/extensions/steep-mediawiki-gadgets/CSE logo.png',
                 'class' => 'cse-logo',
-                'alt' => 'Centre for Sustainable Energy logo'
+                'href' => 'https://www.cse.org.uk'
+            ),
+            Html::rawElement(
+                'img',
+                array(
+                    'src' => '/mediawiki/extensions/steep-mediawiki-gadgets/CSE logo.png',
+                    'alt' => 'Centre for Sustainable Energy logo'
+                )
             )
         );
 

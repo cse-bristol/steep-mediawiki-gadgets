@@ -30,8 +30,7 @@
 }
 
 .ve-activating .content-actions, .ve-active .content-actions, .ve-activated .content-actions {
-    opacity: 0;
-    pointer-events: none;
+    display: none;
 }
 
 .content-action {

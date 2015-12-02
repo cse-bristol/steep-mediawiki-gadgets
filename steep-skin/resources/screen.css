@@ -59,7 +59,7 @@ Everything other than the navbar.
 
 .contains-contents.clutter .right {
     padding-left: 15em;
-    padding-right: 15em;
+/*    padding-right: 15em;*/
 }
 
 .top .right {

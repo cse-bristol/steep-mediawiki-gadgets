@@ -109,6 +109,11 @@
 .icon-watchlist:before{content:'\0033';}
 .icon-zoomin:before{content:'\0034';}
 .icon-zoomout:before{content:'\0035';}
+.icon-export:before{content:'\0036';}
+.icon-shapelayer:before{content:'\0037';}
+.icon-move:before{content:'\0038';}
+.icon-unwatch:before{content:'\0039';}
+.icon-assetcategory:before{content:'\0021';}
 
 
 html {

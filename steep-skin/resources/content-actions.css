@@ -118,11 +118,11 @@ a.content-action-link::after,
 }
 
 #ca-watch a:after {
-    content: "\0072";
+    content: "\0033";
 }
 
 #ca-unwatch a:after {
-    content: "\0072";
+    content: "\0039";
 }
 
 #ca-delete a:after {
@@ -130,7 +130,7 @@ a.content-action-link::after,
 }
 
 #ca-move a:after {
-    content: "\0063";
+    content: "\0038";
 }
 
 #ca-protect a:after {
@@ -145,8 +145,8 @@ a.content-action-link::after,
     text-decoration: none;
     color: #999;
     position: absolute;
-    top: 2em;
-    left: 1em;
+    top: 35px;
+    right: 0;
     white-space: nowrap;
     line-height: 30px;
     pointer-events: auto;

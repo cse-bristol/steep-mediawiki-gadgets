@@ -3,6 +3,11 @@
     padding: 0.5em;
 }
 
+.steep-view-tools button.oo-ui-buttonElement-button {
+	padding: 6px 25px !important;
+}
+
+
 #steep-set-viewpoint .oo-ui-iconElement-icon {
     display: inline;
     font-family: steep-icons;
@@ -13,6 +18,7 @@
 
 #steep-set-viewpoint .oo-ui-iconElement-icon::after {
     content: '\0079';
+	margin-right: 0.25em;
 }
 
 #steep-history {

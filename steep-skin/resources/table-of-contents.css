@@ -6,9 +6,9 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
 
 @media screen {
     #toc {
-	position: fixed;
-	left: 15em;
-	top: 8em;
+	position: absolute;
+	left: -12.5em;
+	top: 0.5em;
 	transition-property: left, top;
 	transition-duration: 0.3s;
 	height: 90%;
@@ -17,8 +17,9 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
     }
 
     #toc.tochidden {
-	left: 2em;
+/*	left: 2em;
 	top: 2em;
+*/
 	overflow-y: hidden;
 	width: 4em;
     }
@@ -28,7 +29,7 @@ However, Mediawiki renders it as nested lists, so this css is quite complicated.
     }
 
     #toc > ul {
-	width: 12em;
+	width: 11em;
 	transition: opacity 0.3s;
     }
 }

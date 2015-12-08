@@ -71,7 +71,7 @@
 }
 
 .category-contents td.type.Category:after {
-    content:'\0071';
+    content:'\0021';
     color: #1eb04d;
 }
 

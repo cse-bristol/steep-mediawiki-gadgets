@@ -7,9 +7,15 @@
 
 #first-heading {
     vertical-align: bottom;
-    margin: 1em 0 0.5em 0;
-    border-bottom: 1px solid #999;
-    width: 100%;
+    margin: 1em 0 0 0;
+    width: calc(100vw - 20vw); /* remove 20vw equates to the 10% padding on either size of div.right */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.clutter #first-heading {
+    width: calc(100vw - 15em - 230px); /* 10em = padding added to left and right of div.right, 250px = width of .content-actions */
 }
 
 #content h1,
@@ -21,6 +27,11 @@
 
 .patrollink {
     display: none;
+}
+
+.mw-body-content {
+	border-top: 1px solid #999;
+	padding-top: 20px;
 }
 
 .mw-body-content a {

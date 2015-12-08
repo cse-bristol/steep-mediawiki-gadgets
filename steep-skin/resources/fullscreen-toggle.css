@@ -10,7 +10,7 @@
 }
 
 .clutter .fullscreen-toggle {
-    top: 6em;
+/*    top: 6em;*/
 }
 
 .fullscreen-toggle::after {
@@ -18,7 +18,7 @@
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
-    content:'\0072';
+    content:'\0051';
     background-color: #eee;
     color: #282828;
     padding: 10px 8px;
@@ -33,6 +33,7 @@
 }
 
 .clutter .fullscreen-toggle::after {
-    background-color: black;
+    background-color: #282828;
     color: white;    
+    content:'\005A';
 }

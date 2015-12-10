@@ -91,3 +91,6 @@ $wgVisualEditorNamespaces = array_merge(
     NS_FILE
   )
 );
+
+require_once "$IP/ConfirmUsers.php";
+$wgConfirmAccountContact = 'Glenn.Searby@cse.org.uk';

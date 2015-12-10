@@ -10,9 +10,10 @@ body {
 
 .container {
     min-height: 100%;
-    display: table;
-    margin-left: -13em;
+    margin-left: -13rem;
     transition: margin-left 0.3s;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .container.clutter {
@@ -20,21 +21,24 @@ body {
 }
 
 .top {
-    display: table-row;
-    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .bottom {
-    display: table-row;    
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .left {
-    width: 15em;
-    display: table-cell;
+    min-width: 13rem;
+    max-width: 13rem;
 }
 
 .bottom .left {
-    padding-bottom: 2em;
+    padding-bottom: 2rem;
 }
 
 /*
@@ -42,37 +46,27 @@ Everything other than the navbar.
 */
 .right {
     width: 100%;
-    display: table-cell;
-    padding-top: 0;
-    padding-bottom: 2em;
-    padding-left: 7%;
-    padding-right: 7%;
-    transition: padding 0.3s;
-}
-
-.clutter .right {
-    padding-left: 5em;
-    padding-right: 5em;
-}
-
-.contains-contents.clutter .right {
-    padding-left: 15em;
-    /*    padding-right: 15em;*/
-}
-
-.top .right {
-    vertical-align: top;
+    transition: width 0.3s;
+    box-sizing: border-box;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .bottom .right {
-    vertical-align: bottom;
+    padding-bottom: 2rem;
+}
+
+.contains-contents .right {
+    /* Allow extra width for the table of contents (off-screen). */
+    width: calc(100% + 13rem);
+}
+
+.clutter .right {
+    /* Make it slightly smaller to account for the navbar. */
+    width: calc(100% - 13rem);
 }
 
 .bottom .last-modified {
     font-size: 0.85em;
     color: #666;
-}
-
-.left.hidden {
-    margin-left: -15em;
 }

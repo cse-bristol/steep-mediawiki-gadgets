@@ -1,6 +1,5 @@
 .navbar {
     background-color: #282828;
-    max-width: 13em;
 }
 
 .navbar a {
@@ -13,11 +12,6 @@
     color: #08b030;
 }
 
-.upper-nav {
-    display: table-row;
-    height: 100%;
-}
-
 .nav-image-link,
 .nav-icon-link {
     padding: 1.25em 2em;    
@@ -27,7 +21,7 @@
 
 .nav-image-link img {
     /* max-width of navbar - (2 * horizontal padding) */
-    max-width: 9em;
+    max-width: 9rem;
 }
 
 .nav-icon-link::before {
@@ -72,11 +66,6 @@
 .nav-icon-link.about::before {
     content:'\0041';
     color: #666;
-}
-
-
-.lower-nav {
-    padding-bottom: 2em;
 }
 
 .nav-text-link {

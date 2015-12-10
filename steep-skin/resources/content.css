@@ -48,6 +48,11 @@
     padding-left: 13rem;
 }
 
+.ve-activating .contains-contents.clutter .mw-body-content,
+.ve-activated .contains-contents.clutter .mw-body-content {
+    padding-left: 0;
+}
+
 .mw-body-content a {
     color: #08b030;
     font-family: 'fira_sansregular';

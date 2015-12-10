@@ -2,15 +2,10 @@
     position: relative;
     width: 0;
     height: 0;
-    top: 3em;    
-    left: 15em;
-    transition: top 0.3s;
+    top: 1rem;    
+    left: 13.8rem;
     cursor: pointer;
     z-index: 9999;
-}
-
-.clutter .fullscreen-toggle {
-/*    top: 6em;*/
 }
 
 .fullscreen-toggle::after {

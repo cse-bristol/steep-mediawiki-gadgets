@@ -7,22 +7,24 @@
 
 #first-heading {
     vertical-align: bottom;
-    margin: 1em 0 0 0;
-    width: calc(100vw - 20vw); /* remove 20vw equates to the 10% padding on either size of div.right */
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    margin: 2rem 0 0 0;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-bottom: 1px solid #999;
+    box-sizing: border-box;
 }
 
 .clutter #first-heading {
-    width: calc(100vw - 15em - 230px); /* 10em = padding added to left and right of div.right, 250px = width of .content-actions */
+    margin-right: 12rem;
 }
 
 #content h1,
 #content h2,
 #content h3 {
-	font-weight: normal;
-	font-family: 'fira_sanssemibold';
+    font-weight: normal;
+    font-family: 'fira_sanssemibold';
 }
 
 .patrollink {
@@ -30,13 +32,25 @@
 }
 
 .mw-body-content {
-	border-top: 1px solid #999;
-	padding-top: 20px;
+    padding-top: 20px;
+    /* A nice max line width */
+    max-width: 60rem;
+    margin: auto;
+    transition: padding 0.3s;
+    
+    /* Allow us to reposition the table of contents. */
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.contains-contents.clutter .mw-body-content {
+    padding-left: 13rem;
 }
 
 .mw-body-content a {
-	color: #08b030;
-	font-family: 'fira_sansregular';
+    color: #08b030;
+    font-family: 'fira_sansregular';
 }
 
 #content {
@@ -46,26 +60,26 @@
 }
 
 ul#preftoc { 
-	list-style-type: none;
-	padding: 0 0 0.5em 0;
-	margin: 1em 0 1em 0;
-	border-bottom: 1px solid #999;
-	overflow: hidden;
+    list-style-type: none;
+    padding: 0 0 0.5em 0;
+    margin: 1em 0 1em 0;
+    border-bottom: 1px solid #999;
+    overflow: hidden;
 }
 
 ul#preftoc li { 
-	float: left;
+    float: left;
 }
 
 ul#preftoc li + li { 
-	margin-left: 1em;
+    margin-left: 1em;
 }
 
 ul#preftoc li a { 
-	color: #282828;
-	text-decoration: none;
+    color: #282828;
+    text-decoration: none;
 }
 
 ul#preftoc li.selected a { 
-	color: #08b030;
+    color: #08b030;
 }

@@ -38,7 +38,6 @@ require_once "$IP/extensions/R/R.php";
 
 wfLoadExtensions(array(
     'SteepIcons',
-    'SteepTags',
     'CategoryTables',
     'ProjectStructure'    
 ));

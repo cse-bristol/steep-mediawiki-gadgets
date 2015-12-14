@@ -46,7 +46,7 @@ chmod g+w "${NEW_DIR}/Rfiles";
 git -C "${EXT_DIR}/VisualEditor" submodule update --init;
 
 # Steep Extensions
-git clone "https://github.com/cse-bristol/steep-mediawiki-gadgets.git" "${STEEP_DIR}" --branch $REL --depth 1;
+git clone "https://github.com/cse-bristol/steep-mediawiki-gadgets.git" "${STEEP_DIR}" --branch $REL;
 
 # Vector Skin
 git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector "${NEW_DIR}/skins/Vector" --branch $REL --depth 1;

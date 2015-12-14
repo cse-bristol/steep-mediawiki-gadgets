@@ -70,6 +70,8 @@ else
 
     # Run pre-requisites for first install
     source "run-once/run-once.sh";
+
+    PREVIOUS_VERSION="0"
 fi;
 
 echo "Preparing the new version.";

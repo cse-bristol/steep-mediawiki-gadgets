@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg 
+	height="150" 
+	width="150"
+	xmlns="http://www.w3.org/2000/svg"	
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	version="1.0"
+>
+	<defs>
+		<g id="sun-ray">
+			<path d="
+				m -5,40 
+				a 40,40 0 0 0 10,0 
+				l 5,30 
+				a 70,70 0 0 1 -20,0 
+				z
+			" fill="#F0A727" />
+		</g>
+	</defs>
+	
+	<circle cx="75" cy="75" r="30" fill="#DF3B29" />
+	
+	<g id="sun-rays" transform="translate(75, 75)">
+		<use xlink:href="#sun-ray" transform="rotate(0)"/>
+		<use xlink:href="#sun-ray" transform="rotate(30)"/>
+		<use xlink:href="#sun-ray" transform="rotate(60)"/>
+		<use xlink:href="#sun-ray" transform="rotate(90)"/>
+		<use xlink:href="#sun-ray" transform="rotate(120)"/>
+		<use xlink:href="#sun-ray" transform="rotate(150)"/>
+		<use xlink:href="#sun-ray" transform="rotate(180)"/>
+		<use xlink:href="#sun-ray" transform="rotate(210)"/>
+		<use xlink:href="#sun-ray" transform="rotate(240)"/>
+		<use xlink:href="#sun-ray" transform="rotate(270)"/>
+		
+		<!-- These rays are not shown.
+			<use xlink:href="#sun-ray" transform="rotate(300)"/>
+			<use xlink:href="#sun-ray" transform="rotate(330)"/>
+		-->
+	</g>
+</svg>

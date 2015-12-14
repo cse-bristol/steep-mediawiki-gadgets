@@ -74,3 +74,6 @@
     font-size: 0.9em;
 }
 
+.navbar img {
+    max-width: 5em;
+}

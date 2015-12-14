@@ -1,7 +1,9 @@
 <?php
 
+$wgSitename = "CSE Wiki";
+
 if ($wgLogo === "/wiki/resources/assets/wiki.png" || !$wgLogo) {
-  $wgLogo = "/mediawiki/extensions/steep-mediawiki-gadgets/steep-logo.png";
+  $wgLogo = "/mediawiki/skins/Steep/CSE logo sun.svg";
 }
 
 $wgEmergencyContact = "wiki@smartsteep.eu";

@@ -7,6 +7,7 @@ set -e;
 
 PARSOID_DIR="/opt/parsoid";
 PARSOID_SERVICE="parsoid.service";
+PARSOID_VERSION="v0.4.1";
 CONFIG_TARGET="/etc/systemd/system/${PARSOID_SERVICE}";
 
 echo "Cloning parsoid repository.";
@@ -14,8 +15,9 @@ if ! [ -d "${PARSOID_DIR}" ]; then
     sudo git clone git@github.com:wikimedia/parsoid.git "${PARSOID_DIR}";
 fi;
 
-sudo cp "${PARSOID_DIR}/api/localsettings.js.example" "${PARSOID_DIR}/api/localsettings.js";
 pushd "${PARSOID_DIR}" > /dev/null;
+sudo git checkout "${PARSOID_VERSION}";
+sudo cp "${PARSOID_DIR}/api/localsettings.js.example" "${PARSOID_DIR}/api/localsettings.js";
 sudo npm install;
 popd > /dev/null;
 

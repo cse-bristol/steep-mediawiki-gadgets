@@ -11,4 +11,5 @@ sudo ufw allow from 127.0.0.1;
 sudo ufw allow 22/tcp;
 sudo ufw allow 80;
 sudo ufw allow 443;
-sudo ufw enable;
+# Skip the prompt
+echo "y" | sudo ufw enable;

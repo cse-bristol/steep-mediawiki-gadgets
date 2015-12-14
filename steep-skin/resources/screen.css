@@ -24,6 +24,7 @@ body {
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
+    flex-grow: 1;
 }
 
 .bottom {

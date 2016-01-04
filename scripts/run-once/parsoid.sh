@@ -17,7 +17,7 @@ fi;
 
 pushd "${PARSOID_DIR}" > /dev/null;
 sudo git checkout "${PARSOID_VERSION}";
-sudo cp "${PARSOID_DIR}/api/localsettings.js.example" "${PARSOID_DIR}/api/localsettings.js";
+cat "${PARSOID_DIR}/api/localsettings.js.example" | sed 's_http://_https://_' | sudo tee "${PARSOID_DIR}/api/localsettings.js";
 sudo npm install;
 popd > /dev/null;
 

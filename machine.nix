@@ -48,7 +48,7 @@
 
 		     ## TODO: get the thermos logo
 		     ## TODO: this isn't working anyway
-  		     logo = ./steep-logo.png;
+  		     logo = "/w/skins/thermos.JPG";
 
 		     ## TODO fonts aren't loading - dunno why?
 
@@ -58,7 +58,7 @@
 		     # enableUploads = "true";
 		     # uploadDir = "";
 
-		     defaultSkin = "steep";
+		     defaultSkin = "Steep";
 		     
 		     skins = [
 		         ./skins
@@ -71,7 +71,7 @@
 		     # See http://www.mediawiki.org/wiki/Manual:Configuration_settings
 		     extraConfig = ''
 		         wfLoadSkins(array(
-			     'steep',
+			     'Steep',
 			     'Vector'
 			 ));
 		     '';

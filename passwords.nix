@@ -1,0 +1,4 @@
+{
+    dbMediawiki = "thisismypasswordtherearemanyotherslikeitbutthisoneismine";
+    dbRoot = "anotherpasswordthatisverylongandthereforeshouldnotgetbroken";
+}

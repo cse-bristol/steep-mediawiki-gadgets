@@ -46,22 +46,35 @@
 		     emergencyContact = "glenn.searby@cse.org.uk";
 		     siteName = "Thermos Wiki";
 
-		     ## TODO: logo
-  		     # logo = "put the logo somewhere";
+		     ## TODO: get the thermos logo
+		     ## TODO: this isn't working anyway
+  		     logo = ./steep-logo.png;
+
+		     ## TODO fonts aren't loading - dunno why?
+
+		     ## TODO: include the steep icons
 
 		     ## TODO: allow file uploads
 		     # enableUploads = "true";
 		     # uploadDir = "";
 
-		     ## TODO: steep skin, vector skin
-		     # defaultSkin = "":
-		     # skins = [];
+		     defaultSkin = "steep";
+		     
+		     skins = [
+		         ./skins
+		     ];
 
 		     ## TODO: visualeditor
 
 		     ## TODO check through steep settings and see what we need
+		     ## I should remove all the other stuff and just include some .php files?		     
 		     # See http://www.mediawiki.org/wiki/Manual:Configuration_settings
-		     extraConfig = "";
+		     extraConfig = ''
+		         wfLoadSkins(array(
+			     'steep',
+			     'Vector'
+			 ));
+		     '';
 		 }
 	     ];
  	 };

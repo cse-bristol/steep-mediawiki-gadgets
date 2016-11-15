@@ -70,14 +70,7 @@
 
 		     ## TODO: fetch VisualEditor
 
-		     extraConfig = ''
-		         error_reporting(-1);
-                         ini_set( 'display_startup_errors', 1 );
-		         ini_set('display_errors', 1);
-			 $wgShowSQLErrors = true;
-			 $wgDebugDumpSql  = true;
-			 $wgShowDBErrorBacktrace = true;
-		       '' + builtins.foldl' (x: y: x + y) ""
+		     extraConfig = builtins.foldl' (x: y: x + y) ""
 		       (map builtins.readFile [
 		         ./Skins.php
 		         ./Permissions.php

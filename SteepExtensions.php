@@ -1,6 +1,6 @@
 wfLoadExtensions(array(
     'SteepIcons',
-    // 'SteepTags',
+    'SteepTags',
     'CategoryTables'
     
     ## ProjectStructure was a bit of a failure.

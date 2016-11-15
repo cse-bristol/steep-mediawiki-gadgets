@@ -42,7 +42,7 @@ class SteepContentActions {
 	  'class' => 'back-to-page',
 	  'href' => $this->viewUrl
 	),
-	wfMsg('steep-view-link')
+	wfMessage('steep-view-link')->text()
       );
       
     } else {

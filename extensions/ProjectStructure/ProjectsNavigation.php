@@ -8,11 +8,11 @@ class ProjectsNavigation {
                 'id' => 'all-projects',
                 'class' => 'all-projects',
                 'href' => Skin::makeNSUrl(
-                    wfMsg('all-projects-page'),
+                    wfMessage('all-projects-page')->text(),
                     '',
                     NS_CATEGORY
                 ),
-                'text' => wfMsg('all-projects')
+                'text' => wfMessage('all-projects')->text()
             )
         );
         

@@ -8,14 +8,14 @@ class NewProjectsButton {
         ));
         
         $allProjectsPage = Title::newFromText(
-            wfMsg("all-projects-page"),
+            wfMessage("all-projects-page")->text(),
             NS_CATEGORY
         )->getFullText();
 
         if ($categoryName == $allProjectsPage) {
 
             ## Change the text
-            $buttonConfig["label"] = wfMsg('new-project');
+            $buttonConfig["label"] = wfMessage('new-project')->text();
         }
         
         return true;

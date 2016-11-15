@@ -8,14 +8,14 @@ class SteepNavButtons {
             'id' => 'new-process-model',
             'href' => '/process-model',
             'class' => 'new-process-model',
-            'text' => wfMsg('new-process-model')
+            'text' => wfMessage('new-process-model')->text()
         );
 
         $bar['navigation'][] = array(
             'id' => 'new-map',
             'href' => '/map',
             'class' => 'new-map',
-            'text' => wfMsg('new-map')
+            'text' => wfMessage('new-map')->text()
         );
 
         return true;

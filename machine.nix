@@ -14,8 +14,6 @@
 	 networking.domain = "r.cse.org.uk";
 	 networking.firewall.allowedTCPPorts = [80];
 
-	 ## TODO: think about backups and upgrades
-	 
 	 ## Mediawiki data is stored in PostgreSQL.
 	 services.postgresql = {
 	     enable = true;
@@ -30,6 +28,23 @@
 	         mwusers root mediawiki
 		 mwusers wwwrun mediawiki
              '';
+	 };
+
+	 systemd.services.mkdirs = {
+	     script = ''
+	       mkdir -p /var/lib/mediawiki/uploaded-files
+	       chown wwwrun:wwwrun -R /var/lib/mediawiki
+	     '';
+	     wantedBy = [ "multi-user.target" ];
+	     description = "Sets up directories needed by Mediawiki.";
+	 };
+
+	 ## Used by Mediawiki VisualEditor extension
+	 services.parsoid = {
+	     enable = true;
+ 	     interface = "127.0.0.1";
+	     port = 8000;
+	     interwikis = {};
 	 };
 
 	 services.httpd = {
@@ -53,9 +68,9 @@
 		     ## TODO: the Thermos logo is UGLY
   		     logo = "/w/skins/thermos.JPG";
 
-		     ## TODO: allow file uploads
-		     # enableUploads = "true";
-		     # uploadDir = "";
+		     ## Allow file uploads
+		     enableUploads = true;
+		     uploadDir = "/var/lib/mediawiki/uploaded-files";
 
 		     defaultSkin = "Steep";
 		     
@@ -67,8 +82,6 @@
 		         ./extensions
 			 (import ./visual-editor.nix)
 		     ];
-
-		     ## TODO: fetch VisualEditor
 
 		     extraConfig = builtins.foldl' (x: y: x + y) ""
 		       (map builtins.readFile [

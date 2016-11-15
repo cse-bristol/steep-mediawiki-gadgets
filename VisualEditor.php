@@ -3,8 +3,12 @@ $wgVisualEditorSupportedSkins[] = 'steep';
 $wgDefaultUserOptions['visualeditor-enable'] = 1;
 
 # wire up parsoid to this wiki
-$wgVisualEditorParsoidURL = 'http://localhost:8000';
-$wgVisualEditorParsoidForwardCookies = true;
+$wgVirtualRestConfig['modules']['parsoid'] = array(
+    'url' => 'http://127.0.0.1:8000'
+);
+
+## See: https://www.mediawiki.org/wiki/Extension:VisualEditor#Forwarding_Cookies_to_Parsoid
+## $wgVisualEditorParsoidForwardCookies = true;
 
 $wgVisualEditorNamespaces = array_merge(
     $wgContentNamespaces,

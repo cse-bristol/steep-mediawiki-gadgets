@@ -14,9 +14,9 @@
 	 networking.domain = "r.cse.org.uk";
 	 networking.firewall.allowedTCPPorts = [80];
 
-	 ## TODO: think about backups?
+	 ## TODO: think about backups and upgrades
 	 
-	 ## Mediawiki data is stored in MySQL.
+	 ## Mediawiki data is stored in PostgreSQL.
 	 services.postgresql = {
 	     enable = true;
 	     package = pkgs.postgresql;
@@ -37,6 +37,10 @@
  	     adminAddr = "glenn.searby@cse.org.uk";
 	     extraSubservices = [
 	         {
+		     ## See https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/web-servers/apache-httpd/default.nix#L50
+		     ## This mechanism isn't documented.
+		     function = import ./mediawiki.nix;
+
 		     serviceType = "mediawiki";
 
 		     dbType = "postgres";
@@ -46,13 +50,8 @@
 		     emergencyContact = "glenn.searby@cse.org.uk";
 		     siteName = "Thermos Wiki";
 
-		     ## TODO: get the thermos logo
-		     ## TODO: this isn't working anyway
+		     ## TODO: the Thermos logo is UGLY
   		     logo = "/w/skins/thermos.JPG";
-
-		     ## TODO fonts aren't loading - dunno why?
-
-		     ## TODO: include the steep icons
 
 		     ## TODO: allow file uploads
 		     # enableUploads = "true";
@@ -64,17 +63,28 @@
 		         ./skins
 		     ];
 
-		     ## TODO: visualeditor
+		     extensions = [
+		         ./extensions
+			 (import ./visual-editor.nix)
+		     ];
 
-		     ## TODO check through steep settings and see what we need
-		     ## I should remove all the other stuff and just include some .php files?		     
-		     # See http://www.mediawiki.org/wiki/Manual:Configuration_settings
+		     ## TODO: fetch VisualEditor
+
 		     extraConfig = ''
-		         wfLoadSkins(array(
-			     'Steep',
-			     'Vector'
-			 ));
-		     '';
+		         error_reporting(-1);
+                         ini_set( 'display_startup_errors', 1 );
+		         ini_set('display_errors', 1);
+			 $wgShowSQLErrors = true;
+			 $wgDebugDumpSql  = true;
+			 $wgShowDBErrorBacktrace = true;
+		       '' + builtins.foldl' (x: y: x + y) ""
+		       (map builtins.readFile [
+		         ./Skins.php
+		         ./Permissions.php
+		         ./WikiEditor.php
+		         ./VisualEditor.php
+		         ./SteepExtensions.php
+		       ]);
 		 }
 	     ];
  	 };

@@ -39,13 +39,55 @@
 	     description = "Sets up directories needed by Mediawiki.";
 	 };
 
-	 ## Used by Mediawiki VisualEditor extension
-	 services.parsoid = {
-	     enable = true;
- 	     interface = "127.0.0.1";
-	     port = 8000;
-	     interwikis = {};
+ 	 ## TODO: remove this once Parsoid is fixed in NixOS
+	 ##
+	 ## I've packaged Parsoid myself using node2nix, and then based this on the service definition from
+	 ## https://github.com/NixOS/nixpkgs/blob/5187c28f9192db77869f14d31c8f844e3859d463/nixos/modules/services/misc/parsoid.nix
+	 ##
+	 ## I'm also using the yaml confuration mechanism here.
+
+	 systemd.services.parsoid_0_6 = let
+	     conf = ''
+             worker_heartbeat_timeout: 300000
+
+             logging:
+                 level: info
+
+             services:
+               - module: lib/index.js
+                 entrypoint: apiServiceWorker
+                 conf:
+                     mwApis:
+                      - uri: 'http://thermos-wiki.r.cse.org.uk/w/api.php'
+             '';
+	     
+	     confFile = builtins.toFile "config.yaml" conf;
+
+	     parsoid = ((import ./parsoid) { pkgs = pkgs; }).package;
+
+	 in {
+	     description = "Bidirectional wikitext parser";
+	     wantedBy = [ "multi-user.target" ];
+	     after = [ "network.target" ];
+	     serviceConfig = {
+                 User = "nobody";
+		 ExecStart = "${parsoid}/lib/node_modules/parsoid-installed/node_modules/parsoid/bin/server.js --config ${confFile} -n 2";
+             };
 	 };
+
+	 ## Used by Mediawiki VisualEditor extension
+	 ## TODO: broken as of NixOS 16.09. Enable once fixed.
+	 # services.parsoid = {
+	 #     enable = true;
+ 	 #     interface = "127.0.0.1";
+	 #     port = 8000;
+	 #     interwikis = {
+	 #         localhost = "http://localhost/w/api.php";
+	 #     };
+	 #     extraConfig = ''
+	 #       parsoidConfig.debug = true;
+	 #     '';
+	 # };
 
 	 services.httpd = {
  	     enable = true;

@@ -48,7 +48,7 @@ let
         $wgDiff = "${pkgs.diffutils}/bin/diff";
         $wgImageMagickConvertCommand = "${pkgs.imagemagick.out}/bin/convert";
 
-        #$wgDebugLogFile = "/tmp/mediawiki_debug_log.txt";
+        $wgDebugLogFile = "/tmp/mediawiki_debug_log.txt";
 
         # Database configuration.
         $wgDBtype = "${config.dbType}";

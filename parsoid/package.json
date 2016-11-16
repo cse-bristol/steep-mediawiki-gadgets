@@ -1,0 +1,9 @@
+{
+  "name": "parsoid-installed",
+  "description": "Mediawiki parser for the VisualEditor.",
+  "version": "0.6.1",
+  "license": "GPL-2.0+",
+  "dependencies": {
+    "parsoid": "0.6.1"
+  }
+}

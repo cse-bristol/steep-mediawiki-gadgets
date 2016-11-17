@@ -1,20 +1,21 @@
-    <svg xmlns="http://www.w3.org/2000/svg"
-	 xmlns:xlink="http://www.w3.org/1999/xlink"
-	 viewbox="0 0 100 100">
-      <defs>
+<svg
+    viewbox="0 0 80 30"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
 	<path id="wavy-line" d="M -1.5 -2 L 1.5 2 Q -15 25, 1.5 48.5 T 1.5 102 L -1.5 98 Q 15 75, -1.5 51.5 T -1.5 -2" transform="rotate(3, 0, 50)"/>
 
 	<g id="three-wavy-lines">
-	  <use xlink:href="#wavy-line" transform="translate(0,0)"/>
-	  <use xlink:href="#wavy-line" transform="translate(20,0)"/>
-	  <use xlink:href="#wavy-line" transform="translate(40,0)"/>
+	    <use xlink:href="#wavy-line" transform="translate(0,0)"/>
+	    <use xlink:href="#wavy-line" transform="translate(20,0)"/>
+	    <use xlink:href="#wavy-line" transform="translate(40,0)"/>
 	</g>
 	
-      </defs>
+    </defs>
 
-      <g id="all-wavy-lines" transform="translate(53,0) scale(0.18,0.1)">
+    <g id="all-wavy-lines" transform="translate(53,0) scale(0.18,0.1)">
 	<use xlink:href="#three-wavy-lines" fill="rgb(249,99,41)" transform="translate(0,0)"/>
 	<use xlink:href="#three-wavy-lines" fill="rgb(1,187,226)" transform="translate(90,0)"/>
-      </g>
-      <text font-family="Arial" y="23">THERMOS</text>
-    </svg>
+    </g>
+    <text font-family="Arial" y="23" fill="white" >THERMOS</text>
+</svg>

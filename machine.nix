@@ -108,7 +108,7 @@
 		     siteName = "Thermos Wiki";
 
 		     ## TODO: the Thermos logo is UGLY
-  		     logo = "/w/skins/thermos-logo-type.gif";
+  		     logo = "/w/skins/thermos.svg";
 
 		     ## Allow file uploads
 		     enableUploads = true;

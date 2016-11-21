@@ -13,6 +13,13 @@
     </defs>
 
     <g id="all-wavy-lines" transform="translate(53,0) scale(0.18,0.1)">
+	<!-- Tim says:
+	     red - 83/38/19
+	     blue - 29/71/84
+	     But I haven't used those, because they look pale against a black background.
+
+	     I took these colours by picking from Inkscape of the JPG logo.
+	     They seem to look ok. -->
 	<use xlink:href="#three-wavy-lines" fill="rgb(249,99,41)" transform="translate(0,0)"/>
 	<use xlink:href="#three-wavy-lines" fill="rgb(1,187,226)" transform="translate(90,0)"/>
     </g>

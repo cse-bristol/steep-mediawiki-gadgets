@@ -10,12 +10,11 @@
 	    <use xlink:href="#wavy-line" transform="translate(20,0)"/>
 	    <use xlink:href="#wavy-line" transform="translate(40,0)"/>
 	</g>
-	
     </defs>
 
     <g id="all-wavy-lines" transform="translate(53,0) scale(0.18,0.1)">
 	<use xlink:href="#three-wavy-lines" fill="rgb(249,99,41)" transform="translate(0,0)"/>
 	<use xlink:href="#three-wavy-lines" fill="rgb(1,187,226)" transform="translate(90,0)"/>
     </g>
-    <text font-family="Arial" y="23" fill="white" >THERMOS</text>
+    <text font-family="segoe UI light" y="23" fill="white" letter-spacing="0.1rem">THERMOS</text>
 </svg>

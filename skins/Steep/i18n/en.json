@@ -8,9 +8,9 @@
     "steepskin-desc": "Skin for the Steep platform",
 
     "home": "Home",
-    "add-assets": "Add Assets",
-    "manage-assets": "Manage Assets",
-    "manage-assets-page": "ManageAssets",
+    "add-assets": "Add Files",
+    "manage-assets": "Manage Files",
+    "manage-assets-page": "ManageFiles",
     "manage-users": "Users",
     "manage-users-page": "ManageUsers",
 

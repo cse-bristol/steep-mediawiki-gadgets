@@ -23,14 +23,26 @@ class CategoryTable extends Article {
     private $sort = 'latest';
     private $sortAscending = false;
     private static $sortOptions = array(
-        'latest',
-        'type',
-        'title'
+        'Latest',
+        'Type',
+        'Title'
         /*
           To sort based on watch status, we'd have to index that. This would be a fairly complicated task, so I'm leaving it out for now.
           'watched',
         */
     );
+
+    private static function sortLatest($a, $b) {
+	return $a->getTouched() - $b->getTouched();
+    }
+
+    private static function sortType($a, $b) {
+	return $a->getNamespace() - $b->getNamespace();
+    }
+
+    private static function sortTitle($a, $b) {
+	return strcasecmp($a->getText(), $b->getText());
+    }
 
     public static function markStale(&$modifiedTimes) {
         $modifiedTimes['page'] = wfTimestampNow();
@@ -52,12 +64,12 @@ class CategoryTable extends Article {
         if ($page) {
             $tablePage->page = $page;
         }
-    
+
         $ascending = $req->getText('sortAscending');
-    
+
         if (!is_null($ascending)) {
             $ascending = ($ascending === 'true');
-      
+
             $tablePage->sortAscending = $ascending;
         }
 
@@ -71,7 +83,7 @@ class CategoryTable extends Article {
           Article also includes the following internal state, which we haven't copied over.
 
           These appear to be set inside Article:view() rather than pushed in from outside, so we should be ok.
-       
+
           // mContent
           // mContentObject
           // mContentLoaded
@@ -84,9 +96,9 @@ class CategoryTable extends Article {
 
         $output = $tablePage->getContext()->getOutput();
         $output->addModules('ext.category-tables');
-    
+
         $tablePage->view();
-    
+
         /*
           Returning false causes the original CategoryPage to return from its view method without doing anything itself.
         */
@@ -106,15 +118,21 @@ class CategoryTable extends Article {
     }
 
     function view() {
+	$cat = Category::newFromTitle(
+	    $this->getTitle()
+	);
+
+	$categoryContentsIterator = $cat->getMembers();
+
         /*
           Don't cache category pages in the browser (we would return a 304 stale otherwise).
         */
         global $wgHooks;
         $wgHooks['OutputPageCheckLastModified'][] = 'CategoryTable::markStale';
-    
+
         parent::view();
 
-        $this->getContext()->getOutput()->enableOOUI();
+	$this->getContext()->getOutput()->enableOOUI();
 
 
         if ($this->canEdit()) {
@@ -128,12 +146,12 @@ class CategoryTable extends Article {
             Hooks::run(
                 "CategoryTableAddToCategory",
                 array(
-                    &$newCategoryPageConfig,
-                    $this->getContext()->getOutput(),
-                    $this->getTitle()
+                   &$newCategoryPageConfig,
+                   $this->getContext()->getOutput(),
+                   $this->getTitle()
                 )
             );
-                
+
             $this->out(
                 new OOUI\ButtonWidget(
                     $newCategoryPageConfig
@@ -162,20 +180,36 @@ class CategoryTable extends Article {
             )
         );
 
-        $search = CategoryContentSearch::create(
-            $this->pageSize * ($this->page - 1),
-            $this->pageSize,
-            $this
-        );
+	$categoryContents = array();
+	$currentItem = $categoryContentsIterator->current();
 
-        $searchResults = $search->search($this->sort, $this->sortAscending);
+	while ($currentItem != null) {
+	    $categoryContents[] = $currentItem;
+	    $categoryContentsIterator->next();
+	    $currentItem = $categoryContentsIterator->current();
+	}
+
+	uksort(
+	    $categoryContents,
+	    "sort" + $this->$sort
+	);
+
+	if ($this->sortAscending) {
+	    $categoryContents = array_reverse($categoryContents);
+	}
 
         $this->out(
-            $this->table($searchResults)
+            $this->table(
+		array_slice(
+		    $categoryContents,
+		    $offset * $pageSize,
+		    $pageSize
+		)
+	    )
         );
 
-        $this->pagination($searchResults->getTotalHits());
-    
+        $this->pagination(count($categoryContents));
+
         $this->addHelpLink('Help:Categories');
     }
 
@@ -210,28 +244,13 @@ class CategoryTable extends Article {
         return $widget;
     }
 
-    function table($searchResults) {
+    function table($categoryContents) {
         $rows = "";
 
-        while ($current = $searchResults->current()) {
-            $highlights = $current->getHighlights();
-      
-            if (array_key_exists('text', $highlights)) {
-                $highlightText = $highlights['text'][0];
-	
-            } else {
-                $highlightText = '';
-            }
+	foreach ($categoryContents as $title) {
+	    $rows .= $this->categoryContentsRow($title);
+	}
 
-            $rows .= $this->categorycontentsrow(
-                $current->getFields(),
-                $highlightText,
-                $current->getIndex() === CategoryContentSearch::$steepIndex
-            );
-
-            $searchResults->next();
-        }
-    
         return Html::rawElement(
             'table',
             array(
@@ -247,59 +266,21 @@ class CategoryTable extends Article {
         );
     }
 
-    function categoryContentsRow($row, $highlight, $isSteep) {
-        if ($isSteep) {
-            $type = $row['collection'][0];
-
-            $titleText = $row['doc'][0];
-
-            if ($type === 'process-models') {
-                $link = '/process-model/?name=' . urlencode($titleText);
-            } else if ($type === 'maps') {
-                $link = '/map/?name=' . urlencode($titleText);
-            } else {
-                $link = '';
-            }
-      
-            $watched = false;
-            $timestamp = $row['_timestamp'];
-            // Convert from ElasticSearch format to a Unix timestamp...
-            $timestamp = round($timestamp / 1000);
-            // ...and then to a Mediawiki timestamp.
-            $timestamp = wfTimestamp(TS_MW, $timestamp);
-
-        } else {
-            $title = Title::newFromText($row['title'][0], $row['namespace'][0]);
-
-            $type = $title->getNSText() ?: 'Page';
-
-            /*
-              If the title includes the text of the current page (because of our faux-sub-page implementation), hide this section.
-            */
-            $myTitleText = $this->getTitle()->getText();
-            $titleText = $title->getText();
-            $titleText = preg_replace(
-                '/^' . preg_quote($this->getTitle()->getText() . '/', '/') . '/',
-                '',
-                $title->getText()
-            );
-      
-            $link = $title->getLinkURL();
-
-            $watched = $this->getContext()->getUser()->isWatched($title);
-            $timestamp = $row['timestamp'][0];
-        }
-
+    function categoryContentsRow($title) {
         return Html::rawElement(
             'tr',
             array(),
             join(
                 '',
                 array(
-                    $this->typeCell($type),
-                    $this->titleCell($titleText, $link, $highlight),	  
-                    $this->watchedCell($watched),
-                    $this->lastChangeCell($timestamp)
+                    $this->typeCell($title->getNSText() ?: 'Page'),
+                    $this->titleCell(
+			$title->getText(),
+			$title->getLinkURL(),
+			''
+		    ),
+                    $this->watchedCell($this->getContext()->getUser()->isWatched($title)),
+                    $this->lastChangeCell($title->getTouched())
                 )
             )
         );
@@ -333,7 +314,7 @@ class CategoryTable extends Article {
         if ($link) {
             $props['href'] = $link;
         }
-		     
+
         return $this->cell(
             join(
                 '',
@@ -371,7 +352,7 @@ class CategoryTable extends Article {
         } else {
             $dateString = '';
         }
-    
+
         return $this->cell(
             $dateString,
             array(
@@ -410,7 +391,7 @@ class CategoryTable extends Article {
 
             foreach ($pagesBefore as $i => $p) {
                 $pageLinks .= $this->paginationLink($p);
-            };      
+            };
         }
 
         $pageLinks .= Html::rawElement(
@@ -427,7 +408,7 @@ class CategoryTable extends Article {
                     $lastPage
                 )
             );
-      
+
             foreach ($pagesAfter as $p) {
                 $pageLinks .= $this->paginationLink($p);
             }
@@ -449,13 +430,13 @@ class CategoryTable extends Article {
     function paginationLink($page, $content = null, $params = array()) {
         $query = $this->getContext()->getRequest()->getQueryValues();
         $query['page'] = $page;
-    
+
         $params['href'] = "?" . http_build_query($query);
 
         if (!$content) {
             $content = $page;
         }
-    
+
         return Html::rawElement(
             'a',
             $params,

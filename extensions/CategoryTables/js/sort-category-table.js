@@ -8,7 +8,7 @@
  */
 (function(mw, $, OO) {
     var sortAscendingParam = 'sortAscending';
-    
+
     mw.hook('wikipage.content').add(function(content) {
 	if (!mw.viewingCategoryPage) {
 	    return;
@@ -19,7 +19,7 @@
 		=== 'true'; // Convert string to boolean.
 
 	sort.on('change', function() {
-	    var qs = mw.getHrefWithUpdatedQueryString('sort', sort.getValue().toLowerCase());
+	    var qs = mw.getHrefWithUpdatedQueryString('sort', sort.getValue());
 
 	    window.location.assign(qs);
 	});
@@ -42,6 +42,6 @@
 	    );
 	});
     });
-    
+
 
 }(mediaWiki, jQuery, OO));

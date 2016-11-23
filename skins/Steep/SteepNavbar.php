@@ -179,7 +179,7 @@ class SteepNavbar {
                 $this->navLink(
                     $this->getMsg('help'),
 		    Title::newFromText(
-			$this->getMsg('helppage')
+			'Help:Contents'
 		    )->getLinkUrl()
                 ),
                 $this->navLink(

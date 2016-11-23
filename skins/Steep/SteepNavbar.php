@@ -13,7 +13,7 @@ class SteepNavbar {
         'n-randompage',
         'n-help'
     );
-    
+
     function __construct($navigation, $siteName, $logoPath, $homeHref, $translator, $isPage) {
         $this->navItems = $navigation;
         $this->siteName = $siteName;
@@ -94,7 +94,7 @@ class SteepNavbar {
             ## Ignore things we've listed at the top.
             if (!in_array($item['id'], $this->excludedNavigation)) {
                 $itemClass = array_key_exists('class', $item) ? ' ' . $item['class'] : '';
-			
+
                 $sidebarNavigation[] = Html::rawElement(
                     'a',
                     array(
@@ -113,7 +113,7 @@ class SteepNavbar {
     public function upperNavItems() {
         $addAssetsTitle = Title::newFromText(
             'Upload',
-            MWNamespace::getCanonicalIndex('special')      
+            MWNamespace::getCanonicalIndex('special')
         );
 
         return join(
@@ -130,7 +130,7 @@ class SteepNavbar {
                 $this->navIconLink(
                     $this->getMsg('add-assets'),
                     $addAssetsTitle->getLinkUrl(),
-                    'add-assets'	
+                    'add-assets'
                 ),
                 $this->navIconLink(
                     $this->getMsg('manage-assets'),
@@ -145,7 +145,7 @@ class SteepNavbar {
                       NS_SPECIAL
                       ),
                     */
-                    'manage-assets'	
+                    'manage-assets'
                 ),
                 $this->navIconLink(
                     $this->getMsg('manage-users'),
@@ -154,7 +154,7 @@ class SteepNavbar {
                         '',
                         NS_SPECIAL
                     ),
-                    'manage-users'	
+                    'manage-users'
                 )
             )
         );
@@ -168,17 +168,19 @@ class SteepNavbar {
                     Title::newFromText(
                         $this->getMsg('aboutpage')
                     )->getLinkUrl(),
-                    'about'	
+                    'about'
                 ),
                 $this->navLink(
                     $this->getMsg('help'),
-                    "http://tools.smartsteep.eu/wiki/User_Manual"
+		    Title::newFromText(
+			$this->getMsg('helppage')
+		    )->getLinkUrl()
                 ),
                 $this->navLink(
                     $this->getMsg('privacy'),
                     Title::newFromText(
                         $this->getMsg('privacypage')
-                    )->getLinkUrl()	  
+                    )->getLinkUrl()
                 ),
                 $this->navLink(
                     $this->getMsg('disclaimers'),
@@ -188,6 +190,6 @@ class SteepNavbar {
                 )
             )
         );
-    }  
+    }
 }
 ?>

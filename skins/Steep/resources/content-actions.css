@@ -10,7 +10,7 @@
     transition: opacity 0.3s;
     pointer-events: none;
 
-    z-index: 99999;
+    z-index: 100;
 
     /* Cross-browser disable text selection. */
     user-select: none;

@@ -10,11 +10,11 @@ $wgVirtualRestConfig['modules']['parsoid'] = array(
 ## See: https://www.mediawiki.org/wiki/Extension:VisualEditor#Forwarding_Cookies_to_Parsoid
 ## $wgVisualEditorParsoidForwardCookies = true;
 
-$wgVisualEditorAvailableNamespaces = array_merge(
-    $wgContentNamespaces,
-    array(
-        NS_USER,
-        NS_CATEGORY,
-        NS_FILE
-    )
+$wgVisualEditorAvailableNamespaces = array(
+    NS_MAIN => true,
+    NS_HELP => true,
+    NS_PROJECT => true,
+    NS_USER => true,
+    NS_CATEGORY => true,
+    NS_FILE => true
 );

@@ -18,12 +18,12 @@
 	 services.postgresql = {
 	     enable = true;
 	     package = pkgs.postgresql;
-	     
+
              authentication = pkgs.lib.mkForce ''
                  local mediawiki all ident map=mwusers
                  local all all ident
              '';
-  
+
              identMap = ''
 	         mwusers root mediawiki
 		 mwusers wwwrun mediawiki
@@ -60,7 +60,7 @@
                      mwApis:
                       - uri: 'http://thermos-wiki.r.cse.org.uk/w/api.php'
              '';
-	     
+
 	     confFile = builtins.toFile "config.yaml" conf;
 
 	     parsoid = ((import ./parsoid) { pkgs = pkgs; }).package;
@@ -115,7 +115,7 @@
 		     uploadDir = "/var/lib/mediawiki/uploaded-files";
 
 		     defaultSkin = "Steep";
-		     
+
 		     skins = [
 		         ./skins
 		     ];
@@ -132,7 +132,7 @@
 		         ./WikiEditor.php
 		         ./VisualEditor.php
 		         ./SteepExtensions.php
-		       ]);
+		       ]) + "wfLoadExtension('Cite');";
 		 }
 	     ];
  	 };

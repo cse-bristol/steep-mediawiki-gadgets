@@ -57,7 +57,7 @@
 		"breadcrumbs.css": {
 		    "media": "all"
 		},
-		
+
 		"content.css": {
 		    "media": "all"
 		},
@@ -84,8 +84,6 @@
 	},
 	"skins.steep.js": {
 	    "scripts": [
-		"scroll-fix.js",
-		
 		"fullscreen-toggle.js"
 	    ],
 	    "position": "bottom",
@@ -99,6 +97,6 @@
     "ResourceFileModulePaths": {
 	"localBasePath": "resources",
 	"remoteSkinPath": "Steep/resources"
-    },    
+    },
     "manifest_version": 1
 }

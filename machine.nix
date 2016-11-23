@@ -127,6 +127,7 @@
 
 		     extraConfig = builtins.foldl' (x: y: x + y) ""
 		       (map builtins.readFile [
+		         # ./Debug.php
 		         ./Skins.php
 		         ./Permissions.php
 		         ./WikiEditor.php

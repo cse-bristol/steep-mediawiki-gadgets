@@ -65,7 +65,7 @@ class SteepTemplate extends BaseTemplate {
 
   function header() {
     $userTools = "";
-    
+
     foreach ( $this->getPersonalTools() as $key => $item ) {
       if ($key === 'newmessages') {
 	/*
@@ -73,7 +73,7 @@ class SteepTemplate extends BaseTemplate {
 	 */
 	continue;
       }
-      
+
       $userTools = $userTools . $this->makeListItem($key, $item);
     }
 
@@ -108,7 +108,7 @@ class SteepTemplate extends BaseTemplate {
 	'class' => 'search-icon',
       )
     );
-    
+
     return Html::rawElement(
       'form',
       array(
@@ -156,7 +156,7 @@ class SteepTemplate extends BaseTemplate {
     $last = count($titleParts) - 1;
 
     $titleSoFar = '';
-    
+
     foreach ($titleParts as $i => $titlePart) {
       $isLast = $i === $last;
 
@@ -164,19 +164,19 @@ class SteepTemplate extends BaseTemplate {
 	$titleSoFar .= '/';
       }
       $titleSoFar .= $titlePart;
-      
+
       $mwTitlePart = Title::newFromText(
 	$titleSoFar,
-	$isLast ? $mwTitle->getNamespace() : NS_CATEGORY
+	$mwTitle->getNamespace()
       );
-      
+
       $breadcrumbs .= $this->crumb(
 	$titlePart,
 	$mwTitlePart->getLinkUrl(),
 	$isLast
       );
     }
-    
+
     return Html::rawElement(
       'h1',
       array(
@@ -200,7 +200,7 @@ class SteepTemplate extends BaseTemplate {
       )
     );
   }
-    
+
   function bodyContent() {
     return Html::rawElement(
       'div',
@@ -225,7 +225,7 @@ class SteepTemplate extends BaseTemplate {
 	$text,
 	1
       );
-      
+
     } else {
       return $text;
     }
@@ -235,7 +235,7 @@ class SteepTemplate extends BaseTemplate {
     if (count($this->get('categoryLinks')) == 0) {
       return '';
     }
-    
+
     $header = Html::rawElement(
       'h2',
       array(),
@@ -319,10 +319,10 @@ class SteepTemplate extends BaseTemplate {
     $this->hasContents = (preg_match('/id="toc"/', $this->get('bodytext')) === 1);
     $this->fullScreen = $this->haveData('hidetoc') && ($this->get('hidetoc') == 1);
     $this->homeHref = $this->data['nav_urls']['mainpage']['href'];
-    
+
     $this->navbar = new SteepNavbar($this->get('sidebar')['navigation'], $this->get('sitename'), $this->get('logopath'), $this->homeHref, $this->translator, $this->get('isPage'));
     $this->contentActions = new SteepContentActions($this->get('content_actions'), $this->get('viewurl'));
-    
+
     $this->html('headelement');
 
     echo Html::rawElement(
@@ -332,7 +332,7 @@ class SteepTemplate extends BaseTemplate {
       ),
       $this->top() . $this->bottom()
     );
-    
+
     $this->printTrail();
 
     echo Html::closeElement('body');

@@ -113,6 +113,10 @@ a.content-action-link::after,
     content: "\0057";
 }
 
+#ca-edit a:after {
+    content: "\0057";
+}
+
 #ca-history a:after {
     content: "\0062";
 }

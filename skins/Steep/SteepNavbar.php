@@ -155,7 +155,13 @@ class SteepNavbar {
                         NS_SPECIAL
                     ),
                     'manage-users'
-                )
+                ),
+		$this->navLink(
+                    $this->getMsg('specialpages'),
+		    Title::newFromText(
+			'Special:SpecialPages'
+		    )->getLinkUrl()
+                ),
             )
         );
     }

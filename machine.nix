@@ -92,6 +92,7 @@
 	 services.httpd = {
  	     enable = true;
  	     adminAddr = "glenn.searby@cse.org.uk";
+	     extraConfig = "RedirectMatch ^/$ /wiki";
 	     extraSubservices = [
 	         {
 		     ## See https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/web-servers/apache-httpd/default.nix#L50

@@ -134,7 +134,8 @@
 		         ./WikiEditor.php
 		         ./VisualEditor.php
 		         ./SteepExtensions.php
-		       ]) + "wfLoadExtension('Cite');";
+		       ]) + "wfLoadExtension('Cite');"
+		       + "$wgServer = 'https://wiki.thermos-project.eu';";
 		 }
 	     ];
  	 };

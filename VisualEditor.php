@@ -4,7 +4,8 @@ $wgDefaultUserOptions['visualeditor-enable'] = 1;
 
 # wire up parsoid to this wiki
 $wgVirtualRestConfig['modules']['parsoid'] = array(
-    'url' => 'http://127.0.0.1:8000'
+    'url' => 'http://127.0.0.1:8000',
+    'domain' => 'localhost'
 );
 
 ## See: https://www.mediawiki.org/wiki/Extension:VisualEditor#Forwarding_Cookies_to_Parsoid

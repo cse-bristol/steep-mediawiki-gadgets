@@ -59,6 +59,7 @@
                  conf:
                      mwApis:
                       - uri: 'http://thermos-wiki.r.cse.org.uk/w/api.php'
+                        domain: 'localhost'
              '';
 
 	     confFile = builtins.toFile "config.yaml" conf;

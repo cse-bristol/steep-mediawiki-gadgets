@@ -94,6 +94,11 @@
  	     enable = true;
  	     adminAddr = "glenn.searby@cse.org.uk";
 	     extraConfig = "RedirectMatch ^/$ /wiki";
+             phpOptions = ''
+             post_max_size = 100M;
+             upload_max_filesize = 100M;
+             '';
+
 	     extraSubservices = [
 	         {
 		     ## See https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/web-servers/apache-httpd/default.nix#L50
@@ -109,7 +114,6 @@
 		     emergencyContact = "glenn.searby@cse.org.uk";
 		     siteName = "Thermos Wiki";
 
-		     ## TODO: the Thermos logo is UGLY
   		     logo = "/w/skins/thermos.svg";
 
 		     ## Allow file uploads
@@ -135,6 +139,7 @@
 		         ./WikiEditor.php
 		         ./VisualEditor.php
 		         ./SteepExtensions.php
+                         ./FileUploads.php
 		       ]) + "wfLoadExtension('Cite');"
 		       + "$wgServer = 'https://wiki.thermos-project.eu';";
 		 }

@@ -1,0 +1,3 @@
+[submodule "extensions/MsCalendar"]
+	path = extensions/MsCalendar
+	url = git@github.com:cse-bristol/mediawiki-extensions-MsCalendar.git

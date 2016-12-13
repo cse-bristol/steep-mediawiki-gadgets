@@ -133,13 +133,14 @@
 
 		     extraConfig = builtins.foldl' (x: y: x + y) ""
 		       (map builtins.readFile [
-		         # ./Debug.php
+		         #./Debug.php
 		         ./Skins.php
 		         ./Permissions.php
 		         ./WikiEditor.php
 		         ./VisualEditor.php
 		         ./SteepExtensions.php
                          ./FileUploads.php
+                         ./Calendar.php
 		       ]) + "wfLoadExtension('Cite');"
 		       + "$wgServer = 'https://wiki.thermos-project.eu';";
 		 }

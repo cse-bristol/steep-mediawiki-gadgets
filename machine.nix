@@ -45,7 +45,10 @@
                cp -R /var/lib/mediawiki/uploaded-files "$BACKUP_DIR"
                tar --create -f "$BACKUP_DIR.tar" "$BACKUP_DIR"
                gzip "$BACKUP_DIR.tar"
+               rsync -rvz /var/backup/ rsync://bolt/backup/thermos-wiki
+
                rm -rf "$BACKUP_DIR"
+               rm "$BACKUP_DIR.tar"
              '';
          };
 

@@ -30,6 +30,25 @@
              '';
 	 };
 
+         ## Backup wiki database
+         systemd.services.backup = {
+             startAt = "daily";
+             path = [
+                 pkgs.postgresql
+                 pkgs.gzip
+                 pkgs.gnutar
+             ];
+             script = ''\
+               BACKUP_DIR="/var/backup/$(date +%Y-%m-%d)"
+               mkdir -p "$BACKUP_DIR"
+               pg_dump mediawiki -U mediawiki > "$BACKUP_DIR/mediawiki.sql"
+               cp -R /var/lib/mediawiki/uploaded-files "$BACKUP_DIR"
+               tar --create -f "$BACKUP_DIR.tar" "$BACKUP_DIR"
+               gzip "$BACKUP_DIR.tar"
+               rm -rf "$BACKUP_DIR"
+             '';
+         };
+
 	 systemd.services.mkdirs = {
 	     script = ''
 	       mkdir -p /var/lib/mediawiki/uploaded-files

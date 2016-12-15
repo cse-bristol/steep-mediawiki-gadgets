@@ -37,18 +37,29 @@
                  pkgs.postgresql
                  pkgs.gzip
                  pkgs.gnutar
+                 pkgs.rsync
              ];
              script = ''\
                BACKUP_DIR="/var/backup/$(date +%Y-%m-%d)"
                mkdir -p "$BACKUP_DIR"
+
+               ## Database
                pg_dump mediawiki -U mediawiki > "$BACKUP_DIR/mediawiki.sql"
+
+               ## Uploaded files
                cp -R /var/lib/mediawiki/uploaded-files "$BACKUP_DIR"
+
+               ## Make a gzipped tar of the backup
+               rm -f "$BACKUP_DIR.tar" "$BACKUP_DIR.tar.gz"
                tar --create -f "$BACKUP_DIR.tar" "$BACKUP_DIR"
                gzip "$BACKUP_DIR.tar"
+
+               ## Send it to bolt
                rsync -rvz /var/backup/ rsync://bolt/backup/thermos-wiki
 
+               ## Tidy up
                rm -rf "$BACKUP_DIR"
-               rm "$BACKUP_DIR.tar"
+               rm -f "$BACKUP_DIR.tar.gz"
              '';
          };
 

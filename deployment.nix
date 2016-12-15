@@ -1,5 +1,4 @@
-{
-  thermosWiki =
+let machine =
      { config, pkgs, ...} :
      { deployment.targetEnv = "libvirtd";
        deployment.libvirtd.imageDir = "/pool/nixops";
@@ -17,4 +16,8 @@
        # which you can poke at with virsh qemu:///system or virt-manager
        deployment.libvirtd.networks = [ "default" "cse-internal" ];
      };
+in
+{
+  thermosWiki = machine;
+  thermos-wiki-test = machine;
 }

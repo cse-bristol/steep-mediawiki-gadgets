@@ -44,11 +44,11 @@
           tar --create -f "$BACKUP_DIR.tar" "$BACKUP_DIR"
           gzip "$BACKUP_DIR.tar"
 
+          rm -rf "$BACKUP_DIR"
+
           ## Send it to bolt
           rsync -rvz /var/backup/ rsync://bolt/backup/${hostname}
 
-          ## Tidy up
-          rm -rf "$BACKUP_DIR"
           rm -f "$BACKUP_DIR.tar.gz"
         '';
     };

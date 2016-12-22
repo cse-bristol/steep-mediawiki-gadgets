@@ -29,19 +29,13 @@ class SteepNavbar {
         );
     }
 
-    function navImgLink ($alt, $href, $src, $text='') {
+    function navImgLink ($alt, $href, $src) {
         $img = Html::rawElement(
             'img',
             array(
                 'src' => $src,
                 'alt' => $alt
             )
-        );
-
-        $div = Html::rawElement(
-            'div',
-            array(),
-            $text ?: $alt
         );
 
         return Html::rawElement(
@@ -123,8 +117,7 @@ class SteepNavbar {
                 $this->navImgLink(
                     $this->siteName,
                     $this->homeHref,
-                    $this->logoPath,
-                    $this->getMsg('home')
+                    $this->logoPath
                 ),
                 $this->standardNavItems(),
                 $this->navIconLink(

@@ -3,7 +3,7 @@
 }
 
 .navbar a {
-    display:block;    
+    display:block;
     text-decoration: none;
     text-align: center;
 }
@@ -12,16 +12,18 @@
     color: #08b030;
 }
 
-.nav-image-link,
 .nav-icon-link {
-    padding: 1.25em 2em;    
+    padding: 1.25em 2em;
     color: white;
     white-space: nowrap;
 }
 
+.nav-image-link {
+    padding: 1.25rem 0;
+}
+
 .nav-image-link img {
-    /* max-width of navbar - (2 * horizontal padding) */
-    max-width: 9rem;
+    width: 11.5rem;
 }
 
 .nav-icon-link::before {
@@ -73,4 +75,3 @@
     color: #999999;
     font-size: 0.9em;
 }
-

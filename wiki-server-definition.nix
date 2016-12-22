@@ -119,12 +119,12 @@
         extraConfig = "RedirectMatch ^/$ /wiki";
         servedFiles = [
             {
-                files = ./favicon.ico;
+                file = ./favicon.ico;
                 urlPath = "/favicon.ico";
-            },
+            }
             {
                 file = ./thermos-logo.svg;
-                urlPath = "/thermos-logo.svg"
+                urlPath = "/thermos-logo.svg";
             }
         ];
         phpOptions = ''

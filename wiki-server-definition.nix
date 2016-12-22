@@ -117,6 +117,16 @@
         enable = true;
         adminAddr = "glenn.searby@cse.org.uk";
         extraConfig = "RedirectMatch ^/$ /wiki";
+        servedFiles = [
+            {
+                files = ./favicon.ico;
+                urlPath = "/favicon.ico";
+            },
+            {
+                file = ./thermos-logo.svg;
+                urlPath = "/thermos-logo.svg"
+            }
+        ];
         phpOptions = ''
         post_max_size = 100M;
         upload_max_filesize = 100M;
@@ -137,7 +147,7 @@
    	     emergencyContact = "glenn.searby@cse.org.uk";
    	     siteName = "Thermos Wiki";
 
-   	     logo = "/w/skins/thermos.svg";
+   	     logo = "/thermos-logo.svg";
 
    	     ## Allow file uploads
    	     enableUploads = true;

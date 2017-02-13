@@ -20,6 +20,12 @@
         '';
     };
 
+    ## Empty the medaiwiki jobs queue
+    systemd.services.runJobs = {
+        startAt = "minutely";
+        script = "/run/current-system/sw/bin/mediawiki-main-runJobs";
+    };
+
     ## Backup wiki database
     systemd.services.backup = {
         startAt = "daily";
@@ -29,7 +35,7 @@
             pkgs.gnutar
             pkgs.rsync
         ];
-        script = ''\
+        script = ''
           BACKUP_DIR="/var/backup/$(date +%Y-%m-%d)"
           mkdir -p "$BACKUP_DIR"
 

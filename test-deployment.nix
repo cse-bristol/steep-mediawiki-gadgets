@@ -18,5 +18,5 @@ let machine =
      };
 in
 {
-  thermosWiki = machine;
+  thermos-wiki-test = machine;
 }

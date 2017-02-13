@@ -101,7 +101,7 @@ let
         for skin in $skins; do
           cp -prvd $skin/* skins/
         done
- 
+
         for extension in $extensions; do
 	  cp -prvd $extension/* extensions/
         done
@@ -124,7 +124,7 @@ let
     { buildInputs = [ pkgs.makeWrapper ]; }
     ''
       mkdir -p $out/bin
-      for i in changePassword.php createAndPromote.php userOptions.php edit.php nukePage.php update.php; do
+      for i in changePassword.php createAndPromote.php userOptions.php edit.php nukePage.php update.php showJobs.php runJobs.php; do
         makeWrapper ${php}/bin/php $out/bin/mediawiki-${config.id}-$(basename $i .php) \
           --add-flags ${mediawikiRoot}/maintenance/$i
       done

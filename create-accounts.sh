@@ -9,3 +9,4 @@ for person in "k.kuriyan@imperial.ac.uk" "a.pantaleo@imperial.ac.uk" "m.aunedi@i
 done
 
 mediawiki-main-createAndPromote --force --sysop "james.wilson@islington.gov.uk"
+mediawiki-main-createAndPromote --force --sysop "ipp@creara.es"

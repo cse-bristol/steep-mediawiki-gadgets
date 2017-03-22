@@ -2,6 +2,63 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 
 [[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
 
+* TODO Add Map To Thermos Wiki
+  A place to collate information about the project.
+
+* TODO Thermos Wiki Styling
+
+Tim wanted more line spacing in the contents, and also less line spacing.
+
+
+** Share-Server
+
+   Depends on ElasticSearch.
+
+   Should be run as a service?
+
+   I had to use the development version of node2nix, because there was a bug.
+
+   I have run =node2nix=:
+   + default.nix lets users deploy
+   + node-env.nix build logic
+   + node-packages.nix package list
+
+   Then you run =nix-build -A package= from the same directory.
+
+** ElasticSearch:
+
+https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/search/elasticsearch.nix
+
+Seems reasonably straightforward?
+
+pkgs.elasticsearch2
+
+https://github.com/NixOS/nixpkgs/tree/master/pkgs/servers/search/elasticsearch
+** Map
+** CirrusSearch
+
+
+
+* TODO Thermos Categories Find Button
+
+search-in-category.js
+
+API call
+
+action: query
+list: search
+srnamespace:
+
+
+
+* TODO Thermos Media Search in VisualEditor
+
+Just doesn't seem to work? Or sometimes works?
+
+
+* TODO Contents page in wiki doesn't show unless you're zoomed in
+
+
 * Steep Icons Extension
 Provides an icon font. The skin and other extensions listed here depend on this to display properly.
 
@@ -42,7 +99,7 @@ Modifies the display of categories to be a sortable, paged table.
 
 Adds a box to search within the category.
 
-Adds a button to add items (pages, files, sub-categories) within that category. 
+Adds a button to add items (pages, files, sub-categories) within that category.
 
 Added pages and sub-categories are treated much like sub-pages: they get the category they belong to pre-pended to their name, creating a hierarchy.
 
@@ -106,7 +163,7 @@ Then modify your LocalSettings.php to include the following (replace any existin
       'SteepIcons',
       'SteepTags',
       'CategoryTables',
-      'ProjectStructure'    
+      'ProjectStructure'
   ));
 #+END_SRC
 

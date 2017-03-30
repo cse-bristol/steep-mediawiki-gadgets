@@ -1,0 +1,19 @@
+.branding {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 1px dotted #282828;
+}
+
+.london-logos img {
+    margin: 0.1em;
+}
+
+.cse-logo {
+    width: 10em;
+}
+
+.cse-logo img {
+    height: 9em;
+}

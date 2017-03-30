@@ -58,6 +58,10 @@
 		    "media": "all"
 		},
 
+		"footer.css": {
+		    "media": "all"
+		},
+
 		"content.css": {
 		    "media": "all"
 		},

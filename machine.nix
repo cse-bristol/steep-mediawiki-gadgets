@@ -6,7 +6,7 @@
 let machine-function = (import ./wiki-server-definition.nix);
 in
 {
-    network.description = "110 Thermos Wiki";
+    network.description = "737 GLA Smart Energy Wiki";
 
-    thermosWiki = {pkgs, ...} : machine-function {inherit pkgs; hostname = "thermos-wiki"; extraConfig = "$wgServer = 'https://wiki.thermos-project.eu';";};
+    gla-wiki = {pkgs, ...} : machine-function {inherit pkgs; hostname = "gla-wiki"; extraConfig = "$wgServer = 'https://london-smart-energy.cse.org.uk';";};
 }

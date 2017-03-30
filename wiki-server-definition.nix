@@ -16,7 +16,7 @@
 
         identMap = ''
             mwusers root mediawiki
-   	 mwusers wwwrun mediawiki
+   	     mwusers wwwrun mediawiki
         '';
     };
 
@@ -123,14 +123,10 @@
         enable = true;
         adminAddr = "glenn.searby@cse.org.uk";
         extraConfig = "RedirectMatch ^/$ /wiki";
-        servedFiles = [
+        servedDirs = [
             {
-                file = ./favicon.ico;
-                urlPath = "/favicon.ico";
-            }
-            {
-                file = ./thermos-logo.svg;
-                urlPath = "/thermos-logo.svg";
+                dir = ./images;
+                urlPath = "/images";
             }
         ];
         phpOptions = ''
@@ -151,9 +147,9 @@
    	     dbName = "mediawiki";
    	     dbUser = "mediawiki";
    	     emergencyContact = "glenn.searby@cse.org.uk";
-   	     siteName = "Thermos Wiki";
+   	     siteName = "GLA Smart Energy for Londoners wiki";
 
-   	     logo = "/thermos-logo.svg";
+   	     logo = "/images/gla-smart-energy-logo.jpg";
 
    	     ## Allow file uploads
    	     enableUploads = true;
@@ -178,8 +174,7 @@
    	         ./WikiEditor.php
    	         ./VisualEditor.php
    	         ./SteepExtensions.php
-                    ./FileUploads.php
-                    ./Calendar.php
+                 ./FileUploads.php
    	       ]) + "wfLoadExtension('Cite');"
    	       + extraConfig;
    	 }

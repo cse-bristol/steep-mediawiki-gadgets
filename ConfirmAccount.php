@@ -1,6 +1,6 @@
 $wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['edit'] = false;
-$wgEmailConfirmToEdit = true;
+$wgEmailConfirmToEdit = false;
 
 $wgConfirmAccountRequestFormItems = array(
 'UserName'        => array( 'enabled' => true ),

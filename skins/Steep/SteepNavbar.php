@@ -44,7 +44,7 @@ class SteepNavbar {
                 'href' => $href,
                 'class' => 'nav-image-link'
             ),
-            $img . $div
+            $img
         );
     }
 

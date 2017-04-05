@@ -172,7 +172,7 @@
 
    	     extraConfig = builtins.foldl' (x: y: x + y) ""
    	       (map builtins.readFile [
-   	         #./Debug.php
+   	         # ./Debug.php
    	         ./Skins.php
    	         ./Permissions.php
    	         ./WikiEditor.php
@@ -181,7 +181,11 @@
                     ./FileUploads.php
                     ./Calendar.php
    	       ]) + "wfLoadExtension('Cite');"
-   	       + extraConfig;
+   	       + extraConfig
+               + ''
+                   $wgInvalidUsernameCharacters = '!';
+                   $wgUserrightsInterwikiDelimiter = '!';
+               '';
    	 }
         ];
     };

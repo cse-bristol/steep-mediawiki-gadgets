@@ -3,6 +3,7 @@ let machine =
      { deployment.targetEnv = "libvirtd";
        deployment.libvirtd.imageDir = "/pool/nixops";
        deployment.libvirtd.headless = true;
+       deployment.libvirtd.memorySize = 2048;
 
        # This is important:
        # NixOps needs to connect to machines over the network to configure them

@@ -1,22 +1,32 @@
 {pkgs, hostname, extraConfig} :
+
+let
+     mediawikiPassword = builtins.readFile ./db-mediawiki-password;
+in
 {
     networking.hostName = hostname;
     networking.domain = "r.cse.org.uk";
     networking.firewall.allowedTCPPorts = [80];
 
+    users.users = (import /etc/nixos/users.nix);
+
     ## Mediawiki data is stored in PostgreSQL.
-    services.postgresql = {
+    services.mysql = {
         enable = true;
-        package = pkgs.postgresql;
+        package = pkgs.mariadb;
 
-        authentication = pkgs.lib.mkForce ''
-            local mediawiki all ident map=mwusers
-            local all all ident
-        '';
+        rootPassword = builtins.readFile ./db-root-password;
 
-        identMap = ''
-            mwusers root mediawiki
-   	     mwusers wwwrun mediawiki
+        initialDatabases = [
+            {
+                name = "mediawiki";
+                schema = "";
+            }
+        ];
+
+        initialScript = builtins.toFile "mediawiki-db-setup" ''
+GRANT ALL PRIVILEGES ON mediawiki.* TO 'mediawiki'@'localhost' IDENTIFIED BY '${mediawikiPassword}';
+GRANT ALL PRIVILEGES ON mediawiki.* TO 'mediawiki'@'localhost.localdomain' IDENTIFIED BY '${mediawikiPassword}';
         '';
     };
 
@@ -30,7 +40,7 @@
     systemd.services.backup = {
         startAt = "daily";
         path = [
-            pkgs.postgresql
+            pkgs.mariadb
             pkgs.gzip
             pkgs.gnutar
             pkgs.rsync
@@ -40,7 +50,7 @@
           mkdir -p "$BACKUP_DIR"
 
           ## Database
-          pg_dump mediawiki -U mediawiki > "$BACKUP_DIR/mediawiki.sql"
+          mysqldump --single-transaction -h localhost mediawiki > "$BACKUP_DIR/mediawiki.sql"
 
           ## Uploaded files
           cp -R /var/lib/mediawiki/uploaded-files "$BACKUP_DIR"
@@ -142,10 +152,11 @@
 
    	     serviceType = "mediawiki";
 
-   	     dbType = "postgres";
+   	     dbType = "mysql";
    	     dbServer = "";
    	     dbName = "mediawiki";
    	     dbUser = "mediawiki";
+             dbPassword = mediawikiPassword;
    	     emergencyContact = "glenn.searby@cse.org.uk";
    	     siteName = "GLA Smart Energy for Londoners wiki";
 
@@ -164,13 +175,14 @@
    	     extensions = [
    	         ./extensions
    		 (import ./visual-editor.nix)
+                 (import ./confirm-account.nix)
    	     ];
 
    	     extraConfig = builtins.foldl' (x: y: x + y) ""
    	       (map builtins.readFile [
    	         #./Debug.php
    	         ./Skins.php
-   	         ./Permissions.php
+   	         ./ConfirmAccount.php
    	         ./WikiEditor.php
    	         ./VisualEditor.php
    	         ./SteepExtensions.php

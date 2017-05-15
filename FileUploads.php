@@ -1,5 +1,5 @@
 ## Normal users can't upload
-$wgGroupPermissions['user']['upload'] = false;
+$wgGroupPermissions['user']['upload'] = true;
 
 ## Any file type is allowed
 $wgStrictFileExtensions = false;

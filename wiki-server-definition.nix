@@ -32,7 +32,7 @@ GRANT ALL PRIVILEGES ON mediawiki.* TO 'mediawiki'@'localhost.localdomain' IDENT
 
     ## Empty the medaiwiki jobs queue
     systemd.services.runJobs = {
-        startAt = "minutely";
+        startAt = "*-*-* *:*:*";
         script = "/run/current-system/sw/bin/mediawiki-main-runJobs";
     };
 

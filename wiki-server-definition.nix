@@ -22,7 +22,7 @@
 
     ## Empty the medaiwiki jobs queue
     systemd.services.runJobs = {
-        startAt = "minutely";
+        startAt = "*-*-* *:*:*";
         script = "/run/current-system/sw/bin/mediawiki-main-runJobs";
     };
 

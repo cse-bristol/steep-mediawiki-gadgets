@@ -1,119 +1,77 @@
-Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/][Steep Project]].
+* 737 - London Smart Energy Wiki
 
-[[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
+This is a deployment of the STEEP Stakeholder engagement platform.
 
-* Steep Icons Extension
-Provides an icon font. The skin and other extensions listed here depend on this to display properly.
+See the master branch for the main readme contents.
 
-* Steep Skin
-Reskins Mediawiki to have a simpler look and feel with fewer buttons.
+It is owned by Simon Roberts at CSE. He is responsible for deciding how long it should live.
 
-It also provides /breadcrumbs/ in page and category titles which contain the '/' character. These act a bit like sub-pages, except that it doesn't check whether the parent pages exist.
+** Live Server
 
-* Steep Tags Extension
-Adds two XML-like tags =<data-map>= and =<process-model>= to Mediawiki. These insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]] as an iframe.
+Hosted using NixOps on bolt.r.cse.org.uk:/pool/nixops-config/737-gla-smart-energy-wiki, it can be accessed at https://london-smart-energy.cse.org.uk/wiki.
 
-There can be controlled with the following properties:
- + =name= sets the name of the document to load.
- + =v= sets the version of the document to load.
- + =viewpoint= overrides the default viewpoint of the document.
- + =width=
- + =height=
+Backed up daily onto bolt.r.cse.org.uk:/pool/backup/gla-wiki.
 
-Adds buttons to Mediawiki's Visual Editor's /Insert/ menu to allow you to insert these tags more easily.
+** Credentials
 
-See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
+The following are available in the CSE password database:
+ + MySQL root password
+ + MySQL mediawiki password
+ + HTTP basic password for user 'london'
 
-** Set Viewpoint
-Determines the initial view that the map or process-model will show on opening the document. It does this by adding a /&viewpoint=/ parameter to the /src/ of the iframe.
+** Nix Compatibility
 
-You can also save viewpoints when you are editing a process-model or viewpoint directly in its own Window. The 'Set Viewpoint' button we are providing in VisualEditor overrides this, allow you to look at several different parts of the same map or process-model in a document.
+For this project, we replaced our deployment / upgrade scripts with a NixOps definition. This is much more reliable / reusable.
 
-** History
-Choose which version of the process-model or map will be displayed.
+** Build Process
 
-Choose 'Latest' to ensure that the document will always show the most recent version.
+To create a wiki using this code:
+ + Create a passwords file (see instructions in machines.nix)
+ + Deploy with NixOps
+ + =nixops ssh gla-wiki=
+ + Create users with the =mediawiki-main-createAndPromote= command.
 
-** Open Original
-This opens the process-model or map in a new window or tab depending on browser configuration.
+** Known Issues
+*** TODO Update to NixPkgs 17.09
 
-* Category Tables Extension
-Modifies the display of categories to be a sortable, paged table.
+It was deployed with 16.09.
 
-Adds a box to search within the category.
+*** TODO Tidy up Parsoid definition
 
-Adds a button to add items (pages, files, sub-categories) within that category. 
+There is a custom Nix definition in the parsoid folder. We should replace this with a version from NixPkgs.
 
-Added pages and sub-categories are treated much like sub-pages: they get the category they belong to pre-pended to their name, creating a hierarchy.
+*** TODO Tidy up Mediawiki definition
 
-* Project Structure Extension
-Provides a project structure build around categories.
+There is a custom Nix definition mediawiki.nix. The only change I've made is to add extra PHP scripts to the /mediawikiScripts/ property.
 
-This makes two categories special: /Categories:Projects/ and /Categories:ProjectsAndSubProjects/:
- + Every category added to /Category:Projects/ also gets added to /Categories:ProjectsAndSubProjects/
- + Every sub-category, sub-sub-category and so-on inside /Categories:ProjectsAndSubProjects/ also gets added to /Category:ProjectsAndSubProjects/.
+We should revert back to using the standard package from NixPkgs. If we still want the extra scripts, we should add them with a small override to the package instead of duplicating it.
 
-Adds a navigation link to /Categories:Projects/.
+After that, we should review our config files (anything in this folder ending in .php).
 
-Modifies the text in various places to talk about "Projects" rather than "Categories".
+*** TODO STEEP Maps and Process Models don't work with Nix
 
-Depends on CategoryTables.
+I didn't do the work to adapt these to work with Nix.
 
-* Dependencies
- * Mediawiki v1.25.1
- * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_25 branch.
- * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Note that this does not require the Parsoid extension be installed into Mediawiki.
- * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
- * ElasticSearch and the CirrusSearch plugin.
+If we decided to resurrect these, then we have the problem that the ShareJS project is dead. This means that the whole backend (which includes collaborative live editing) would have to be replaced.
 
-The Steep Project also uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]], but we do not actually require that for these components.
+** Differences from STEEP
 
-Verify your Mediawiki plugins by looking at the Special:Version page of your wiki.
+We're using newer versions of things than STEEP:
+ + Mediawiki 1.27.1 instead of 1.25.1
+ + PHP 7.0.16 instead of 5.6.17
+ + MariaDB 10.1.21 instead of MySQL 5.5.46
 
-* Deployment
-To add this extension to an existing Mediawiki installation, run the following from inside your Mediawiki directory:
-#+BEGIN_SRC sh
-  # Checkout the code into the extensions folder.
-  git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/steep-mediawiki-gadgets;
+We've dropped the following extensions:
+ + STEEP Projects extension
+ + STEEP Map and Process Model extensions
+ + Semantic Mediawiki, Semantic Forms, Semantic Drilldown
+ + R
+ + Interwiki
+ + Graphviz
+ + InputBox
 
-  # Icon fonts
-  ln -s -T extensions/steep-mediawiki-gadgets/SteepIcons extensions/SteepIcons;
+The things from STEEP that we are still using are:
+ + The skin and icons
+ + CategoryTables
 
-  # Steep skin
-  ln -s -T extensions/steep-mediawiki-gadgets/steep-skin skins/Steep;
-
-  # Steep Tags
-  ln -s -T extensions/steep-mediawiki-gadgets/SteepTags extensions/SteepTags;
-
-  # Category Tables
-  ln -s -T extensions/steep-mediawiki-gadgets/CategoryTables extensions/CategoryTables;
-
-  # Project Structure
-  ln -s -T extensions/steep-mediawiki-gadgets/ProjectStructure extensions/ProjectStructure;
-#+END_SRC
-
-Then modify your LocalSettings.php to include the following (replace any existing wfLoadSkins call):
-#+BEGIN_SRC php
-  require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";
-
-  wfLoadSkins(array(
-      'Steep',
-      'Vector'
-  ));
-  $wgDefaultSkin = "steep";
-
-  wfLoadExtensions(array(
-      'SteepIcons',
-      'SteepTags',
-      'CategoryTables',
-      'ProjectStructure'    
-  ));
-#+END_SRC
-
-** Scripts
-The file [[file:scripts/steep-deploy.sh][steep-deploy.sh]] can run a fresh install or upgrade of the entire Steep platform.
-
-The files [[file:scripts/backup/steep-backup.sh][steep-backup.sh]] and [[scripts/backup/steep-restore.sh][steep-restore.sh]] do what they say.
-
-* Future Plans
-See [[file:TODO.org][TODO.org]].
+We've replaced the EU and STEEP logos with London logos.

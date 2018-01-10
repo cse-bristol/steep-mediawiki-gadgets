@@ -2,7 +2,7 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 
 [[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
 
-The STEEP project has now finished, but the server will be live until END DATE.
+The STEEP project has now finished, but the server will be live until 30-09-2020, at which point we will kill it.
 
 * Live Deployment
 

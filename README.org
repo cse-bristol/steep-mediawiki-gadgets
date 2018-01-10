@@ -1,119 +1,29 @@
-Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/][Steep Project]].
+* Bristol Smart Energy Wiki
 
-[[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
+This is a deployment of the STEEP Stakeholder engagement platform.
 
-* Steep Icons Extension
-Provides an icon font. The skin and other extensions listed here depend on this to display properly.
+See the master branch for the main readme contents.
 
-* Steep Skin
-Reskins Mediawiki to have a simpler look and feel with fewer buttons.
+It is owned by Simon Roberts at CSE. He is responsible for deciding how long it should live.
 
-It also provides /breadcrumbs/ in page and category titles which contain the '/' character. These act a bit like sub-pages, except that it doesn't check whether the parent pages exist.
+** Live Server
 
-* Steep Tags Extension
-Adds two XML-like tags =<data-map>= and =<process-model>= to Mediawiki. These insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]] as an iframe.
+Hosted on Linode, it can be accessed at https://bristol-smart-energy.cse.org.uk/.
 
-There can be controlled with the following properties:
- + =name= sets the name of the document to load.
- + =v= sets the version of the document to load.
- + =viewpoint= overrides the default viewpoint of the document.
- + =width=
- + =height=
+It is backed up daily onto Linode.
 
-Adds buttons to Mediawiki's Visual Editor's /Insert/ menu to allow you to insert these tags more easily.
+** Credentials
 
-See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
+The following are available in the CSE password database:
+ + Server root password
+ + Password for wiki 'admin' user
+ + MySQL root password
+ + Mediawiki root password
+ + An HTML Basic login which is no longer required (anyone can view this wiki now)
 
-** Set Viewpoint
-Determines the initial view that the map or process-model will show on opening the document. It does this by adding a /&viewpoint=/ parameter to the /src/ of the iframe.
+** Differences from STEEP
 
-You can also save viewpoints when you are editing a process-model or viewpoint directly in its own Window. The 'Set Viewpoint' button we are providing in VisualEditor overrides this, allow you to look at several different parts of the same map or process-model in a document.
-
-** History
-Choose which version of the process-model or map will be displayed.
-
-Choose 'Latest' to ensure that the document will always show the most recent version.
-
-** Open Original
-This opens the process-model or map in a new window or tab depending on browser configuration.
-
-* Category Tables Extension
-Modifies the display of categories to be a sortable, paged table.
-
-Adds a box to search within the category.
-
-Adds a button to add items (pages, files, sub-categories) within that category. 
-
-Added pages and sub-categories are treated much like sub-pages: they get the category they belong to pre-pended to their name, creating a hierarchy.
-
-* Project Structure Extension
-Provides a project structure build around categories.
-
-This makes two categories special: /Categories:Projects/ and /Categories:ProjectsAndSubProjects/:
- + Every category added to /Category:Projects/ also gets added to /Categories:ProjectsAndSubProjects/
- + Every sub-category, sub-sub-category and so-on inside /Categories:ProjectsAndSubProjects/ also gets added to /Category:ProjectsAndSubProjects/.
-
-Adds a navigation link to /Categories:Projects/.
-
-Modifies the text in various places to talk about "Projects" rather than "Categories".
-
-Depends on CategoryTables.
-
-* Dependencies
- * Mediawiki v1.25.1
- * [[http://www.mediawiki.org/wiki/Extension:VisualEditor][VisualEditor]] REL1_25 branch.
- * [[https://github.com/wikimedia/parsoid][Parsoid]] (with a running Parsoid server). Note that this does not require the Parsoid extension be installed into Mediawiki.
- * The Process Model and Map software hosted on the same domain as your wiki. Set up and run a [[https://github.com/cse-bristol/share-server][ShareJS Server]] to act as the backend for these.
- * ElasticSearch and the CirrusSearch plugin.
-
-The Steep Project also uses [[https://semantic-mediawiki.org/][Semantic Mediawiki]], but we do not actually require that for these components.
-
-Verify your Mediawiki plugins by looking at the Special:Version page of your wiki.
-
-* Deployment
-To add this extension to an existing Mediawiki installation, run the following from inside your Mediawiki directory:
-#+BEGIN_SRC sh
-  # Checkout the code into the extensions folder.
-  git clone git@github.com:cse-bristol/steep-mediawiki-gadgets.git extensions/steep-mediawiki-gadgets;
-
-  # Icon fonts
-  ln -s -T extensions/steep-mediawiki-gadgets/SteepIcons extensions/SteepIcons;
-
-  # Steep skin
-  ln -s -T extensions/steep-mediawiki-gadgets/steep-skin skins/Steep;
-
-  # Steep Tags
-  ln -s -T extensions/steep-mediawiki-gadgets/SteepTags extensions/SteepTags;
-
-  # Category Tables
-  ln -s -T extensions/steep-mediawiki-gadgets/CategoryTables extensions/CategoryTables;
-
-  # Project Structure
-  ln -s -T extensions/steep-mediawiki-gadgets/ProjectStructure extensions/ProjectStructure;
-#+END_SRC
-
-Then modify your LocalSettings.php to include the following (replace any existing wfLoadSkins call):
-#+BEGIN_SRC php
-  require_once "$IP/extensions/steep-mediawiki-gadgets/steep-mediawiki-gadgets.php";
-
-  wfLoadSkins(array(
-      'Steep',
-      'Vector'
-  ));
-  $wgDefaultSkin = "steep";
-
-  wfLoadExtensions(array(
-      'SteepIcons',
-      'SteepTags',
-      'CategoryTables',
-      'ProjectStructure'    
-  ));
-#+END_SRC
-
-** Scripts
-The file [[file:scripts/steep-deploy.sh][steep-deploy.sh]] can run a fresh install or upgrade of the entire Steep platform.
-
-The files [[file:scripts/backup/steep-backup.sh][steep-backup.sh]] and [[scripts/backup/steep-restore.sh][steep-restore.sh]] do what they say.
-
-* Future Plans
-See [[file:TODO.org][TODO.org]].
+This wiki's initial setup is identical to the main STEEP wiki, except that:
+ + Left out the STEEP project view extension that we made.
+ + Swapped EU and STEEP logos for Bristol logos.
+ + Asked for less information when you sign up for an account.

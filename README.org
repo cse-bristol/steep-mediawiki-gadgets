@@ -2,15 +2,40 @@ Part of the Stakeholder Engagement Platform for the [[http://www.smartsteep.eu/]
 
 [[https://github.com/cse-bristol/share-server][Code]] distributed under an open source MIT license.
 
-* Steep Icons Extension
+The STEEP project has now finished, but the server will be live until END DATE.
+
+* Live Deployment
+
+The project is deployed at https://tools.smartsteep.eu. This is hosted on CSE's Linode account. CSE has pre-paid for this server to exist for the required period of time.
+
+Back-ups taken weekly. See: https://manager.linode.com/linodes/backups/steep.
+
+** Credentials
+
+These are available in the CSE password database:
+ + Wiki admin user login
+ + Database password for 'mediawiki' user.
+
+Unfortunately, I've lost the database password for the 'root' user. If you need root access to the live database, MySQL has a process for resetting the password.
+
+You can SSH onto cse@tools.smartsteep.eu using the CSE SSH key.
+
+** Likely Maintenance Issues
+
+Parsoid - the server backend for Mediawiki's VisualEditor - tends to fall over and need restarting.
+
+Similarly, ElasticSearch has proven to be a bit unreliable. Probably there is a configuration mistake.
+
+* Features
+** Steep Icons Extension
 Provides an icon font. The skin and other extensions listed here depend on this to display properly.
 
-* Steep Skin
+** Steep Skin
 Reskins Mediawiki to have a simpler look and feel with fewer buttons.
 
 It also provides /breadcrumbs/ in page and category titles which contain the '/' character. These act a bit like sub-pages, except that it doesn't check whether the parent pages exist.
 
-* Steep Tags Extension
+** Steep Tags Extension
 Adds two XML-like tags =<data-map>= and =<process-model>= to Mediawiki. These insert a [[https://github.com/cse-bristol/process-model][Process Model]] or [[https://github.com/cse-bristol/energy-efficiency-planner][Map]] as an iframe.
 
 There can be controlled with the following properties:
@@ -24,29 +49,29 @@ Adds buttons to Mediawiki's Visual Editor's /Insert/ menu to allow you to insert
 
 See: [[https://doc.wikimedia.org/VisualEditor/master/][Visual Editor API]], [[http://www.mediawiki.org/wiki/Manual:Tag_extensions/Example][Tag Extensions Example]].
 
-** Set Viewpoint
+*** Set Viewpoint
 Determines the initial view that the map or process-model will show on opening the document. It does this by adding a /&viewpoint=/ parameter to the /src/ of the iframe.
 
 You can also save viewpoints when you are editing a process-model or viewpoint directly in its own Window. The 'Set Viewpoint' button we are providing in VisualEditor overrides this, allow you to look at several different parts of the same map or process-model in a document.
 
-** History
+*** History
 Choose which version of the process-model or map will be displayed.
 
 Choose 'Latest' to ensure that the document will always show the most recent version.
 
-** Open Original
+*** Open Original
 This opens the process-model or map in a new window or tab depending on browser configuration.
 
-* Category Tables Extension
+** Category Tables Extension
 Modifies the display of categories to be a sortable, paged table.
 
 Adds a box to search within the category.
 
-Adds a button to add items (pages, files, sub-categories) within that category. 
+Adds a button to add items (pages, files, sub-categories) within that category.
 
 Added pages and sub-categories are treated much like sub-pages: they get the category they belong to pre-pended to their name, creating a hierarchy.
 
-* Project Structure Extension
+** Project Structure Extension
 Provides a project structure build around categories.
 
 This makes two categories special: /Categories:Projects/ and /Categories:ProjectsAndSubProjects/:
@@ -106,7 +131,7 @@ Then modify your LocalSettings.php to include the following (replace any existin
       'SteepIcons',
       'SteepTags',
       'CategoryTables',
-      'ProjectStructure'    
+      'ProjectStructure'
   ));
 #+END_SRC
 

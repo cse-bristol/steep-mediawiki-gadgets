@@ -10,7 +10,6 @@ in
 
     users.users = (import /etc/nixos/users.nix);
 
-    ## Mediawiki data is stored in PostgreSQL.
     services.mysql = {
         enable = true;
         package = pkgs.mariadb;

@@ -4,7 +4,7 @@ This is a deployment of the STEEP Stakeholder engagement platform.
 
 See the master branch for the main readme contents.
 
-It is owned by Simon Roberts at CSE. He is responsible for deciding how long it should live.
+It is owned by Simon Roberts at CSE, who still wants it to live for now. Check with him again in 2019 about both this and the Bristol Smart Energy wiki.
 
 ** Live Server
 

@@ -65,10 +65,11 @@ We've dropped the following extensions:
  + STEEP Projects extension
  + STEEP Map and Process Model extensions
  + Semantic Mediawiki, Semantic Forms, Semantic Drilldown
- + R
- + Interwiki
+ + R (no longer maintained)
+ + Interwiki (now built in)
  + Graphviz
- + InputBox
+ + InputBox (now built in)
+ + ElasticSearch and CirrusSearch
 
 The things from STEEP that we are still using are:
  + The skin and icons
